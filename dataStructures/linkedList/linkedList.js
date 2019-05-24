@@ -6,9 +6,7 @@ Methods:
 -addToTail (replaces the tail with a new value that is passed in)
 -removeHead (deletes head)
 -addNewHead (puts a new head node in front of the current head)
--contains (should search through the linked list and return true 
-
-if a matching value is found)
+-contains (should search through the linked list and return true if a matching value is found)
 -getMax (returns the maximum value in the linked list)
 -containsSequence (?)
 
@@ -93,6 +91,25 @@ class LinkedList {
             }
         }
         return false
+    }
+
+    getMax() {
+        if (this.head === null) {
+            return null
+        }
+        let currentNode = this.head;
+        let maxValue = null;
+
+        while (currentNode !== null) {
+            if (currentNode.value > maxValue) {
+                maxValue = currentNode.value;
+                currentNode = currentNode.next;
+            }
+            else {
+                continue;
+            }
+        }
+        return maxValue
     }
 
 }
@@ -198,3 +215,25 @@ class LinkedList {
 // console.log(l2.contains()); // false
 // console.log(l2.contains(null)); // false
 // console.log(l2.contains(5)); // false
+
+
+
+
+// // //  GET MAX tests
+// // test #1
+// let n1 = new Node(3);
+// let n2 = new Node(4);
+// let n3 = new Node(5);
+// let n4 = new Node(14);
+// let l1 = new LinkedList();
+
+// l1.addToTail(n1)
+// l1.addToTail(n2)
+// l1.addToTail(n3)
+// console.log(l1.getMax()) // 5
+// l1.addToTail(n4)
+// console.log(l1.getMax()) // 14
+
+// // test #2
+// let l2 = new LinkedList();
+// console.log(l2.getMax()); // null
