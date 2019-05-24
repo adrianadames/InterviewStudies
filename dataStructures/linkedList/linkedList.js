@@ -50,7 +50,21 @@ class LinkedList {
                 }
             }
         }
-    }    
+    }
+    
+    removeHead() {
+        let currentNode = this.head;
+        let next = null;
+        let prev = null;
+
+        if (currentNode === null) {
+            return null;
+        } else {
+            this.head = currentNode.next;
+            //free memory from former head node
+            return this.head;
+        }
+    }
 
 }
 
@@ -58,7 +72,6 @@ class LinkedList {
 
 
 // // //  ADD TO TAIL tests
-
 // // test #1
 // let n1 = new Node(3);
 // let n2 = new Node(4);
@@ -75,7 +88,6 @@ class LinkedList {
 // console.log('n1.next.value: ', n1.next.value);
 // console.log('n1.next.next.value: ', n1.next.next.value);
 // console.log('n1.next.next.next: ', n1.next.next.next);
-
 
 // // test #2 (making sure a linked list of null-valued nodes works as expected)
 // let n1 = new Node();
@@ -94,3 +106,20 @@ class LinkedList {
 // console.log('n1.next.value: ', n1.next.value);
 // console.log('n1.next.next.value: ', n1.next.next.value);
 // console.log('n1.next.next.next: ', n1.next.next.next);
+
+
+
+// // //  REMOVE HEAD tests
+// // test #1
+// let n1 = new Node(3);
+// let n2 = new Node(4);
+// let n3 = new Node(5);
+// let l1 = new LinkedList();
+
+// l1.addToTail(n1)
+// l1.addToTail(n2)
+// l1.addToTail(n3)
+
+// console.log(l1.head.value);
+// l1.removeHead();
+// console.log(l1.head.value);
