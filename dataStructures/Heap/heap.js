@@ -1,6 +1,8 @@
 /*
 NOTES:
--problem statement not quite complete. See chapters 6(Heapsort) and 9(Priority Queues) in Goodrich text. 
+-See chapter 6(Heapsort) in Cormen text and chapter 9(Priority Queues) in Goodrich text. 
+-problem statement not quite complete. 
+
 
 Methods: 
 -insert

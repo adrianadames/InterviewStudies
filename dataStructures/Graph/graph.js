@@ -1,4 +1,8 @@
 /*
+NOTE: 
+-See chapter 7 (Linked Lists) in Goodrich text.
+-There are different ways to implement the graph data structure. Implement another version. 
+
 Data structures to use in implementation of graph data structure: 
 -Queue
 -Stack
@@ -16,5 +20,5 @@ Methods:
 -bft
 -bfs
 
-NOTE: There are different ways to implement the graph data structure. Implement another version.
+NOTE: 
 */

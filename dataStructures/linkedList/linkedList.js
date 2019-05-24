@@ -1,4 +1,7 @@
 /*
+NOTE: 
+-See chapter 10 in Cormen and chapter 7 (Linked Lists) in Goodrich. 
+
 Methods: 
 -addToTail (replaces the tail with a new value that is passed in)
 -removeHead (deletes head)
