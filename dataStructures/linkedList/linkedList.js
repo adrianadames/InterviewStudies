@@ -126,7 +126,7 @@ class LinkedList {
                     currentNode = currentNode.next;
                     next = currentNode.next
                     if (currentNode.value === value) {
-                        prev.next = next
+                        prev.next = next;
                         // free currentNode block of memory 
                         return currentNode.value
                     }
@@ -135,6 +135,44 @@ class LinkedList {
         }
         return false
     }
+
+    removeAllNodesWithValue(value) {
+        if (this.head === null) {
+            return null
+        }
+        let currentNode = this.head;
+        let prev = null;
+        let next = null;
+        let count = 0
+
+        while (currentNode !== null) {
+            if (this.head.value === value) {
+                count +=1;
+                let oldHead = currentNode;
+                this.head = currentNode.next;
+                //free memory from former head node
+                currentNode = this.head;
+            } 
+            if (currentNode.next === null) {
+                if (count > 0) {
+                    return `count: ${count}, value: ${value}`
+                } else {
+                    return null
+                }
+            } else {
+                prev = currentNode;
+                currentNode = currentNode.next;
+                next = currentNode.next
+                if (currentNode.value === value) {
+                    count +=1;
+                    prev.next = next;
+                    // free currentNode block of memory 
+                }
+            }
+        }
+    }
+
+
 }
 
 
@@ -175,7 +213,6 @@ class LinkedList {
 // console.log('n1.next.value: ', n1.next.value);
 // console.log('n1.next.next.value: ', n1.next.next.value);
 // console.log('n1.next.next.next: ', n1.next.next.next);
-
 
 
 // // //  REMOVE HEAD tests
@@ -260,7 +297,7 @@ class LinkedList {
 // console.log(l2.getMax()); // null
 
 
-// // //  REMOVE VALUE tests
+// // //  REMOVE FIRST NODE WITH VALUE X tests
 // // test #1
 // let n1 = new Node(3);
 // let n2 = new Node(4);
@@ -270,12 +307,49 @@ class LinkedList {
 // l1.addToTail(n2)
 // l1.addToTail(n3)
 
-// console.log('l1.removeValue(323): ', l1.removeValue(323)); // null
+// console.log('l1.removeFirstNodeWithValue(323): ', l1.removeFirstNodeWithValue(323)); // null
 // console.log('l1.head.value: ', l1.head.value); // 3 
-// console.log('l1.removeValue(3): ', l1.removeValue(3)); // 3
+// console.log('l1.removeFirstNodeWithValue(3): ', l1.removeFirstNodeWithValue(3)); // 3
 // console.log('l1.head.value: ', l1.head.value); // 4
-// console.log('l1.removeValue(4): ', l1.removeValue(4)); // 4
+// console.log('l1.removeFirstNodeWithValue(4): ', l1.removeFirstNodeWithValue(4)); // 4
 // console.log('l1.head.value: ', l1.head.value); // 5
-// console.log('l1.removeValue(5): ', l1.removeValue(5)); // 5
-// console.log('l1.removeValue(6): ', l1.removeValue(6)); // null
+// console.log('l1.removeFirstNodeWithValue(5): ', l1.removeFirstNodeWithValue(5)); // 5
+// console.log('l1.removeFirstNodeWithValue(6): ', l1.removeFirstNodeWithValue(6)); // null
 // console.log('l1: ', l1);  // LinkedList { head: null }
+
+
+// // //  REMOVE ALL NODES WITH VALUE X tests
+// // test #1
+// let n1 = new Node(3);
+// let n2 = new Node(4);
+// let n3 = new Node(5);
+// let n4 = new Node(6);
+// let n5 = new Node(7);
+// let n6 = new Node(8);
+// let n7 = new Node(3);
+// let n8 = new Node(4);
+// let n9 = new Node(5);
+
+// let l1 = new LinkedList();
+// l1.addToTail(n1);
+// l1.addToTail(n2);
+// l1.addToTail(n3);
+// l1.addToTail(n4);
+// l1.addToTail(n5);
+// l1.addToTail(n6);
+// l1.addToTail(n7);
+// l1.addToTail(n8);
+// l1.addToTail(n9);
+
+// console.log('l1.removeAllNodesWithValue(12345): ', l1.removeAllNodesWithValue(12345)); // 
+// console.log('l1: ', l1);  // 
+// console.log('l1.removeAllNodesWithValue(5): ', l1.removeAllNodesWithValue(5)); // 
+// console.log('l1: ', l1);  // 
+// console.log('l1.removeAllNodesWithValue(6): ', l1.removeAllNodesWithValue(6)); //
+// console.log('l1: ', l1);  // 
+// console.log('l1.removeAllNodesWithValue(3): ', l1.removeAllNodesWithValue(3)); //
+// console.log('l1: ', l1);  // 
+// console.log('l1.removeAllNodesWithValue(7): ', l1.removeAllNodesWithValue(7)); //
+// console.log('l1: ', l1);  // 
+// console.log('l1.removeAllNodesWithValue(4): ', l1.removeAllNodesWithValue(4)); // count: 2, value: 4
+// console.log('l1: ', l1);  // LinkedList { head: Node { value: 8, next: null } }
