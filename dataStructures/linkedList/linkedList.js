@@ -36,7 +36,6 @@ class LinkedList {
     addToTail(node) {
         const newTail = node;
         newTail.next = null;
-
         if (this.head === null) {
             this.head = newTail;
             return newTail
@@ -67,7 +66,6 @@ class LinkedList {
 
     addNewHead(node) {
         const newHead = node;
-
         if (this.head === null) {
             this.head = newHead;
             return newHead
