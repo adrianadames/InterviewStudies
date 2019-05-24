@@ -5,7 +5,7 @@ NOTE:
 Methods: 
 -addToTail (replaces the tail with a new value that is passed in)
 -removeHead (deletes head)
--addToHead (puts a new head node in front of the current head)
+-addNewHead (puts a new head node in front of the current head)
 -contains (should search through the linked list and return true 
 
 if a matching value is found)
@@ -66,6 +66,19 @@ class LinkedList {
         }
     }
 
+    addNewHead(node) {
+        const newHead = node;
+
+        if (this.head === null) {
+            this.head = newHead;
+            return newHead
+        } else {
+            newHead.next = this.head;
+            this.head = newHead;
+            return newHead
+        }
+    }
+
 }
 
 
@@ -123,3 +136,26 @@ class LinkedList {
 // console.log(l1.head.value);
 // l1.removeHead();
 // console.log(l1.head.value);
+
+
+// // //  ADD NEW HEAD tests
+// // test #1
+// let n1 = new Node(3);
+// let n2 = new Node(4);
+// let n3 = new Node(5);
+// let n4 = new Node(14);
+// let l1 = new LinkedList();
+
+// l1.addToTail(n1)
+// l1.addToTail(n2)
+// l1.addToTail(n3)
+
+// console.log(l1.head.value); // 3
+// l1.addNewHead(n4);
+// console.log(l1.head.value); // 14
+
+// l1.addNewHead(new Node(213213)) 
+// console.log(l1.head.value); // 213213
+
+// l1.addNewHead(new Node()) 
+// console.log(l1.head.value); // null 
