@@ -79,6 +79,22 @@ class LinkedList {
         }
     }
 
+    contains(value) {
+        // if (this.head === null) {
+        //     return false
+        // }
+        let currentNode = this.head;
+        while (currentNode !== null) {
+            if (currentNode.value === value) {
+                return true
+            }
+            else {
+                currentNode = currentNode.next
+            }
+        }
+        return false
+    }
+
 }
 
 
@@ -159,3 +175,26 @@ class LinkedList {
 
 // l1.addNewHead(new Node()) 
 // console.log(l1.head.value); // null 
+
+
+// // //  CONTAINS tests
+// // test #1
+// let n1 = new Node(3);
+// let n2 = new Node(4);
+// let n3 = new Node(5);
+// let n4 = new Node(14);
+// let l1 = new LinkedList();
+
+// l1.addToTail(n1)
+// l1.addToTail(n2)
+// l1.addToTail(n3)
+// l1.addToTail(n4)
+
+// console.log(l1.contains(6)); // false
+// console.log(l1.contains(14)); // true
+
+// // test #2
+// let l2 = new LinkedList();
+// console.log(l2.contains()); // false
+// console.log(l2.contains(null)); // false
+// console.log(l2.contains(5)); // false
