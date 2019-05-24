@@ -10,9 +10,12 @@ Methods:
 -getMax (returns the maximum value in the linked list)
 -removeFirstNodeWithValue(x) (delete first encountered node that has a value of x)
 -removeAllNodesWithValue(x) (delete all nodes with a value of x)
+
 -containsSequence (?)
 -removeSequence (?)
 -reverse (-Reverse a singly linked list)
+-insert new node after node x
+-remove node after node x
 
 Apply knowledge:
 -Implement a stack with a singly linked list.
