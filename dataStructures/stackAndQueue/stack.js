@@ -6,6 +6,7 @@ Methods:
 -push (add item to the the end of the stack (items at end of stack are the first to be removed)) (i.e. push(item))
 -pop (remove the most recently added item from the stack) (i.e. pop())
 
+QQQQQQQQ: Should the stack be of a fixed size n, or is my implementation good as is?
 */
 
 class Stack {
