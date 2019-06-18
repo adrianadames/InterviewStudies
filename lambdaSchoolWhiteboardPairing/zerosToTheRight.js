@@ -22,7 +22,7 @@ zerosToTheRight = (arr) => {
     for (let i = 0; i < arrCopy.length;i++) {
         if (arrCopy[i] !== 0) {
             count +=1;
-            arrWithZerosToRight.unshift(arrCopy[i]) // add non-zero integer to beginning of array
+            arrWithZerosToRight.unshift(arrCopy[i]); // add non-zero integer to beginning of array
         } else {
             arrWithZerosToRight.push(arrCopy[i]); //add zero to end of array
         }
