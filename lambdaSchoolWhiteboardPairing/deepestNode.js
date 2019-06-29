@@ -9,6 +9,7 @@ Given the root of a binary tree, return a deepest node. For example, in the foll
  /
 d
 
+
 */
 
 class BinaryTree {
@@ -18,41 +19,42 @@ class BinaryTree {
         this.right = right
     }
 
+    // O(n) where n is number of nodes in tree
     deepestNode = () => {
-        let deepestNode = this;
-        let deepestLeftNode, deepestRightNode;
-        let depth, right_depth,left_depth=0;
+        let currentNode = this;
+        let visited = []; 
+        let queue = []; //FIFO (shift to remove from front, push to add to back)
 
-        while (this.left !== null && this.right !== null) {
-            if (this.left === null && this.right === null) {
-                return (this, depth)
-            } else if (this.left && this.right === null) {
-                left_depth+=1;
-                deepestLeftNode = this.left;
-            } else if (this.left === null && this.right) {
-                right_depth+=1;
-                deepestRightNode = this.right;
-            } else {
-                left_depth+=1;
-                right_depth+=1;
-                deepestLeftNode = this.left;
-                deepestRightNode = this.right;
+        if (currentNode) {
+            queue.push(currentNode);
+        }
+        while (queue.length > 0) {
+            currentNode = queue.shift();
+            if (!visited.includes(currentNode)) {
+                visited.push(currentNode);
+                if (currentNode.left) {
+                    queue.push(currentNode.left)
+                }
+                if (currentNode.right) {
+                    queue.push(currentNode.right)
+                }
             }
-            this.deepestNode()
         }
-
-        if (left_depth>right_depth) {
-            return (deepestLeftNode, left_depth)
-        } else if (right_depth>= left_depth) {
-            return (deepestRightNode, right_depth)
-        }
+        return visited[visited.length-1];
     }
 }
 
-let bt1=new BinaryTree(5)
+let bt1=new BinaryTree('a')
+bt1.left = new BinaryTree('b');
+bt1.right = new BinaryTree('c');
+bt1.left.left = new BinaryTree('d');
+bt1.left.left.left = new BinaryTree('e');
+bt1.left.left.left.right = new BinaryTree('f');
+bt1.right.right = new BinaryTree('g');
+bt1.right.right.right = new BinaryTree('h');
+bt1.right.right.right.right = new BinaryTree('i');
+bt1.right.right.right.right.left = new BinaryTree('j');
 
-bt1.right = new BinaryTree(7);
-bt1.left = new BinaryTree(6);
 
 console.log(bt1.deepestNode())
 
