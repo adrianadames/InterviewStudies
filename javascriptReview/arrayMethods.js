@@ -188,3 +188,140 @@ console.log(arr12[1])
 // is not visited. While the specific behavior of these methods in such cases is 
 // well-defined, you should not rely upon it so as not to confuse others who might 
 // read your code. If you must mutate the array, copy into a new array instead.
+
+// The entries() method returns a new Array Iterator object that contains the key/value
+// pairs for each index in the array.
+
+const arr13 = ['square', 'circle', 'rectangle', 'hexagon', 'octagon'];
+const iterator1 = arr13.entries()
+console.log(iterator1)
+
+for (const [index,element] of arr13.entries()) {
+    console.log(index,element)
+}
+
+for (const [i,e] of iterator1) {
+    console.log(i,e)
+}
+
+const iterator2 = arr13.entries()
+for (let e of iterator2) {
+    console.log(e);
+}
+
+
+// The every() method tests whether all elements in the array pass the test implemented
+// by the provided function. It returns a Boolean value. The syntax is as follows: 
+//             arr.every(callback(element[, index(OPTIONAL)[, array(OPTIONAL)]])[, thisArg(OPTIONAL)])
+// where the callback is the function to test for each element and where the callback takes three
+// (OPTIONAL) arguments: element, the current element being processed, the index of the current element
+// being processed, and the array every was called upon. The thisArg param is the value to use as this
+// when executing callback. 
+
+const cb = (element, index, array) => {return element>7};
+const cb1 = (element) => {return element>7};
+const arr14 = [1,2,3];
+const arr15 = [11,12,13];
+
+console.log(arr14.every(cb))
+console.log(arr15.every(cb))
+console.log(arr14.every(cb1))
+console.log(arr15.every(cb1))
+
+console.log([12, 5, 8, 130, 44].every(x => x >= 10));
+console.log([12, 54, 18, 130, 44].every(x => x >= 10));
+
+// The filter() method creates a new array with all elements that pass the test implemented by 
+// the provided function. The syntax is as follows: 
+//     var newArray = arr.filter(callback(element[, index(OPTIONAL)[, array(OPTIONAL)]])[, thisArg(OPTIONAL)])
+
+const arr16 = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+let checkIfEven = (element) => {return element % 2 === 0}
+
+console.log(arr16.filter(checkIfEven))
+
+// The find() method returns the value of the first element in the array that satisfies 
+// the provided testing function. Otherwise undefined is returned. See also the findIndex()
+// method, which returns the index of a found element in the array instead of its value.
+// The syntax is as follows: 
+//             arr.find(callback(element[, index[, array]])[, thisArg])
+// If no values in array pass the test, undefined is returned. 
+
+let checkIfOdd = (element, index, array) => {return element % 2 !== 0}
+console.log(arr16.find(checkIfOdd))
+
+// The findIndex() method returns the index of the first element in the array that 
+// satisfies the provided testing function. Otherwise, it returns -1, indicating that
+// no element passed the test. Same syntaxt as find() method. 
+
+console.log(arr16.findIndex(checkIfOdd))
+
+// The forEach() method executes a provided function once for each array element.
+// The syntax is as follows: 
+//             arr.forEach(callback(currentValue [, index [, array]])[, thisArg]);
+// forEach() executes the callback function once for each array element; unlike map()
+// or reduce() it always returns the value undefined and is not chainable. The typical
+// use case is to execute side effects at the end of a chain.
+
+// ******* NEED MORE REVIEW TIME FOR THIS METHOD *************
+
+const arr17 = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+let squareRoot = (element) => {return Math.sqrt(element)}
+console.log(squareRoot(16.3))
+for (let i = 0; i < arr17.length;i++) {
+    console.log(squareRoot(arr17[i]))
+}
+console.log(arr17.forEach(squareRoot))
+
+
+// The keys() method returns a new Array Iterator object that contains the keys for 
+// each index in the array.
+
+const arr18 = ['apple', 'pear', 'orange', 1, 2, 88];
+let iterator3 = arr18.keys();
+console.log(iterator3)
+for (let key of iterator3) {
+    console.log(key)
+}
+
+// The map() method creates a new array with the results of calling a provided 
+// function on every element in the calling array. // The syntax is as follows: 
+//      var new_array = arr.map(function callback(currentValue[, index[, array]]) {
+//            // Return element for new_array
+//      }[, thisArg])
+
+const arr19 = [1,2,3,4,5];
+console.log(arr19.map(squareRoot))
+console.log(arr19.map(x => {return x*2}))
+
+// The reduce() method executes a reducer function (that you provide) on each 
+// element of the array, resulting in a single output value. The syntax is as follows:
+//     arr.reduce(callback(accumulator, currentValue[, index[, array]])[, initialValue])
+// where the accumulator accumulates the callback's return values, 
+
+// ******* NEED MORE REVIEW TIME FOR THIS METHOD *************
+console.log(arr19.reduce((element, accumulator, currentValue, index) => {return element + accumulator},0))
+
+// The reduceRight() method applies a function against an accumulator and each value 
+// of the array (from right-to-left) to reduce it to a single value.
+
+// SKIPPING FOR NOW
+
+// The some() method tests whether at least one element in the array passes the test 
+// implemented by the provided function. It returns a Boolean value. The syntax is as follows:
+//          arr.some(callback(element[, index[, array]])[, thisArg])
+
+const arr20 = [21,23,25];
+const arr21 = [2,4,6]
+console.log(arr20.some(checkIfEven))
+console.log(arr21.some(checkIfEven))
+
+// The values() method returns a new Array Iterator object that contains the values 
+// for each index in the array.
+
+const iterator4 = arr20.values();
+console.log(iterator4)
+
+for (const value of iterator4) {
+    console.log(value)
+}
