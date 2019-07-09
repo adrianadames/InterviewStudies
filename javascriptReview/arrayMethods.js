@@ -110,6 +110,78 @@ console.log(arr6)
 // ACCESSOR METHODS: These methods do not modify the array and return some 
 // representation of the array.
 
+// The concat() method is used to merge two or more arrays. This method does
+// not change the existing arrays, but instead returns a new array.
+
+// If all valueN parameters are omitted, concat returns a shallow copy of 
+// the existing array on which it is called.
+
+const arr7 = ['a','b','c']
+const arr8 = ['x', 'y', 'z']
+console.log(arr7.concat())
+console.log(arr7.concat(arr8))
+console.log(arr7.concat(1,2,3,4,5))
+
+// The includes() method determines whether an array includes a certain value
+// among its entries, returning true or false as appropriate. The syntax is as 
+// follows: 
+//             arr.includes(valueToFind[, fromIndex(OPTIONAL)])
+// where fromIndex is the index at which to start searching for the value. Defaults
+// to zero if ommitted. 
+
+console.log(arr7.includes('a'))
+console.log(arr7.includes('d'))
+console.log(arr7.includes('a',1))
+
+// The indexOf() method returns the first index at which a given element can be 
+// found in the array, or -1 if it is not present. The syntax is as follows: 
+//             arr.indexOf(searchElement[, fromIndex(OPTIONAL)])
+
+const arr9 = ['apple', 'orange', 'cucumber'];
+console.log(arr9.indexOf('apple'))
+console.log(arr9.indexOf('apple',1))
+
+// The join() method creates and returns a new string by concatenating all of the
+// elements in an array (or an array-like object), separated by commas or a specified
+// separator string. If the array has only one item, then that item will be returned 
+// without using the separator. The syntax is as follows:
+//             arr.join([separator(OPTIONAL)])
+// where the seperator parameter specifies the string to seperate each pair of adjacent
+// elements of the array. If ommitted, the default will be a comma ','. 
+
+console.log(arr9.join())
+console.log(arr9.join(''))
+console.log(arr9.join(' seperator '))
+
+// The lastIndexOf() method returns the last index at which a given element can be found
+// in the array, or -1 if it is not present. The array is searched backwards, starting at
+// fromIndex. The syntax is as follows:
+//             arr.lastIndexOf(searchElement[, fromIndex(OPTIONAL)])
+// where the default for fromIndex is arr.length-1 (i.e. whole array searched). Note that
+// even if fromIndex is negative, the array is still searched from the back to the front
+const arr10 = ['a', 'b', 'c', 'd', 'e', 'a', 'b']
+console.log(arr10.lastIndexOf('a'))
+console.log(arr10.lastIndexOf('a',4))
+console.log(arr10.lastIndexOf('ab'))
+
+// The slice() method returns a shallow copy of a portion of an array into a new array 
+// object selected from begin to end (end not included). The original array will not be
+// modified. The syntax is as follows:
+//             arr.slice([begin(OPTIONAL)[, end(OPTIONAL)]])
+
+console.log(arr10.slice())
+console.log(arr10.slice(1))
+console.log(arr10.slice(0,1))
+
+// The toString() method returns a string representing the specified array and its elements.
+
+const arr11 = [1, 2, 'a', '1a'];
+const arr12 = arr11.toString();
+console.log(arr12)
+console.log(arr12[0])
+console.log(arr12[1])
+
+
 // ITERATION METHODS: Several methods take as arguments functions to be called back 
 // while processing the array. When these methods are called, the length of the 
 // array is sampled, and any element added beyond this length from within the callback
