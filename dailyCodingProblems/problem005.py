@@ -47,3 +47,33 @@ def cdr(f):
 
 print(car(cons(3,4)))
 print(cdr(cons(3,4)))
+
+
+"""
+I also wrote the solution in javascript and it works. 
+function cons(a,b) {
+  function pair(f) {
+    return f(a,b)
+  }
+  return pair
+}
+
+function car(f) {
+  let return_first = function(a,b) {
+    return a
+  };
+  let first_element = f(return_first);
+  return first_element
+}
+
+function cdr(f) {
+  let return_last = function(a,b) {
+    return b
+  };
+  let last_element = f(return_last);
+  return last_element
+}
+
+console.log(car(cons(3,4)))
+console.log(cdr(cons(3,4)))
+"""
