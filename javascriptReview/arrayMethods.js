@@ -65,10 +65,28 @@ console.log(arr4)
 
 // The sort() method sorts the elements of an array in place and returns the sorted array. 
 // The default sort order is built upon converting the elements into strings, then 
-// comparing their sequences of UTF-16 code units values.
+// comparing their sequences of UTF-16 code units values. The syntax is as follows: 
+//             arr.sort([compareFunction(OPTIONAL)])
+// where compareFunction specifies a function that defines the sort order. If omitted, the array 
+// elements are converted to strings, then sorted according to each character's 
+// Unicode code point value. If compareFunction supplied, the elements are sorted according
+// to the return value of the compareFunction. If a and b are two elements being compared, then:
+//      -if compareFunction(a,b) < 0, sort a to an index lower than b (i.e. a comes before b)
+//      -if compareFunction(a,b) = 0, leave a and b unchanged with respect to each other, but sorted
+//      with restpect to all different elements
+//      -if compareFunction(a,b) > 0, sort b to an index lower than a (i.e. b comes before a)
+
+
 
 const arr5 = ['aaa', 'aa', 'a', 'bbb', 'bb', 'b', 'ccc', 'cc', 'c']
 console.log(arr5.sort())
+
+let compareFunction1 = (a,b) => {
+    return a - b
+}
+const arr51 = [0, 3, 5, 6, 1, 191, 34, 12];
+console.log(arr51.sort(compareFunction1))
+
 
 // The splice() method changes the contents of an array by removing or replacing existing 
 // elements and/or adding new elements in place. The syntax is as follows: 
