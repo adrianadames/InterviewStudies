@@ -26,3 +26,46 @@ Guaranteed constraints:
 Sorted array a with all the trees untouched.
 
 */
+
+// Off the top, my guess is to record the ith position of every tree. and push in negative 1 in the output array
+// whenever that index comes up. 
+
+// To record position of ith element in the array, I'll use an object with index as key and value as value. 
+
+function sortByHeight(arr) {
+    let arrCopy = arr.slice();
+    let indexedValues = {};
+
+    for (let i = 0; i < arrCopy.length; i++) {
+        indexedValues[i] = arrCopy[i]
+    }
+    // console.log(indexedValues)
+    function sortFunction(a,b) {
+        return a-b
+    }
+
+    function checkIfNegative(element) {
+        return element !== -1
+    }
+    arrCopyPositiveValues = arrCopy.filter(checkIfNegative).sort(sortFunction);
+    // console.log(arrCopyPositiveValues);
+
+    let outputArray = [];
+    for (let i = 0; i < arr.length;i++) {
+        if (indexedValues[i] === -1) {
+            outputArray.push(-1);
+        }
+        else {
+            outputArray.push(arrCopyPositiveValues.shift());
+        }
+    }
+    console.log('inputArray: ', arr);
+    console.log('outputArray: ', outputArray);
+    return outputArray
+}
+
+// big O? n*log(n) (where n = inputArray.length) because of the use of the sort array method
+
+arr1 = [-1, 150, 190, 170, -1, -1, 160, 180]
+
+sortByHeight(arr1)
