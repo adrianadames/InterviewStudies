@@ -28,7 +28,6 @@ class Stack {
     }
 }
 
-
 class BinarySearchTree {
     constructor(value) {
         this.value = value;
@@ -105,13 +104,6 @@ class BinarySearchTree {
     getMax() {}
 
     contains() {}
-
-    
-
-    
-
-    
-
 }
 
 bst1 = new BinarySearchTree(10);
