@@ -22,3 +22,57 @@ Methods:
 
 NOTE: 
 */
+
+class Queue {
+    constructor() {
+        this.queue = [];
+        this.size = 0;
+    }
+
+    enqueue(item) {
+        if (item === null) {
+            return Error('The item passed into this function must be a non-null value.')
+        } else if (item === undefined) {
+            return Error('The item passed into the function is undefined.')
+        } else {
+            this.queue.push(item);
+            this.size = this.queue.length;
+        } 
+    }
+
+    dequeue() {
+        if (this.queue.length < 1) {
+            return 'queue is empty'
+        } else {
+            this.queue.shift();
+            this.size = this.queue.length;
+        }
+    }
+}
+
+class Stack {
+    constructor() {
+        this.stack = [];
+        this.size = 0;
+    }
+
+    push(item) {
+        if (item === null) {
+            return Error('The item passed into this function must be a non-null value.')
+        } else if (item === undefined) {
+            return Error('The item passed into the function is undefined.')
+        } else {
+            this.stack.push(item);
+            this.size = this.stack.length;
+        } 
+    }
+
+    pop() {
+        if (this.stack.length < 1) {
+            return 'stack is empty'
+        } else {
+            this.stack.pop();
+            this.size = this.stack.length;
+        }
+    } 
+}
