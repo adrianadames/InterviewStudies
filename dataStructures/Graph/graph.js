@@ -103,8 +103,9 @@ class Graph {
 
     addEdge(v1_id, v2_id) {
         if (this.vertices[v1_id] && this.vertices[v2_id]) {
-            this.vertices[v1_id].edges.push(v2_id);
-            this.vertices[v2_id].edges.push(v1_id);
+            this.vertices[v1_id].edges.add(v2_id);
+            this.vertices[v2_id].edges.add(v1_id);
+            // console.log('this.vertices[v1_id].edges: ', this.vertices[v1_id].edges)
         } else {
             return ReferenceError('v1 or v2 is not a vertex in this graph')
         }
@@ -112,28 +113,59 @@ class Graph {
    
     addDirectedEdge(v1_id, v2_id) {
         if (this.vertices[v1_id] && this.vertices[v2_id]) {
-            this.vertices[v1_id].edges.push(v2_id);
+            this.vertices[v1_id].edges.add(v2_id);
         } else {
             return ReferenceError('v1 or v2 is not a vertex in this graph')
         }
     }
 
+    dftRecursive(start_vert_id, visited = []) {
+        // 1) push start_vert to visited
+        // 2) for each start_vert edge, if it hasn't been visited, run dftRecursive on that
+
+        visited.push(start_vert_id);
+
+        for (let edge of this.vertices[start_vert_id].edges) {
+            if (!visited.includes(edge)) {
+                this.dftRecursive(edge, visited);
+            }
+        }
+        
+        return visited
+    } 
 
 
-    dftRecursive() {}
     dftStack() {}
-    dfsRecursive() {}
-    dfsStack() {}
+    dfsRecursive() {} //include path to target
+    dfsStack() {}   //include path to target
     bft() {}
-    bfs() {}
+    bfs() {} //include path to target
 
 }
 
 
-let v1 = new Vertex(3);
 
 let g1 = new Graph();
 
-console.log(v1,g1)
+function addTestVertices(graph) {
+    for (let i = 0; i<10;i++) {
+        graph.addVertex(i);
+    }
+}
 
-console.log(g1.addEdge(v1))
+addTestVertices(g1);
+// console.log(g1);
+
+
+g1.addEdge(0,1);
+g1.addEdge(0,3);
+g1.addEdge(1,2);
+g1.addEdge(2,5);
+g1.addEdge(2,4);
+g1.addEdge(4,9);
+g1.addEdge(3,7);
+g1.addEdge(3,6);
+g1.addEdge(7,9);
+
+console.log(g1.dftRecursive(0))
+// console.log(g1);
