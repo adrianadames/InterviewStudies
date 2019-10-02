@@ -11,7 +11,7 @@ QQQQQQQQ: Should the stack be of a fixed size n, or is my implementation good as
 
 class Stack {
     constructor() {
-        this.stack = [];
+        this.items = [];
         this.size = 0;
     }
 
@@ -21,17 +21,17 @@ class Stack {
         } else if (item === undefined) {
             return Error('The item passed into the function is undefined.')
         } else {
-            this.stack.push(item);
-            this.size = this.stack.length;
+            this.items.push(item);
+            this.size = this.items.length;
         } 
     }
 
     pop() {
-        if (this.stack.length < 1) {
+        if (this.items.length < 1) {
             return 'stack is empty'
         } else {
-            this.stack.pop();
-            this.size = this.stack.length;
+            this.size = this.items.length-1;
+            return this.items.pop();
         }
     } 
 }
@@ -61,24 +61,24 @@ class Stack {
 // console.log('s1: ', s1); // Stack { stack: [ 2, 3, 5, 7, 17 ], size: 5 }
 
 
-// // // POP tests
-// // test #1
-// let s1 = new Stack;
-// s1.push(2);
-// s1.push(3);
-// s1.push(5);
-// s1.push(7);
-// s1.push(11);
-// s1.push(13);
-// s1.push(17);
-// console.log('s1: ', s1)
-// s1.pop();
-// console.log('s1: ', s1)
-// s1.pop();
-// console.log('s1: ', s1)
-// s1.pop();
-// console.log('s1: ', s1)
-// s1.pop();
+// // POP tests
+// test #1
+let s1 = new Stack;
+s1.push(2);
+s1.push(3);
+s1.push(5);
+s1.push(7);
+s1.push(11);
+s1.push(13);
+s1.push(17);
+console.log('s1: ', s1)
+s1.pop();
+console.log('s1: ', s1)
+s1.pop();
+console.log('s1: ', s1)
+s1.pop();
+console.log('s1: ', s1)
+s1.pop();
 
 // // test #2
 // let s1 = new Stack;

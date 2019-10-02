@@ -10,7 +10,7 @@ Methods:
 
 class Queue {
     constructor() {
-        this.queue = [];
+        this.items = [];
         this.size = 0;
     }
 
@@ -20,17 +20,17 @@ class Queue {
         } else if (item === undefined) {
             return Error('The item passed into the function is undefined.')
         } else {
-            this.queue.push(item);
-            this.size = this.queue.length;
+            this.items.push(item);
+            this.size = this.items.length;
         } 
     }
 
     dequeue() {
-        if (this.queue.length < 1) {
+        if (this.items.length < 1) {
             return 'queue is empty'
         } else {
-            this.queue.shift();
-            this.size = this.queue.length;
+            this.items.shift();
+            this.size = this.items.length;
         }
     }
 }

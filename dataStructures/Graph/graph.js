@@ -25,7 +25,7 @@ NOTE:
 
 class Queue {
     constructor() {
-        this.queue = [];
+        this.items = [];
         this.size = 0;
     }
 
@@ -35,24 +35,24 @@ class Queue {
         } else if (item === undefined) {
             return Error('The item passed into the function is undefined.')
         } else {
-            this.queue.push(item);
-            this.size = this.queue.length;
+            this.items.push(item);
+            this.size = this.items.length;
         } 
     }
 
     dequeue() {
-        if (this.queue.length < 1) {
+        if (this.items.length < 1) {
             return 'queue is empty'
         } else {
-            this.queue.shift();
-            this.size = this.queue.length;
+            this.items.shift();
+            this.size = this.items.length;
         }
     }
 }
 
 class Stack {
     constructor() {
-        this.stack = [];
+        this.items = [];
         this.size = 0;
     }
 
@@ -62,17 +62,17 @@ class Stack {
         } else if (item === undefined) {
             return Error('The item passed into the function is undefined.')
         } else {
-            this.stack.push(item);
-            this.size = this.stack.length;
+            this.items.push(item);
+            this.size = this.items.length;
         } 
     }
 
     pop() {
-        if (this.stack.length < 1) {
+        if (this.items.length < 1) {
             return 'stack is empty'
         } else {
-            this.stack.pop();
-            this.size = this.stack.length;
+            this.size = this.items.length-1;
+            return this.items.pop();
         }
     } 
 }
@@ -130,12 +130,27 @@ class Graph {
                 this.dftRecursive(edge, visited);
             }
         }
-        
         return visited
     } 
 
+    dftStack(start_vert_id) {
+        let visited = [];
+        let stack = new Stack();
 
-    dftStack() {}
+        stack.push(start_vert_id);
+
+        while (stack.size > 0) {
+            let currentVertId = stack.pop();
+            if (!visited.includes(currentVertId)) {
+                for (let edge of this.vertices[currentVertId].edges) {
+                    stack.push(edge);    
+                }
+                visited.push(currentVertId); 
+            }
+        }
+        return visited
+    }
+
     dfsRecursive() {} //include path to target
     dfsStack() {}   //include path to target
     bft() {}
@@ -167,5 +182,6 @@ g1.addEdge(3,7);
 g1.addEdge(3,6);
 g1.addEdge(7,9);
 
-console.log(g1.dftRecursive(0))
-// console.log(g1);
+// console.log(g1.dftRecursive(0))
+console.log(g1.dftStack(0))
+
