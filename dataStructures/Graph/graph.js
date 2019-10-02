@@ -96,7 +96,7 @@ class Graph {
     constructor(vertices = {}) {
         this.vertices = vertices;
     }
-    
+  
     addVertex(vertex_id) {
         this.vertices[vertex_id] = new Vertex(vertex_id);
     }
@@ -151,10 +151,10 @@ class Graph {
         return visited
     }
 
-    dfsRecursive() {} //include path to target
-    dfsStack() {}   //include path to target
+    dfsRecursivePath() {} //include path to target
+    dfsStackPath() {}   //include path to target
     bft() {}
-    bfs() {} //include path to target
+    bfsPath() {} //include path to target
 
 }
 
