@@ -29,8 +29,8 @@ class Queue {
         if (this.items.length < 1) {
             return 'queue is empty'
         } else {
-            this.items.shift();
-            this.size = this.items.length;
+            this.size = this.items.length -1;
+            return this.items.shift();
         }
     }
 }

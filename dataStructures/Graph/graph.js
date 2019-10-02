@@ -44,8 +44,8 @@ class Queue {
         if (this.items.length < 1) {
             return 'queue is empty'
         } else {
-            this.items.shift();
-            this.size = this.items.length;
+            this.size = this.items.length -1;
+            return this.items.shift();
         }
     }
 }
@@ -186,7 +186,26 @@ class Graph {
         return null
     }
     
-    bft() {}
+    bft(start_vert_id) {
+        let visited = [];
+        let queue = new Queue();
+        queue.enqueue(start_vert_id);
+        
+        while (queue.size>0) {
+            let currentVertId = queue.dequeue();
+            if (!visited.includes(currentVertId)) {
+                visited.push(currentVertId)
+                for (let edge of this.vertices[currentVertId].edges) {
+                    queue.enqueue(edge)
+                }
+            }
+        }
+        return visited
+    }
+
+
+
+
     bfsPath() {} 
 
 }
@@ -218,4 +237,4 @@ g1.addEdge(7,9);
 // console.log(g1.dftRecursive(0))
 // console.log(g1.dftStack(0))
 
-console.log(g1.dfsRecursivePath(0,7))
+console.log(g1.bft(0,7))
