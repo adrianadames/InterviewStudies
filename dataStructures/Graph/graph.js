@@ -15,10 +15,10 @@ Methods:
 -addDirectedEdge
 -dftRecursive
 -dftStack
--dfsRecursive
--dfsStack
+-dfsRecursivePath
+-dfsStackPath
 -bft
--bfs
+-bfsPath
 
 NOTE: 
 */
@@ -151,7 +151,7 @@ class Graph {
         path.push(start_vert_id);
 
         if (start_vert_id === target_vert_id) {
-            console.log('visited: ', visited)
+            console.log('visited: ', visited);
             return path // OR return visited??????????
         }
         for (let edge of this.vertices[start_vert_id].edges) {
@@ -194,22 +194,43 @@ class Graph {
         while (queue.size>0) {
             let currentVertId = queue.dequeue();
             if (!visited.includes(currentVertId)) {
-                visited.push(currentVertId)
+                visited.push(currentVertId);
                 for (let edge of this.vertices[currentVertId].edges) {
-                    queue.enqueue(edge)
+                    queue.enqueue(edge);
                 }
             }
         }
         return visited
     }
 
+    bfsPath(start_vert_id, target_vert_id) {
+        let visited = []
+        let queue = new Queue();
+        queue.enqueue([start_vert_id]);
 
+        while (queue.size>0) {
+            let dequeuedPath = queue.dequeue();
+            // console.log('dequeuedPath: ', dequeuedPath);
+            let dequeuedVertId = dequeuedPath[dequeuedPath.length-1];
 
-
-    bfsPath() {} 
-
+            if (!visited.includes(dequeuedVertId)) {
+                if (dequeuedVertId === target_vert_id) {
+                    let visitedVertices = visited.slice();
+                    visitedVertices.push(dequeuedVertId); 
+                    console.log('visitedVertices: ', visitedVertices);
+                    return dequeuedPath
+                } 
+                visited.push(dequeuedVertId);
+                for (let edge of this.vertices[dequeuedVertId].edges) {
+                    let newPath = dequeuedPath.slicbfe();
+                    newPath.push(edge);
+                    queue.enqueue(newPath);
+                }
+            }
+        }
+        return null
+    } 
 }
-
 
 
 let g1 = new Graph();
@@ -221,8 +242,6 @@ function addTestVertices(graph) {
 }
 
 addTestVertices(g1);
-// console.log(g1);
-
 
 g1.addEdge(0,1);
 g1.addEdge(0,3);
@@ -237,4 +256,4 @@ g1.addEdge(7,9);
 // console.log(g1.dftRecursive(0))
 // console.log(g1.dftStack(0))
 
-console.log(g1.bft(0,7))
+console.log(g1.bfsPath(0,7))
