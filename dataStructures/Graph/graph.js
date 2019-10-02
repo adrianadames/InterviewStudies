@@ -77,11 +77,6 @@ class Stack {
     } 
 }
 
-
-
-//when we did it in python, we had the graph represented by a dictionary of all the vertices in the graph
-// the vertices had their own data structure. one of the vertices' properties was edges, 
-
 class Vertex {
     constructor(vertex_id, value = null, color = "white") {
         this.id = vertex_id;  //unique id for each vertex
@@ -105,7 +100,6 @@ class Graph {
         if (this.vertices[v1_id] && this.vertices[v2_id]) {
             this.vertices[v1_id].edges.add(v2_id);
             this.vertices[v2_id].edges.add(v1_id);
-            // console.log('this.vertices[v1_id].edges: ', this.vertices[v1_id].edges)
         } else {
             return ReferenceError('v1 or v2 is not a vertex in this graph')
         }
@@ -136,7 +130,6 @@ class Graph {
     dftStack(start_vert_id) {
         let visited = [];
         let stack = new Stack();
-
         stack.push(start_vert_id);
 
         while (stack.size > 0) {
@@ -151,12 +144,15 @@ class Graph {
         return visited
     }
 
+    // QQQQQQQQQQQQQQQ: Do I need to use path as a parameter for this algorithm? Does visited on its own suffice?
+    // I'm getting the same answer either way. Will revisit at a later time. 
     dfsRecursivePath(start_vert_id, target_vert_id, visited = [], path = []) {
         visited.push(start_vert_id);
         path.push(start_vert_id);
 
         if (start_vert_id === target_vert_id) {
-            return path
+            console.log('visited: ', visited)
+            return path // OR return visited??????????
         }
         for (let edge of this.vertices[start_vert_id].edges) {
             if (!visited.includes(edge)) {
@@ -169,10 +165,29 @@ class Graph {
         return null        
     } 
 
+    // QQQQQQQQQQQQQQQ: Do I need to use path as a parameter for this algorithm? I don't think so. 
+    dfsStackPath(start_vert_id, target_vert_id) {
+        let stack = new Stack();
+        let visited = [];
+        stack.push(start_vert_id);
 
-    dfsStackPath() {}   //include path to target
+        while (stack.size>0) {
+            let currentVertId = stack.pop();
+            if (!visited.includes(currentVertId)) {
+                visited.push(currentVertId);
+                if (currentVertId === target_vert_id) {
+                    return visited
+                }
+                for (let edge of this.vertices[currentVertId].edges) {
+                    stack.push(edge);
+                }
+            }
+        }
+        return null
+    }
+    
     bft() {}
-    bfsPath() {} //include path to target
+    bfsPath() {} 
 
 }
 
