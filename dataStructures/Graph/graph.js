@@ -232,7 +232,7 @@ class Graph {
     } 
 }
 
-
+// NOTE!!!!!!!!! Still need to validate various bft/dft methods on graphs with directed edges. 
 let g1 = new Graph();
 
 function addTestVertices(graph) {
