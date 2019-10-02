@@ -151,7 +151,25 @@ class Graph {
         return visited
     }
 
-    dfsRecursivePath() {} //include path to target
+    dfsRecursivePath(start_vert_id, target_vert_id, visited = [], path = []) {
+        visited.push(start_vert_id);
+        path.push(start_vert_id);
+
+        if (start_vert_id === target_vert_id) {
+            return path
+        }
+        for (let edge of this.vertices[start_vert_id].edges) {
+            if (!visited.includes(edge)) {
+                let newPath = this.dfsRecursivePath(edge, target_vert_id, visited, path);
+                if (newPath) {
+                    return newPath
+                }
+            }
+        }
+        return null        
+    } 
+
+
     dfsStackPath() {}   //include path to target
     bft() {}
     bfsPath() {} //include path to target
@@ -183,5 +201,6 @@ g1.addEdge(3,6);
 g1.addEdge(7,9);
 
 // console.log(g1.dftRecursive(0))
-console.log(g1.dftStack(0))
+// console.log(g1.dftStack(0))
 
+console.log(g1.dfsRecursivePath(0,7))
