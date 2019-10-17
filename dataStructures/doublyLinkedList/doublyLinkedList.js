@@ -1,6 +1,7 @@
 /*
 NOTE: 
 -See chapter 10 in Cormen and chapter 7 (Linked Lists) in Goodrich. 
+-Need to look up common methods for linked lists in case there are some I'm unware of
 
 Methods: 
 -addToTail
