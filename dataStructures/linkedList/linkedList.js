@@ -3,6 +3,7 @@ NOTE:
 -See chapter 10 in Cormen and chapter 7 (Linked Lists) in Goodrich. 
 
 Methods: 
+DONE: 
 -addToTail (replaces the tail with a new value that is passed in)
 -removeHead (deletes head)
 -addNewHead (puts a new head node in front of the current head)
@@ -11,6 +12,7 @@ Methods:
 -removeFirstNodeWithValue(x) (delete first encountered node that has a value of x)
 -removeAllNodesWithValue(x) (delete all nodes with a value of x)
 
+NOT DONE: 
 -containsSequence (?)
 -removeSequence (?)
 -reverse (-Reverse a singly linked list)
