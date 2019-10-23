@@ -1,9 +1,15 @@
 /*
-Good morning! Write a "First In, Last Out" Stack class. Do not modify the Stack class's constructor, or it's length "getter" method.
+Good morning! Write a "First In, Last Out" Stack class. Do not modify the 
+Stack class's constructor, or it's length "getter" method.
 
-Once you're done with the F.I.L.O. Stack class, implement a "First In, First Out" Queue class using two of your stacks.
+Once you're done with the F.I.L.O. Stack class, implement a "First In, 
+First Out" Queue class using two of your stacks.
 
-The "queue" data structure is like customers waiting in line at the grocery store. Each customer gets in line, or "enqueue"s. Customers are served in the order they joined the line - "first come, first serve." When they are done paying for their groceries they "dequeue" from the cashier's line.
+The "queue" data structure is like customers waiting in line at the 
+grocery store. Each customer gets in line, or "enqueue"s. Customers 
+are served in the order they joined the line - "first come, first 
+serve." When they are done paying for their groceries they "dequeue"
+from the cashier's line.
 
 Here's how you can check if your code works:
 const stack = new Stack();
