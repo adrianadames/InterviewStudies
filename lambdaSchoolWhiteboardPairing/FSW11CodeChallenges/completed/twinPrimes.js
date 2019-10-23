@@ -15,3 +15,30 @@ which is a prime, so it returns true.
 23 is a prime, but 23 + 2 is 25, which is not a prime.  23 - 2 is 21, 
 which isn't a prime either, so 23 is not a twin prime.
 */
+
+function isTwinPrime(int) {
+
+    let isPrime = (int) => {
+        let x = 2;
+        while (int % x > 0) {
+            let y = Math.floor(int/x);
+            if (x >= y) {
+                return true
+            } else {
+                x++;
+            }
+        }
+        return false
+    }
+
+    if (isPrime(int) === true && (isPrime(int+2) === true || isPrime(int-2) === true)) {
+        return true
+    } else {
+        return false
+    }
+}
+
+console.log(isTwinPrime(5));
+console.log(isTwinPrime(9));
+console.log(isTwinPrime(7));
+console.log(isTwinPrime(23));
