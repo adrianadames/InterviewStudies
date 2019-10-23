@@ -32,34 +32,48 @@ class Stack {
     this.storage = [];
   }
 
+  // note: both approaches have same desired FILO behavior, but the order of storage at any given time
+  // is different depending on which of the approaches below are used. Approach II gives you the stack.storage()
+  // example test case value that came with the problem statement.
   add(item) {
-    this.storage.unshift(item);
+    // //Approach I
+    // this.storage.unshift(item); //adds to beginning of storage array and returns new length of array
 
+    //Approach II
+    this.storage.push(item);
   }
 
   remove() {
-  this.storage.pop();
+    // //Approach I
+    // return this.storage.shift(); //removes and returns first element from array
+
+    //Approach II
+    return this.storage.pop(); // removes and returns last element from storage array
   }
 
   get length() {
-    return this.storage.length;
+    return this.storage.length; //The get syntax binds an object property to a function that will be called when that property is looked up
   }
 }
 
 class Queue {
   constructor() {
-    this.storage= [];
+    // this.storage= []; <-- came with problem statement
+    this.stack1 = new Stack();
+    this.stack2 = new Stack();
+    this.storage = [this.stack1.storage]
   }
 
   enqueue(item) {
-    this.storage.push(item);
+    // this.storage.push(item); <-- came with problem statement
+    this.stack1.add(item);
   }
 
   dequeue() {
-    if (this.storage.length > 0) {
-      this.storage.shift();
+    while (this.stack1.length>0) {
+      this.stack2.add(this.stack1.remove());
     }
-
+    return this.stack2.remove()
   }
 }
 
@@ -68,7 +82,7 @@ const stack = new Stack();
 console.log(stack.length);  // <--- 0
 stack.add('first'); stack.add('second'); stack.add('third');
 console.log(stack.length);  // <--- 3
-console.log(stack.storage); // <--- [ 'first', 'second', 'third' ]
+console.log(stack.storage); // <--- [ 'first', 'second', 'third' ]  
 console.log('FILO Stack:', stack.remove(), stack.remove(), stack.remove()); // <--- FILO: third second first
 
 const queue = new Queue();
