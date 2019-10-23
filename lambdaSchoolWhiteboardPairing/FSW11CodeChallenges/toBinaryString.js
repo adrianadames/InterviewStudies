@@ -27,3 +27,7 @@ Count from 0 to 31 in binary with one hand: https://youtu.be/Bke95oWWZII
 
 Remainder division with the modulo operator %
 */
+
+function toBinaryString(int) {
+    // Math.pow(x, y) returns the value of x to the power of y
+}
