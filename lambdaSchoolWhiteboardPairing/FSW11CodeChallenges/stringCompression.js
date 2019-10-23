@@ -1,11 +1,13 @@
 /*
-Write a function called getProduct that gets the product of all the integers at the array EXCEPT the one at that index.
+Good morning! Implement a method to perform basic 
+string compression using the counts of repeated characters.
 
-For example, given [1, 9, 6, 5, 2] your function should return [540, 60, 90, 108,  270], because the calculation looks like this:
+For example, the string  'aabcccccaaa' would become a2b1c5a3.
 
-[9 * 6 * 5 * 2, 1 * 6 * 5 * 2, 1 * 9 * 5 * 2, 1 * 9 * 6 * 5].
+If the "compressed" string would not become smaller than the 
+original string, then your method should return the original 
+string.
 
-Edge cases:
-No division, as some arrays may include 0.
-Target time: O(n).
+You can assume the string has only uppercase and lowercase 
+letters (a - z).
 */
