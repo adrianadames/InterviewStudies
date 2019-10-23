@@ -63,6 +63,7 @@ class DoublyLinkedList {
 
         node.next = null;
         node.prev = null;
+        return node
     }
 
     removeHead() {

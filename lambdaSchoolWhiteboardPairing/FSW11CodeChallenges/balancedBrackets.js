@@ -17,4 +17,10 @@ balancedBrackets('[](){}'); // true
 Step 3: ignore other characters
 
 balancedBrackets(' const obj  = { x: someFunction() }'); // true
+
+NOTE: To make this problem a little bit harder, also take into consideration the inclusion of || as 
+one of the possible pairs of balanced brackets. Unlike the other brackets, the same symbol represents 
+the closing and opening bracket. 
+
+Basically, the problem statement is, given a string, check if the brackets are matching. 
 */
