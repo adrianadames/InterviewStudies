@@ -76,18 +76,26 @@ class DoublyLinkedList {
     }
 }
 
+// Methods To Test: 
+// -addToTail
+// -addNewHead
+// -removeHead 
 
+
+//// TESTS 
 let d1 = new DoublyLinkedList();
-let n1 = new Node(2);
-let n2 = new Node(3);
-// d1.insertBetween(8, d1.headerSentinel, d1.trailerSentinel);
-// d1.addNewHead(n1);
-// d1.addNewHead(n2);
-d1.addToTail(2);
-// console.log('d1: ', d1.trailerSentinel.prev)
-d1.addToTail(3);
-// console.log('d1: ', d1.trailerSentinel.prev)
-console.log('d1: ', d1.headerSentinel.next)
-d1.removeHead(d1);
-// d1.removeHead(d1);
-console.log('d1: ', d1.headerSentinel.next)
+d1.addNewHead(2);
+console.log('d1 head: ', d1.headerSentinel.next)
+d1.addNewHead(3);
+console.log('d1 head: ', d1.headerSentinel.next)
+d1.removeHead();
+console.log('d1 head: ', d1.headerSentinel.next) //expect head to be 2 but get 3
+
+
+let d2 = new DoublyLinkedList();
+d2.addToTail(2);
+console.log('d2: ', d2.trailerSentinel.prev)
+d2.addToTail(3);
+console.log('d2: ', d2.trailerSentinel.prev)
+d2.removeHead();
+console.log('d2 head: ', d2.headerSentinel.next) //expect head to be 2 and get 2
