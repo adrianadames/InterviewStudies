@@ -74,3 +74,41 @@ console.log(smallestString("aaa", "aa1"))
 console.log(smallestString("123", "a"))
 console.log(smallestString("abc", "abc1"))
 console.log(smallestString("abc1", "abc10"))
+
+
+
+// NOTE: Just worked on the python version with interleaved numbers and letters
+
+// def splitStringIntoList(str):
+//   splitStr = [i for i in str]
+//   listWithNumbersCombined = []
+//   for i in splitStr:
+//     if (i.isdigit() and listWithNumbersCombined[len(listWithNumbersCombined)-1].isdigit()):
+//       listWithNumbersCombined[len(listWithNumbersCombined)-1]+= i 
+//     else:
+//       listWithNumbersCombined.append(i)
+//   return listWithNumbersCombined
+
+
+// # print(splitStringIntoList('hello123world1225')) 
+
+
+// def smallestString(str1,str2):
+//   splitString1 = splitStringIntoList(str1)
+//   splitString2 = splitStringIntoList(str2)
+//   lenOfSmallestList = 0;
+//   if ((len(splitString1) < len(splitString2))):
+//     lenOfSmallestList = len(splitString1)
+//   if ((len(splitString1) > len(splitString2))):
+//     lenOfSmallestList = len(splitString2)
+//   # else lenOfSmallestList = len(splitString2)
+//   # if (len(splitString1) < len(splitString2)):
+//   #   lenOfSmallestList = len(splitString1)  
+
+//   for i in range(lenOfSmallestList):
+//     if (splitString1[i] < splitString2[i]):
+//       return str1
+//     return str2
+
+
+// print(smallestString('hey', 'hey23123y'))
