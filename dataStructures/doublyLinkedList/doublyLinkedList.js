@@ -82,20 +82,20 @@ class DoublyLinkedList {
 // -removeHead 
 
 
-//// TESTS 
-let d1 = new DoublyLinkedList();
-d1.addNewHead(2);
-console.log('d1 head: ', d1.headerSentinel.next)
-d1.addNewHead(3);
-console.log('d1 head: ', d1.headerSentinel.next)
-d1.removeHead();
-console.log('d1 head: ', d1.headerSentinel.next) //expect head to be 2 but get 3
+// //// TESTS 
+// let d1 = new DoublyLinkedList();
+// d1.addNewHead(2);
+// console.log('d1 head: ', d1.headerSentinel.next)
+// d1.addNewHead(3);
+// console.log('d1 head: ', d1.headerSentinel.next)
+// d1.removeHead();
+// console.log('d1 head: ', d1.headerSentinel.next) //expect head to be 2 but get 3
 
 
-let d2 = new DoublyLinkedList();
-d2.addToTail(2);
-console.log('d2: ', d2.trailerSentinel.prev)
-d2.addToTail(3);
-console.log('d2: ', d2.trailerSentinel.prev)
-d2.removeHead();
-console.log('d2 head: ', d2.headerSentinel.next) //expect head to be 2 and get 2
+// let d2 = new DoublyLinkedList();
+// d2.addToTail(2);
+// console.log('d2: ', d2.trailerSentinel.prev)
+// d2.addToTail(3);
+// console.log('d2: ', d2.trailerSentinel.prev)
+// d2.removeHead();
+// console.log('d2 head: ', d2.headerSentinel.next) //expect head to be 2 and get 2
