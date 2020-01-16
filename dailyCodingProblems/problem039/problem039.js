@@ -26,6 +26,8 @@ with a dot (.).
 /// // // // NOTE: HOLDING OFF ON WORKING ON THIS UNTIL AFTER I GO THROUGH COUPLE GAME OF LIFE
 // // // // //     TUTORIALS. 
 
+// NOTE: Solution here for reference: https://leetcode.com/problems/game-of-life/solution/
+
 
 // function conwaysGame(xRange,yRange) {
 //     let boardCoords = [];
