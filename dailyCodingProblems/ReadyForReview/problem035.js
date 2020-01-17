@@ -16,14 +16,11 @@ become ['R', 'R', 'R', 'G', 'G', 'B', 'B'].
 // once they match, we move the start index to the second index and then move the end pointer one by one
 
 
+// NOTE: THE BELOW ONLY WORKS BECAUSE RGB is in reverse alphabetical order. If I wanted to order into 
+// RBGs THEN IT WOULND'T WORK!!!
+
 function orderIntoRGBs(arr) {
     let startIndex =-1;
-
-    let RGBVals = {
-        'R':0,
-        'G':1,
-        'B':2
-    };
 
     while (startIndex !== arr.length - 1) {
         startIndex += 1;
@@ -33,7 +30,7 @@ function orderIntoRGBs(arr) {
             let startVal = arr[startIndex];
             let endVal = arr[endIndex];
 
-            if (RGBVals[startVal] > RGBVals[endVal]) {
+            if (startVal < endVal) {
                 arr[startIndex] = endVal;
                 arr[endIndex] = startVal;
             }

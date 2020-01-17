@@ -4,6 +4,8 @@ This problem was asked by Dropbox.
 Given the root to a binary search tree, find the second largest node in the tree.
 */
 
+// NOTE: CURRENT SOLUTION DOESN"T WORK FOR CERTAIN BST. USE BST VISUALIZER
+// TOOL TO EXAMINE WHY. 
  
 
 // the largest node occurs when the node doesn't have a right hand side subtree
@@ -70,7 +72,6 @@ function secondLargestVal(bst) {
 
 
 
-
 // example tree
 let bst1 = new BST(10);
 // console.log(bst1.val)
@@ -78,13 +79,13 @@ let bst1 = new BST(10);
 bst1.insert(20);
 // console.log(bst1.right.val)
 
-bst1.insert(25);
-// console.log(bst1.right.right.val)
+// bst1.insert(25);
+// console.log(bst1.right.val)
 
 bst1.insert(13);
-// console.log(bst1.right.left.val)
+// console.log(bst1.right.left)
 
-bst1.insert(26);
+// bst1.insert(26);
  
 
 
