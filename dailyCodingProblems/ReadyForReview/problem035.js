@@ -41,10 +41,10 @@ function orderIntoRGBs(arr) {
         }
     }
     
-    console.log(arr)
+    // console.log(arr)
     return arr
 }
 
 const arr1 = ['G', 'B', 'R', 'R', 'B', 'R', 'G'];
 
-orderIntoRGBs(arr1)
+console.log(orderIntoRGBs(arr1));

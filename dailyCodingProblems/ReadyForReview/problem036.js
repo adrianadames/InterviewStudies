@@ -54,6 +54,22 @@ class BST {
     }
 }
 
+function secondLargestVal(bst) {
+    if (!bst.right) {
+        return bst.left
+    }
+    let largest = bst.right;
+    let secondLargest = bst;
+
+    if (largest.right === null) {
+        return secondLargest.val
+    } else {
+        return secondLargestVal(largest)
+    }
+} 
+
+
+
 
 // example tree
 let bst1 = new BST(10);
@@ -72,18 +88,5 @@ bst1.insert(26);
  
 
 
-function secondLargestVal(bst) {
-    if (!bst.right) {
-        return bst.left
-    }
-    let largest = bst.right;
-    let secondLargest = bst;
-
-    if (largest.right === null) {
-        return secondLargest.val
-    } else {
-        return secondLargestVal(largest)
-    }
-} 
 
 console.log(secondLargestVal(bst1))
