@@ -1,7 +1,8 @@
 /*
 This problem was asked by LinkedIn.
 
-Given a string, return whether it represents a number. Here are the different kinds of numbers:
+Given a string, return whether it represents a number. Here 
+are the different kinds of numbers:
 
 "10", a positive integer
 "-10", a negative integer
