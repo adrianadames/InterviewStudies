@@ -24,6 +24,12 @@ Apply knowledge:
 -Implement a queue with a singly linked list.
 */
 
+
+// NOTE: SOMETHING IS WRONG HERE I JUST DISCOVERED WHILE 
+// WORKNG ON DIFFERENT PROBLEM. THIS NOT WORKING IF I 
+// INITIALIZE list with let l1 = new LinkedList(n1). 
+// The addToTail WONT ADD TO TAIL!!!
+
 class Node {
     constructor(value = null, next) {
         this.value = value;
@@ -180,10 +186,7 @@ class LinkedList {
 
 }
 
-// NOTE: SOMETHING IS WRONG HERE I JUST DISCOVERED WHILE 
-// WORKNG ON DIFFERENT PROBLEM. THIS NOT WORKING IF I 
-// INITIALIZE list with let l1 = new LinkedList(n1). 
-// The addToTail WONT ADD TO TAIL!!!
+
 
 
 
