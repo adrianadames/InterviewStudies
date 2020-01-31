@@ -6,7 +6,8 @@ and return its head.
 
 For example, given 1 -> 2 -> 3 -> 4, return 2 -> 1 -> 4 -> 3.
 
-NOTE: THE APPROACH BELOW ISN'T WORKING. 
+NOTE: I eventually gave up and looked up solution. Solution is below, but
+I still don't understand it. Will come back to this at a later time. 
 */
 
 class Node {
