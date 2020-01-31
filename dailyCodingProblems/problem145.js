@@ -6,7 +6,7 @@ and return its head.
 
 For example, given 1 -> 2 -> 3 -> 4, return 2 -> 1 -> 4 -> 3.
 
-NOTE: THE APPROACH BELOW ISN'T WORKING. THINK SMARTER. 
+NOTE: THE APPROACH BELOW ISN'T WORKING. 
 */
 
 class Node {
@@ -16,47 +16,129 @@ class Node {
     }
 }
 
+
+function swapEveryTwoNodes(head) {
+    if (!head) {
+        return null
+    }
+
+    let curr = head;
+    let next = head.next;
+    let newHead = next;
+
+    let i = 0;
+    let j = 0;
+
+    while ( i < 2) {
+        // current node now points two nodes down
+        curr.next = next.next;
+
+        // node that curr node was originally pointing to, now points to the original node 
+        next.next = curr;
+
+        // curr node still refers to the original node we started with
+        // next node now refers to the node that the original pointer is pointing to now (the node two nodes down from where we started)
+        curr = curr;
+        next = curr.next;
+
+
+        //current node now points two nodes down
+        curr.next = next.next;
+
+
+        while (j < 2) {
+            curr = next;
+            next = curr.next;
+            
+            curr.next = next.next;
+            next.next = next.next.next;
+    
+            curr = curr.next;
+            curr.next = next;
+            
+            j+=1
+        }
+        i+=1
+
+        
+    }
+
+    return newHead
+    
+
+
+}
 let n1 = new Node(1);
 let n2 = new Node(2);
 let n3 = new Node(3);
 let n4 = new Node(4);
+let n5 = new Node(5);
+let n6 = new Node(6);
+let n7 = new Node(7);
+let n8 = new Node(8);
 
 // console.log(n1, n2)
 
 n1.next = n2;
 n2.next = n3;
 n3.next = n4;
+n4.next = n5;
+n5.next = n6;
+n6.next = n7;
+n7.next = n8
+// console.log(swapEveryTwoNodes(n1))
 
-console.log(n1.next)
 
-function swapEveryTwoNodes(head) {
-    let count = 0;
-    let currentNode = head;
-    let newHead = currentNode.next;
-    let temp1, temp2;
+let swappedLinkedList = swapEveryTwoNodes(n1)
 
-    while (count < 1) {
-        if (count % 2 === 0) {
-            temp1 = currentNode;
-            console.log('temp1: ', temp1);
-            temp2 = currentNode.next;
-            console.log('temp2: ', temp2);
-            console.log('temp2.next: ', temp2.next);
+console.log(swappedLinkedList.next)
+
+
+
+// console.log(n1.next.next.next)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// function swapEveryTwoNodes(head) {
+//     let count = 0;
+//     let currentNode = head;
+//     let newHead = currentNode.next;
+//     let temp1, temp2;
+
+//     while (count < 1) {
+//         if (count % 2 === 0) {
+//             temp1 = currentNode;
+//             console.log('temp1: ', temp1);
+//             temp2 = currentNode.next;
+//             console.log('temp2: ', temp2);
+//             console.log('temp2.next: ', temp2.next);
             
-            currentNode = temp2;
-            currentNode.next = temp1;
-            console.log('currentNode.next: ', currentNode.next);
-            currentNode.next.next = temp2.next;
-            console.log('currentNode.next.next: ', currentNode.next.next);
+//             currentNode = temp2;
+//             currentNode.next = temp1;
+//             console.log('currentNode.next: ', currentNode.next);
+//             currentNode.next.next = temp2.next;
+//             console.log('currentNode.next.next: ', currentNode.next.next);
 
-            count +=1;
-        } else {
-            count +=1;
-            currentNode = currentNode.next
-        }
-    }
+//             count +=1;
+//         } else {
+//             count +=1;
+//             currentNode = currentNode.next
+//         }
+//     }
 
-    return newHead
-}
+//     return newHead
+// }
 
-console.log(swapEveryTwoNodes(n1))
+// console.log(swapEveryTwoNodes(n1))
