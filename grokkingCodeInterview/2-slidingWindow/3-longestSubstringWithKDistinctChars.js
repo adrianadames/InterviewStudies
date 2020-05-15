@@ -30,63 +30,50 @@ function longestSubstringWithKDistinctChars(str,K) {
     let windowEnd = 0; 
     
     // initialize substring to analyze
-    let substring = str[0];
-    let substringLength = 1;
-    let longestSubstringLength = 1; 
+    let substringLength = 0;
+    let longestSubstringLength = 0; 
 
-    // establish set that will store up to K distinct chars
-    let distinctChars = new Set(str[0]); // property: size, methods: add(value), delete(value), has(value)
+    let distinctCharsTracker = new Object();
 
-    while (windowEnd < str.length -1) {
-        // if we have reached max number of distinct chars in the substring we're analyzing, 
-        if (distinctChars.size >= K) {
-            // if the next character is NOT distinct, then add it to the substring window we're analyzing
-            if (distinctChars.has(str[windowEnd+1])) {
-                substringLength +=1;
-                console.log('substringLength= ', substringLength)
-                windowEnd +=1;
-                if (substringLength > longestSubstringLength) {
-                    longestSubstringLength = substringLength;
-                }
-            } 
-            // if the next character is distinct, we make window smaller from the front - removing the
-            // element from the front
-            else {
-                distinctChars.delete(str[windowStart]);
-                windowStart += 1; 
-                substringLength -=1;
-                console.log('substringLength= ', substringLength)
-            }
-        } 
-        // if we haven't reached max number of distinct chars in the substring, make window bigger from the end
-        else {
+    while (windowEnd < str.length) {
+
+        //does the letter we're considering have an entry in our tracker?
+        if (distinctCharsTracker[str[windowEnd]]) {
+            // if yes, then add plus one to its value in the tracker and expand the window
+            // console.log('letter currently in tracker: ', str[windowEnd]);
+            distinctCharsTracker[str[windowEnd]] += 1;
             windowEnd +=1;
-            substringLength +=1;            
-            console.log('substringLength= ', substringLength)
+            substringLength +=1;
+            // console.log('substringLength3 = ', substringLength);
             if (substringLength > longestSubstringLength) {
                 longestSubstringLength = substringLength;
             }
-            distinctChars.add(str[windowEnd]);
-            console.log('distinctChars= ', distinctChars);
+        } else {
+            if (Object.entries(distinctCharsTracker).length < K) {
+                distinctCharsTracker[str[windowEnd]] =1;
+                // console.log('distinctCharsTracker1= ', distinctCharsTracker);
+                windowEnd += 1; 
+                substringLength +=1;
+                // console.log('substringLength1 = ', substringLength);
+                if (substringLength > longestSubstringLength) {
+                    longestSubstringLength = substringLength;
+                }
+            } else {
+                distinctCharsTracker[str[windowStart]] -=1;
+                // console.log('distinctCharsTracker2= ', distinctCharsTracker);
+                if (distinctCharsTracker[str[windowStart]] === 0) {
+                    delete distinctCharsTracker[str[windowStart]];
+                }
+                substringLength -=1;
+                windowStart +=1;  
+            }
         }
     }
-
     return longestSubstringLength
 }
 
-// console.log(longestSubstringWithKDistinctChars('araaci', 2)) // returns 4
-// console.log(longestSubstringWithKDistinctChars('araaci', 1)) // returns 2
-// console.log(longestSubstringWithKDistinctChars('cbbebi', 3)) // returns 5
 
-
-
-console.log(longestSubstringWithKDistinctChars('cbbebibccci', 2))
-// -this example here catches a problem
-// -at the point where our substring is 'bbeb', substring length is 4, and the letters in distinct
-// chars set are 'b' and 'e' 
-// -once we look to the next letter, we see that it's distinct (the letter 'i'), which means we shift
-// window from the front, leaving us with 'beb'
-// -the problem is that in the code above, i have removed 'b' from the distinct letters list; it 
-// should still be there...
-// -the algorithm should instead continue to shift the window over until the number of unique letters is < K, 
-// reducing the length of the current substring
+console.log(longestSubstringWithKDistinctChars('araaci', 2)) // returns 4
+console.log(longestSubstringWithKDistinctChars('araaci', 1)) // returns 2
+console.log(longestSubstringWithKDistinctChars('cbbebi', 3)) // returns 5
+console.log(longestSubstringWithKDistinctChars('cbbebibccci', 2)) // returns 4
