@@ -25,28 +25,32 @@ Explanation: The longest substrings with no more than '3' distinct characters ar
 */
 
 function longestSubstringWithKDistinctChars(str,K) {
-    // establish parameters used to define substring
+    // establish parameters used to define the indices of the beginning and end of the substring 
     let windowStart = 0;
     let windowEnd = 0; 
     
-    // initialize substring to analyze
+    // initialize substring length
     let substringLength = 0;
     let longestSubstringLength = 0; 
 
+    // create object for tracking the distinct letters in our substring and their quantity
     let distinctCharsTracker = new Object();
 
     while (windowEnd < str.length) {
-
-        //does the letter we're considering have an entry in our tracker?
+        // if letter under consideration already in our tracker, add 1 to it's count in our tracker
+        // and expand the substring (by moving the indices) to include the letter
         if (distinctCharsTracker[str[windowEnd]]) {
-            // if yes, then add plus one to its value in the tracker and expand the window
             distinctCharsTracker[str[windowEnd]] += 1;
             windowEnd +=1;
             substringLength +=1;
             if (substringLength > longestSubstringLength) {
                 longestSubstringLength = substringLength;
             }
-        } else {
+        } 
+        // if letter under consideration not in our tracker already
+        else {
+            // if our tracker has less than 2 entries, then expand the substring
+            // to include the letter and add it to our tracker
             if (Object.entries(distinctCharsTracker).length < K) {
                 distinctCharsTracker[str[windowEnd]] =1;
                 windowEnd += 1; 
@@ -54,8 +58,16 @@ function longestSubstringWithKDistinctChars(str,K) {
                 if (substringLength > longestSubstringLength) {
                     longestSubstringLength = substringLength;
                 }
-            } else {
+            } 
+            // if our tracker has 2 entries in it, then we have to shrink the
+            // substring from the frontside. we shrink the window from the frontside
+            // adding one to window start and we subtract one instance of it from our tracker 
+            else {
                 distinctCharsTracker[str[windowStart]] -=1;
+                
+                // I use the below strategy so that I don't have to loop through the values
+                // of the distinctCharsTracker to check that there are at least two entries
+                // with non-zero values 
                 if (distinctCharsTracker[str[windowStart]] === 0) {
                     delete distinctCharsTracker[str[windowStart]];
                 }
