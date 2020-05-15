@@ -40,27 +40,22 @@ function longestSubstringWithKDistinctChars(str,K) {
         //does the letter we're considering have an entry in our tracker?
         if (distinctCharsTracker[str[windowEnd]]) {
             // if yes, then add plus one to its value in the tracker and expand the window
-            // console.log('letter currently in tracker: ', str[windowEnd]);
             distinctCharsTracker[str[windowEnd]] += 1;
             windowEnd +=1;
             substringLength +=1;
-            // console.log('substringLength3 = ', substringLength);
             if (substringLength > longestSubstringLength) {
                 longestSubstringLength = substringLength;
             }
         } else {
             if (Object.entries(distinctCharsTracker).length < K) {
                 distinctCharsTracker[str[windowEnd]] =1;
-                // console.log('distinctCharsTracker1= ', distinctCharsTracker);
                 windowEnd += 1; 
                 substringLength +=1;
-                // console.log('substringLength1 = ', substringLength);
                 if (substringLength > longestSubstringLength) {
                     longestSubstringLength = substringLength;
                 }
             } else {
                 distinctCharsTracker[str[windowStart]] -=1;
-                // console.log('distinctCharsTracker2= ', distinctCharsTracker);
                 if (distinctCharsTracker[str[windowStart]] === 0) {
                     delete distinctCharsTracker[str[windowStart]];
                 }
