@@ -37,6 +37,8 @@ function removeDuplicates(arr) {
         }
         i += 1;
     }
+    // arr.splice(nextNonDuplicate); return arr.length <---- fixes solution
+
     return nextNonDuplicate
 }
 
