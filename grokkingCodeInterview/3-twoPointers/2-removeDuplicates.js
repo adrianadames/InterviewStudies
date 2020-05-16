@@ -18,7 +18,13 @@ Output: 2
 Explanation: The first two elements after removing the duplicates will be [2, 11].
 */
 
-// NOTE: I'm suspicuous of this solution because it doesn't result in an array with the duplicates removed...
+// NOTE: -I'm suspicuous of this solution because it doesn't result in an array with the duplicates removed...
+// -It does result in O(n) time complexity and does output the right length. 
+// -What if, after finding the length, cleaving away the end part of the array that we don't care about so we're
+//  left only with the array of non-duplicates? We'd do something like, arr.splice(nextNonduplicate-1). 
+// -That's an O(n) operation, but we only do it once (unlike in my first attempt) so overall, the big 0 is 0(n).
+// -Very good. 
+
 function removeDuplicates(arr) {
     // index of next non-duplicate element
     let nextNonDuplicate = 1;
