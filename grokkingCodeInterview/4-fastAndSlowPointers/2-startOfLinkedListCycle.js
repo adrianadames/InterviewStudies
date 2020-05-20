@@ -2,6 +2,7 @@
 (medium)
 
 Problem Statement: 
+
 Given the head of a Singly LinkedList that contains a cycle, 
 write a function to find the starting node of the cycle.
 */
@@ -49,3 +50,22 @@ head.next.next.next.next.next = new Node(6);
 // head.next.next.next.next.next.next = head.next.next.next;
 // console.log('linked list has cycle: ', linkedListCycle(head));
 
+
+
+// strategy 
+
+function startOfLinkedListCycle(head) {
+    // check if it has a cycle
+
+    // if it does, 
+    // get the size of the cycle (i.e. how many nodes travered before I reach same node)
+    
+    // set a pointer to the head
+    // let pointerA = head;
+    
+    // make another pointer and set it point to the `${sizeOfCycle}` + 'th' node
+    // let pointerB = head
+    // while sizeOfCycle > 0, pointerB = pointerB.next; sizeOfCycle -= 1; 
+
+    // while pointerA !== pointerB, pointerA = pointerA.next, pointerB = pointerB.next
+}
