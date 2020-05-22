@@ -55,7 +55,7 @@ head.next.next.next.next.next = new Node(6);
 // strategy 
 
 function startOfLinkedListCycle(head) {
-    // check if it has a cycle
+    // check if it has a cycle using code from problem 1-linkedListCycle.js
 
     // if it does, 
     // get the size of the cycle (i.e. how many nodes travered before I reach same node)
