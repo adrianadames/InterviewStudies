@@ -22,89 +22,61 @@ Output: [[1,6]]
 Explanation: Since all the given intervals overlap, we merged them into one.
 */
 
-// function mergeIntervals(arr) {
-//     let intervalsArr = arr;
-
-//     for (let i = 0; i< intervalsArr.length; i++) {
-//         let intervalA = intervalsArr[i];
-//         let intervalB = intervalsArr[i+1];
-
-//         // console.log('intervalB = ', intervalB)
-
-//         if (intervalA[0] <= intervalB[0]) {
-//             //check if the end of interval A ends after the start of interval B
-
-//             if (intervalA[1] >= intervalB[1]) {
-//                 intervalsArr.splice(intervalsArr.indexOf(intervalB), 1);
-//             } else {
-//                 intervalA[1] = intervalB[1];
-//                 intervalsArr.splice(intervalsArr.indexOf(intervalB), 1);
-//             }
-//         }
-
-//         if (intervalB[0] < intervalA[0]) {
-//             //check if the end of interval B ends after the start of interval A
-
-//             if (intervalB[1] >= intervalA[1]) {
-//                 intervalsArr.splice(intervalsArr.indexOf(intervalA), 1);
-//             } else {
-//                 intervalB[1] = intervalA[1];
-//                 intervalsArr.splice(intervalsArr.indexOf(intervalA), 1);
-//             }
-//         }
-
-//         console.log('intervalsArr = ', intervalsArr);
-//     }
-// }
+// i think the big O of this function is O(n*log(n))
 
 function mergeIntervals(arr) {
-    let intervalsArr = arr;
+    let intervals = arr;
+    let mergedIntervals = [];
+    
+    if (intervals.length < 2) {
+        return intervals
+    }
 
-    if (intervalsArr.length < 2) {
-        return intervalsArr
-    } 
+    let sortFunction = (a,b) => b[0]-a[0];
 
-    for (let i = 0; i < intervalsArr.length; i++) {
-        let intervalA = intervalsArr[0]; 
+    // bigO = O(n*log(n))
+    intervals.sort(sortFunction);
 
-        for (let j = 1; j < intervalsArr.length; j++) {
-            let intervalB = intervalsArr[j]; 
+    // bigO = O(n)
+    while (intervals.length > 1) {
+        let intervalA = intervals[intervals.length-1];
+        let intervalB = intervals[intervals.length-2];
 
+        // if end time of intervalA is greater than the start time of interval B, 
+        // we have overlap
+        if (intervalB[0] < intervalA[1]) {
+            // get the endTime of new merged interval
+            let endTime = Math.max(intervalA[1], intervalB[1]);
 
+            // replace intervalB value with the value of the new merged interval
+            intervalB = [intervalA[0], endTime];
 
+            // replace the old value of intervalB in the intervals array with the 
+            // new interval B 
+            intervals[intervals.length-2] = intervalB;
+
+            // pop off intervalA from the intervals array
+            intervals.pop();
+        } else {
+            // we do not have overlap, so we pop off the end value in intervals 
+            // and push it into mergedIntervals
+            mergedIntervals.push(intervals.pop())
         }
     }
 
-    for (let i = 0; i< intervalsArr.length; i++) {
-        let intervalA = intervalsArr[i];
-        let intervalB = intervalsArr[i+1];
+    // at this point the length of the intervals array is just one, so we just pop
+    // it into the merged intervals array 
+    mergedIntervals.push(intervals.pop());
 
-        // console.log('intervalB = ', intervalB)
-
-        if (intervalA[0] <= intervalB[0]) {
-            //check if the end of interval A ends after the start of interval B
-
-            if (intervalA[1] >= intervalB[1]) {
-                intervalsArr.splice(intervalsArr.indexOf(intervalB), 1);
-            } else {
-                intervalA[1] = intervalB[1];
-                intervalsArr.splice(intervalsArr.indexOf(intervalB), 1);
-            }
-        }
-
-        if (intervalB[0] < intervalA[0]) {
-            //check if the end of interval B ends after the start of interval A
-
-            if (intervalB[1] >= intervalA[1]) {
-                intervalsArr.splice(intervalsArr.indexOf(intervalA), 1);
-            } else {
-                intervalB[1] = intervalA[1];
-                intervalsArr.splice(intervalsArr.indexOf(intervalA), 1);
-            }
-        }
-
-        console.log('intervalsArr = ', intervalsArr);
-    }
+    return mergedIntervals
 }
 
-mergeIntervals([[2,6], [1,4]])
+intervals1 = [[6,7], [2,4], [5,9], [1,3]];
+intervals2 = [[1,4], [2,6], [3,5]]; 
+intervals3 = [[1,4], [2,5], [7,9]];
+intervals4 = [[6,7], [2,4], [5,9]];
+
+console.log(mergeIntervals(intervals1));
+console.log(mergeIntervals(intervals2));
+console.log(mergeIntervals(intervals3));
+console.log(mergeIntervals(intervals4));
