@@ -46,10 +46,8 @@ and switch it with the number currently sitting in its new spot
 // time complexity: O(n)
 // space complexity: O(1)
 function sortArrInPlace(arr) {
-    let q = 0; 
     let i = 0; 
     while (i < arr.length) {
-        console.log('q: ', q++)
         // -if item is in the wrong spot
         if (arr[i] !== i + 1) {
             // -move the item to its appropriate spot (i.e. move arr[i] to arr[arr[i] -1])
