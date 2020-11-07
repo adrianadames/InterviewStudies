@@ -1,4 +1,7 @@
 /*
+
+NOTE: Almost finished. I'm confused about the space complexity. 
+
 (easy)
 
 Problem Statement: 
@@ -46,6 +49,8 @@ function sortArrInPlace(arr) {
     }
 }
 
+// time complexity: O(n)
+// space complexity: O(n) or O(1)????
 function findAllMissingNumbers(arr) {
     // sort the numbers in the array (using modified version of function from problem 1-cyclicSort.js.)
     sortArrInPlace(arr);
