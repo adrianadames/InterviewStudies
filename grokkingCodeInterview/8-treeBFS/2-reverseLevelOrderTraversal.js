@@ -64,3 +64,6 @@ class Queue {
 // and then increment the front index and decrement the back index. 
 // -if number of items in the array is even (e.g. [1,2,3,4]), do this arr.length/2 many times
 // -if number of items in array is odd (e.g. [1,2,3,4,5]), do this Math.floor(arr.length/2) many times
+
+// -another way to do this would be to use a stack (i.e. levelOrderStack) to store each levelArray, and then at the end 
+// pop out each element from the stack into the output array (i.e. levelOrderArr).  
