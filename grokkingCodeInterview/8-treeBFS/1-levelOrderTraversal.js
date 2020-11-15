@@ -34,7 +34,42 @@ class BinaryTree {
     this.left = left; 
     this.right = right; 
   }
+};
+
+// -BFT => queue (FIFO); DFT => stack (FILO)
+
+class Queue {
+  constructor(items = []) {
+    this.items = items;
+  }
+
+  enqueue(item) {
+    this.items.push(item);
+  }
+
+  dequeue() {
+    if (this.items.length < 1) {
+      return 'queue is empty'
+    } else {
+      return this.items.shift()
+    }
+  }
 }
+
+
+
+
+
+
+
+
+function levelOrderTraversal(binaryTreeRoot) {
+
+};
+
+
+
+
 
 // ex 1 BT
 let bt1 = new BinaryTree(1);
@@ -44,7 +79,7 @@ bt1.left.left = new BinaryTree(4);
 bt1.left.right = new BinaryTree(5);
 bt1.right.left = new BinaryTree(6);
 bt1.right.right = new BinaryTree(7);
-console.log('bt1: ', bt1);
+// console.log('bt1: ', bt1);
 
 // ex 2 BT
 let bt2 = new BinaryTree(12);
@@ -53,4 +88,8 @@ bt2.right = new BinaryTree(1);
 bt2.left.left = new BinaryTree(9);
 bt2.right.left = new BinaryTree(10);
 bt2.right.right = new BinaryTree(5);
-console.log('bt2: ', bt2);
+// console.log('bt2: ', bt2);
+
+
+// levelOrderTraversal(bt1)
+// levelOrderTraversal(bt2)
