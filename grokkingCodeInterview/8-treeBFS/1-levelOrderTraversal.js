@@ -1,5 +1,4 @@
 /*
-
 (easy)
 
 Problem Statement
@@ -37,16 +36,13 @@ class BinaryTree {
 };
 
 // -BFT => queue (FIFO); DFT => stack (FILO)
-
 class Queue {
   constructor(items = []) {
     this.items = items;
   }
-
   enqueue(item) {
     this.items.push(item);
   }
-
   dequeue() {
     if (this.items.length < 1) {
       return 'queue is empty'
@@ -56,20 +52,33 @@ class Queue {
   }
 }
 
-
-
-
-
-
-
-
+// time complexity: O(n)
+// space complexity: O(n)
 function levelOrderTraversal(binaryTreeRoot) {
+  let queue = new Queue();
+  let levelOrderArr = [];
+  queue.enqueue(binaryTreeRoot);
 
+  while (queue.items.length > 0) {
+    let levelSize = queue.items.length;
+    let levelArr = [];
+
+    for (let i = 0; i < levelSize; i++) {
+      let dequeuedNode = queue.dequeue(); 
+      if (dequeuedNode.left) {
+        queue.enqueue(dequeuedNode.left);
+      }
+      if (dequeuedNode.right) {
+        queue.enqueue(dequeuedNode.right)
+      }
+      levelArr.push(dequeuedNode.value);
+    }
+
+    levelOrderArr.push(levelArr);
+  }
+  // console.log('levelOrderArr: ', levelOrderArr);
+  return levelOrderArr
 };
-
-
-
-
 
 // ex 1 BT
 let bt1 = new BinaryTree(1);
@@ -90,6 +99,5 @@ bt2.right.left = new BinaryTree(10);
 bt2.right.right = new BinaryTree(5);
 // console.log('bt2: ', bt2);
 
-
-// levelOrderTraversal(bt1)
-// levelOrderTraversal(bt2)
+console.log(levelOrderTraversal(bt1));
+console.log(levelOrderTraversal(bt2));
