@@ -1,5 +1,4 @@
 /*
-
 (easy)
 
 Problem Statement
@@ -27,3 +26,41 @@ Reverse Level Order Traversal:
 [[9,10,5],[7,1],[12]]
 
 */
+
+class BinaryTree {
+  constructor(value, left = null, right = null) {
+    this.value = value; 
+    this.left = left; 
+    this.right = right; 
+  }
+};
+
+// BFT => queue (FIFO)
+class Queue {
+  constructor(items = []) {
+    this.items = items;
+  }
+  enqueue(item) {
+    this.items.push(item);
+  }
+  dequeue() {
+    if (this.items.length < 1) {
+      return 'queue is empty'
+    } else {
+      return this.items.shift()
+    }
+  }
+}
+
+// -in the previous problem the output arrays for the examples above are: 
+// [[1],[2,3],[4,5,6,7]] & [[12],[7,1],[9,10,5]]
+
+// -to get the desired output array, I could just grab the output array
+// from the previous problem, and pop out each item in a new output array; 
+
+// -is there a more efficienct way to reverse an array?
+// -can it be done in place?
+// -yes. I believe so. switch the items at the indices at opposite ends of the array
+// and then increment the front index and decrement the back index. 
+// -if number of items in the array is even (e.g. [1,2,3,4]), do this arr.length/2 many times
+// -if number of items in array is odd (e.g. [1,2,3,4,5]), do this Math.floor(arr.length/2) many times

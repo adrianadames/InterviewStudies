@@ -36,13 +36,16 @@ class BinaryTree {
 };
 
 // -BFT => queue (FIFO); DFT => stack (FILO)
+// NOTE: Consider using linked list implementation of queue to get O(1) dequeue time complexity. Look into double ended queue. 
 class Queue {
   constructor(items = []) {
     this.items = items;
   }
+  // O(1) operation
   enqueue(item) {
     this.items.push(item);
   }
+  // O(n) operation
   dequeue() {
     if (this.items.length < 1) {
       return 'queue is empty'

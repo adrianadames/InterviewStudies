@@ -1,5 +1,4 @@
 /*
-
 (medium)
 
 Problem Statement
