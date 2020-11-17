@@ -64,22 +64,22 @@ function levelOrderTraversal(binaryTreeRoot) {
 
   while (queue.items.length > 0) {
     let levelSize = queue.items.length;
-    let levelArr = [];
+    let levelArr = []; 
 
     for (let i = 0; i < levelSize; i++) {
-      let dequeuedNode = queue.dequeue(); 
-      if (dequeuedNode.left) {
-        queue.enqueue(dequeuedNode.left);
+      let levelNode = queue.dequeue(); 
+      if (levelNode.left) {
+        queue.enqueue(levelNode.left);
       }
-      if (dequeuedNode.right) {
-        queue.enqueue(dequeuedNode.right)
+      if (levelNode.right) {
+        queue.enqueue(levelNode.right);
       }
-      levelArr.push(dequeuedNode.value);
+      levelArr.push(levelNode.value);
     }
 
     levelOrderArr.push(levelArr);
   }
-  // console.log('levelOrderArr: ', levelOrderArr);
+
   return levelOrderArr
 };
 
