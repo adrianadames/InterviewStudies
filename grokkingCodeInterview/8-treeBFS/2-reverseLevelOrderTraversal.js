@@ -67,3 +67,17 @@ class Queue {
 
 // -another way to do this would be to use a stack (i.e. levelOrderStack) to store each levelArray, and then at the end 
 // pop out each element from the stack into the output array (i.e. levelOrderArr).  
+
+// time complexity: O(n)
+// space complexity: O(1)
+function reverseArray(arr) {
+  let frontIndex = 0; 
+  let backIndex = arr.length - 1; 
+
+  for (let i = 0; i < Math.floor(arr.length/2);i++) {
+    [arr[frontIndex], arr[backIndex]] = [arr[backIndex], arr[frontIndex]];
+    frontIndex += 1;
+    backIndex -= 1;
+  }
+  return arr
+}
