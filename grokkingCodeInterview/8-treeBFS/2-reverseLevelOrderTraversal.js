@@ -35,23 +35,6 @@ class BinaryTree {
   }
 };
 
-// BFT => queue (FIFO)
-class Queue {
-  constructor(items = []) {
-    this.items = items;
-  }
-  enqueue(item) {
-    this.items.push(item);
-  }
-  dequeue() {
-    if (this.items.length < 1) {
-      return 'queue is empty'
-    } else {
-      return this.items.shift()
-    }
-  }
-}
-
 // -in the previous problem the output arrays for the examples above are: 
 // [[1],[2,3],[4,5,6,7]] & [[12],[7,1],[9,10,5]]
 
@@ -149,7 +132,7 @@ class Queue {
 // // REVERSE ARRAY HELPER FUNCTION
 // time complexity: O(n)
 // space complexity: O(1)
-function reverseArray(arr) {
+function reverseArr(arr) {
   let frontIndex = 0; 
   let backIndex = arr.length - 1; 
 
@@ -160,3 +143,60 @@ function reverseArray(arr) {
   }
   return arr
 }
+
+
+function reverseLevelOrderTraversal(binaryTreeRoot) {
+  // make a queue where I'll store the nodes in each level; 
+  let queue = new Queue(); 
+  queue.enqueue(binaryTreeRoot); 
+  // console.log('queue1: ', queue);
+  let reverseLevelOrderArr = [];
+
+  while (queue.size > 0) {
+    let levelSize = queue.size;
+    let levelArr = [];
+    for (let i = 0; i < levelSize; i++) {
+      let levelNode = queue.dequeue();
+      levelNode = levelNode.value;
+      // console.log('levelNode: ', levelNode)
+      // console.log('queue2: ', queue);
+      // console.log('levelNode.value.value: ', levelNode.value.value)
+      if (levelNode.left) {
+        queue.enqueue(levelNode.left);
+      }
+      if (levelNode.right) {
+        queue.enqueue(levelNode.right);
+      }
+      levelArr.push(levelNode.value);
+      // console.log('levelArr: ', levelArr);
+      // console.log('queue3: ', queue);
+    }
+    reverseLevelOrderArr.push(levelArr)
+  }
+  reverseLevelOrderArr = reverseArr(reverseLevelOrderArr)
+
+  return reverseLevelOrderArr
+}
+
+
+// ex 1 BT
+let bt1 = new BinaryTree(1);
+bt1.left = new BinaryTree(2);
+bt1.right = new BinaryTree(3);
+bt1.left.left = new BinaryTree(4);
+bt1.left.right = new BinaryTree(5);
+bt1.right.left = new BinaryTree(6);
+bt1.right.right = new BinaryTree(7);
+// console.log('bt1: ', bt1);
+
+// ex 2 BT
+let bt2 = new BinaryTree(12);
+bt2.left = new BinaryTree(7);
+bt2.right = new BinaryTree(1);
+bt2.left.left = new BinaryTree(9);
+bt2.right.left = new BinaryTree(10);
+bt2.right.right = new BinaryTree(5);
+// console.log('bt2: ', bt2);
+
+console.log(reverseLevelOrderTraversal(bt1));
+console.log(reverseLevelOrderTraversal(bt2));
