@@ -37,19 +37,8 @@ class BinaryTree {
 
 // -in the previous problem the output arrays for the examples above are: 
 // [[1],[2,3],[4,5,6,7]] & [[12],[7,1],[9,10,5]]
-
 // -to get the desired output array, I could just grab the output array
-// from the previous problem, and pop out each item in a new output array; 
-
-// -is there a more efficienct way to reverse an array?
-// -can it be done in place?
-// -yes. I believe so. switch the items at the indices at opposite ends of the array
-// and then increment the front index and decrement the back index. 
-// -if number of items in the array is even (e.g. [1,2,3,4]), do this arr.length/2 many times
-// -if number of items in array is odd (e.g. [1,2,3,4,5]), do this Math.floor(arr.length/2) many times
-
-// -another way to do this would be to use a stack (i.e. levelOrderStack) to store each levelArray, and then at the end 
-// pop out each element from the stack into the output array (i.e. levelOrderArr).  
+// from the previous problem, and reverse it; 
 
 // LINKED LIST QUEUE IMPLEMENTATION
 class Node {
@@ -91,11 +80,11 @@ class LinkedList {
             this.head = null; 
             this.tail = null;
             this.size -= 1;
-            return removedHead; 
+            return removedHead 
         } else {
             let removedHead = this.head; 
             let newHead = this.head.next; 
-            this.head = newHead 
+            this.head = newHead; 
             this.size -= 1;
             return removedHead
         }
@@ -144,23 +133,23 @@ function reverseArr(arr) {
   return arr
 }
 
-
+// time complexity: O(n)
+// space complexity: O(n)
 function reverseLevelOrderTraversal(binaryTreeRoot) {
-  // make a queue where I'll store the nodes in each level; 
   let queue = new Queue(); 
   queue.enqueue(binaryTreeRoot); 
-  // console.log('queue1: ', queue);
   let reverseLevelOrderArr = [];
 
   while (queue.size > 0) {
     let levelSize = queue.size;
     let levelArr = [];
+
     for (let i = 0; i < levelSize; i++) {
-      let levelNode = queue.dequeue();
+      let levelNode = queue.dequeue(); // returns a node whose value property is the binary tree node
+      
+      // we reassign the levelNode variable to equal the binary tree node stored in the Node dequeued above
       levelNode = levelNode.value;
-      // console.log('levelNode: ', levelNode)
-      // console.log('queue2: ', queue);
-      // console.log('levelNode.value.value: ', levelNode.value.value)
+
       if (levelNode.left) {
         queue.enqueue(levelNode.left);
       }
@@ -168,8 +157,6 @@ function reverseLevelOrderTraversal(binaryTreeRoot) {
         queue.enqueue(levelNode.right);
       }
       levelArr.push(levelNode.value);
-      // console.log('levelArr: ', levelArr);
-      // console.log('queue3: ', queue);
     }
     reverseLevelOrderArr.push(levelArr)
   }
