@@ -63,34 +63,42 @@ class Queue {
    }
 }
 
-
-
-
+// time complexity: O(n)
+// space complexity: O(n)
 function minDepth(binaryTreeRoot) {
    let queue = new Queue(); 
-   let visited = [];
+   let levelOrderArr = [];
    let level = 0;
-
    queue.enqueue(binaryTreeRoot);
-   console.log('queue: ', queue);
 
    while (queue.size > 0) {
-      let current = queue.dequeue();
-      console.log('current: ', current);
-      level += 1;
+      level +=1;
+      let levelSize = queue.size;
+      console.log('level: ', level);
+      console.log('levelSize: ', levelSize);
+      let levelArr = [];
       
-      visited.push(current);
+      for (let i = 0; i < levelSize; i++) {
+         let levelNode = queue.dequeue();
 
-      if (current.left === null || current.right === null) {
-         console.log('level : ', level);
-         return level
-      } else {
-         
-         console.log('level : ', level);
-         queue.enqueue(current.left); 
-         queue.enqueue(current.right);
+         // checks if node is a leaf node; if so, we're at lowest level where there's a leaf
+         if (levelNode.left === null && levelNode.right === null) {
+            console.log('level : ', level);
+            return level
+         } 
+
+         if (levelNode.left) {
+            queue.enqueue(levelNode.left);
+         }
+         if (levelNode.right) {
+            queue.enqueue(levelNode.right);
+         }
+         levelArr.push(levelNode.id);
       }
-   }
+      console.log('levelArr: ', levelArr);
+      levelOrderArr.push(levelArr);
+      console.log('levelOrderArr : ', levelOrderArr);
+   } 
 }
 
 // binary tree root is the top-most node; 
@@ -103,12 +111,12 @@ function minDepth(binaryTreeRoot) {
 
 // Minimum Depth:2 
 
-let [n1, n2, n3, n4, n5] = [new Node(1), new Node(2), new Node(3), new Node(4), new Node(5)]; 
-n1.left = n2;
-n1.right = n3; 
-n2.left = n4;
-n2.right = n5;
-minDepth(n1);
+// let [n1, n2, n3, n4, n5] = [new Node(1), new Node(2), new Node(3), new Node(4), new Node(5)]; 
+// n1.left = n2;
+// n1.right = n3; 
+// n2.left = n4;
+// n2.right = n5;
+// minDepth(n1);
 
 
 // ex 2
@@ -139,3 +147,22 @@ minDepth(n1);
 //       7     1
 //     9      10  5
 //            11
+
+// Minimum Depth: 3
+
+let [n12, n7, n1, n9, n10, n5, n11] = [12, 7, 1, 9, 10, 5, 11].reduce((accumulator, currentValue) => {
+   accumulator.push(new Node(currentValue));
+   return accumulator
+}, []);
+
+n12.left = n7;
+n12.right = n1; 
+
+n7.left = n9;
+
+n1.left = n10;
+n1.right = n5;
+
+n10.left = n11;
+
+minDepth(n12);
