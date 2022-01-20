@@ -40,7 +40,8 @@ class BinaryTree {
   }
 };
 
-function hasPathSum(binaryTree, sum) {
+// first try at the problem
+function hasPathSum1(binaryTree, sum) {
     if (binaryTree === null) {
         return false
     }
@@ -50,7 +51,26 @@ function hasPathSum(binaryTree, sum) {
         return true
     }
 
-    return hasPathSum(binaryTree.left, sum - binaryTree.value) || hasPathSum(binaryTree.right, sum - binaryTree.value)
+    return hasPathSum1(binaryTree.left, sum - binaryTree.value) || hasPathSum1(binaryTree.right, sum - binaryTree.value)
+}
+
+// alternate solution 
+function hasPathSum2(binaryTree, sum, currentPathSum = 0) {
+    let pathSum = currentPathSum; 
+
+    if (binaryTree === null) {
+        return false
+    } 
+
+    pathSum += binaryTree.value; 
+
+    if (binaryTree.left === null && binaryTree.right === null) {
+        if (pathSum === sum) {
+            return true
+        }
+    }
+
+    return hasPathSum2(binaryTree.left, sum, pathSum) || hasPathSum2(binaryTree.right, sum, pathSum)
 }
 
 // ex 1 BT
@@ -72,7 +92,16 @@ bt2.right.left = new BinaryTree(10);
 bt2.right.right = new BinaryTree(5);
 // console.log('bt2: ', bt2);
 
-// console.log(hasPathSum(bt1, 10));
-// console.log(hasPathSum(bt1, 12));
-console.log(hasPathSum(bt2, 23));
-console.log(hasPathSum(bt2, 16));
+console.log(hasPathSum1(bt1, 10)); // returns true
+console.log(hasPathSum1(bt1, 12)); // returns false
+// console.log(hasPathSum1(bt2, 23)); // returns true
+// console.log(hasPathSum1(bt2, 16)); // returns false
+
+
+console.log(hasPathSum2(bt1, 10)); // returns true
+console.log(hasPathSum2(bt1, 12)); // returns false
+// console.log(hasPathSum2(bt2, 23)); // returns true
+// console.log(hasPathSum2(bt2, 16)); // returns false
+
+
+
