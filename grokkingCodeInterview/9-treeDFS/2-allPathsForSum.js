@@ -134,16 +134,22 @@ function getPaths(binaryTree, desiredSum, allPaths, currentPath = [], currentPat
         return 
     }
     currentPath = [...currentPath, binaryTree.value];
+    // // how does this approach differ from uncommented with respect to memory big O?
+    // currentPath.push(binaryTree.value); // using this approach, need to pop from currentPath at end
+    
     currentPathSum += binaryTree.value;
 
     if (binaryTree.left === null && binaryTree.right === null) {
         if (currentPathSum === desiredSum) {
             allPaths.push(currentPath);
+            //allPaths.push(currentPath.slice());
         }
     }
 
     getPaths(binaryTree.left, desiredSum, allPaths, currentPath, currentPathSum);
     getPaths(binaryTree.right, desiredSum, allPaths, currentPath, currentPathSum);
+
+    // currentPath.pop();
 }
 
 console.log('allPathsForSum3: ', allPathsForSum3(bt1, 12));
