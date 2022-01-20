@@ -36,7 +36,7 @@ class BinaryTree {
   }
 };
 
-function allPathsForSum(binaryTree, sum) {
+function allPathsForSum1(binaryTree, sum) {
     let allPaths = [];
     find_paths_recursive(binaryTree, sum, [], allPaths);
     return allPaths
@@ -82,8 +82,68 @@ bt2.right.left = new BinaryTree(10);
 bt2.right.right = new BinaryTree(5);
 // console.log('bt2: ', bt2);
 
-console.log(allPathsForSum(bt1, 12));
+console.log('allPathsForSum1: ', allPathsForSum1(bt1, 12));
+// console.log(allPathsForSum1(bt2, 23));
+// console.log(allPathsForSum1(bt2, 18));
 
-// console.log(allPathsForSum(bt2, 23));
-// console.log(allPathsForSum(bt2, 18));
 
+// SECOND TRY OFF THE TOP
+function allPathsForSum2(binaryTree, desiredSum, allPaths = [], currentPath = [], currentPathSum = 0) {
+    // -so for this problem, i have to calculate the sum of all the root to leaf paths
+    // -as I traverse the tree, I have to save the numbers I have come across in an array, i.e. the path
+    // -once I reach a leaf, if the pathSum = desiredSum, then I should add that path array to the 
+    // allPaths array
+
+    if (binaryTree === null) {
+        return []
+    }
+
+    let path = [...currentPath, binaryTree.value];
+    let pathSum = currentPathSum + binaryTree.value;
+
+    if (binaryTree.left === null && binaryTree.right === null) {
+        if (pathSum === desiredSum) {
+            allPaths.push(path)
+        }
+    }
+
+    allPathsForSum2(binaryTree.left, desiredSum, allPaths,path, pathSum);
+    allPathsForSum2(binaryTree.right, desiredSum, allPaths,path, pathSum);
+
+    return allPaths
+}
+
+console.log('allPathsForSum2: ', allPathsForSum2(bt1, 12))
+
+
+// is there a better way I can do this problem?
+// how can I avoid the use of those extra arguments I have: currentPath, currentPathSum, allPaths?
+// are some avoidable? which ones?
+
+// solution: use helper function getPaths. see below. 
+
+function allPathsForSum3(binaryTree, desiredSum) {
+    let allPaths = [];
+    getPaths(binaryTree, desiredSum, allPaths); 
+    return allPaths
+
+}
+
+function getPaths(binaryTree, desiredSum, allPaths, currentPath = [], currentPathSum= 0 ) {
+    if (binaryTree === null) {
+        return 
+    }
+    currentPath = [...currentPath, binaryTree.value];
+    currentPathSum += binaryTree.value;
+
+    if (binaryTree.left === null && binaryTree.right === null) {
+        if (currentPathSum === desiredSum) {
+            allPaths.push(currentPath);
+        }
+    }
+
+    getPaths(binaryTree.left, desiredSum, allPaths, currentPath, currentPathSum);
+    getPaths(binaryTree.right, desiredSum, allPaths, currentPath, currentPathSum);
+}
+
+console.log('allPathsForSum3: ', allPathsForSum3(bt1, 12));
