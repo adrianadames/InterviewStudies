@@ -52,7 +52,7 @@ bt2.right.left = new BinaryTree(6);
 bt2.right.right = new BinaryTree(5);
 // console.log('bt2: ', bt2);
 
-function sumOfPathNumbers(binaryTree) {
+function sumOfPathNumbers1(binaryTree) {
     // need to first get all the paths and put them in an array 
     // then need to combine the digits in each path into a number 
     // then need to add up the resulting numbers that come from combining the digits
@@ -80,7 +80,35 @@ function findPathsRecursive(currentNode, currentPath, allPaths) {
     currentPath.pop();
 }
 
+console.log(sumOfPathNumbers1(bt1));
+console.log(sumOfPathNumbers1(bt2));
 
-console.log(sumOfPathNumbers(bt1));
 
-console.log(sumOfPathNumbers(bt2));
+/*
+Given a binary tree where each node can only have a digit (0-9) value, 
+each root-to-leaf path will represent a number. Find the total sum of 
+all the numbers represented by all paths.
+*/
+
+function sumOfPathNumbers2(binaryTree) {
+    let totalSum = [0];
+    getPaths(binaryTree, totalSum);
+    return totalSum[0]
+}
+
+function getPaths(binaryTree, totalSum, currentPathNumber = '') {
+    if (binaryTree === null) {
+        return 
+    }
+
+    currentPathNumber += String(binaryTree.value);
+
+    if (binaryTree.left === null && binaryTree.right === null) {
+        totalSum[0] += Number(currentPathNumber);
+    }
+
+    getPaths(binaryTree.left, totalSum, currentPathNumber);
+    getPaths(binaryTree.right, totalSum, currentPathNumber);
+}
+
+console.log('sumOfPathNumbers2: ', sumOfPathNumbers2(bt1));
