@@ -40,39 +40,6 @@ class BinaryTree {
   }
 };
 
-// first try at the problem
-function hasPathSum1(binaryTree, sum) {
-    if (binaryTree === null) {
-        return false
-    }
-    // if current node is leaf (i.e. no left or right child) and its 
-    // value equal to sum, we have found a path
-    if (binaryTree.left === null && binaryTree.right === null && binaryTree.value === sum) {
-        return true
-    }
-
-    return hasPathSum1(binaryTree.left, sum - binaryTree.value) || hasPathSum1(binaryTree.right, sum - binaryTree.value)
-}
-
-// alternate solution 
-function hasPathSum2(binaryTree, sum, currentPathSum = 0) {
-    let pathSum = currentPathSum; 
-
-    if (binaryTree === null) {
-        return false
-    } 
-
-    pathSum += binaryTree.value; 
-
-    if (binaryTree.left === null && binaryTree.right === null) {
-        if (pathSum === sum) {
-            return true
-        }
-    }
-
-    return hasPathSum2(binaryTree.left, sum, pathSum) || hasPathSum2(binaryTree.right, sum, pathSum)
-}
-
 // ex 1 BT
 let bt1 = new BinaryTree(1);
 bt1.left = new BinaryTree(2);
@@ -91,17 +58,6 @@ bt2.left.left = new BinaryTree(9);
 bt2.right.left = new BinaryTree(10);
 bt2.right.right = new BinaryTree(5);
 // console.log('bt2: ', bt2);
-
-console.log(hasPathSum1(bt1, 10)); // returns true
-console.log(hasPathSum1(bt1, 12)); // returns false
-// console.log(hasPathSum1(bt2, 23)); // returns true
-// console.log(hasPathSum1(bt2, 16)); // returns false
-
-
-console.log(hasPathSum2(bt1, 10)); // returns true
-console.log(hasPathSum2(bt1, 12)); // returns false
-// console.log(hasPathSum2(bt2, 23)); // returns true
-// console.log(hasPathSum2(bt2, 16)); // returns false
 
 
 
