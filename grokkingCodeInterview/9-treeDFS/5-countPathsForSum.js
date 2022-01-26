@@ -47,7 +47,6 @@ bt1.right.left = new BinaryTree(2);
 bt1.right.right = new BinaryTree(3);
 // console.log('bt1: ', bt1);
 
-
 // ex 2 BT
 let bt2 = new BinaryTree(12);
 bt2.left = new BinaryTree(7);
@@ -56,3 +55,41 @@ bt2.left.left = new BinaryTree(4);
 bt2.right.left = new BinaryTree(10);
 bt2.right.right = new BinaryTree(5);
 // console.log('bt2: ', bt2);
+
+// Given a binary tree and a number ‘S’, find all paths in the tree 
+// such that the sum of all the node values of each path equals ‘S’. 
+// Please note that the paths can start or end at any node but all 
+// paths must follow direction from parent to child (top to bottom).
+
+function allPathsForSum(binaryTree, desiredSum) {
+    let allPaths = [];
+    traverseTree(binaryTree, desiredSum, allPaths);
+    return allPaths
+}
+
+function traverseTree(binaryTree, desiredSum, allPaths, currentPath = []) {
+    if (binaryTree === null) {
+        return 
+    }
+
+    currentPath.push(binaryTree.value);
+
+    if (binaryTree.left === null && binaryTree.right === null) {
+        let pathSum = 0;
+
+        for (let i = currentPath.length -1; i >= 0; i--) {
+            pathSum += currentPath[i];
+            if (pathSum === desiredSum) {
+                allPaths.push(currentPath.slice(i))
+            }
+        }
+    }
+
+    traverseTree(binaryTree.left, desiredSum, allPaths, currentPath);
+    traverseTree(binaryTree.right, desiredSum, allPaths, currentPath);
+
+    currentPath.pop();
+}
+
+console.log('allPathsForSum: ', allPathsForSum(bt1, 12));
+console.log('allPathsForSum: ', allPathsForSum(bt2, 11));
