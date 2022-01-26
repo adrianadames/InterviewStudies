@@ -135,7 +135,7 @@ function getPaths(binaryTree, desiredSum, allPaths, currentPath = [], currentPat
     }
     currentPath = [...currentPath, binaryTree.value];
     // // how does this approach differ from uncommented with respect to memory big O?
-    // currentPath.push(binaryTree.value); // using this approach, need to pop from currentPath at end
+    // currentPath.push(binaryTree.value); // using this approach, need to pop from currentPath at end; compare to allPathsForSum1
     
     currentPathSum += binaryTree.value;
 

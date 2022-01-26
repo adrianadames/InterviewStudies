@@ -31,3 +31,55 @@ Output: true
 Explanation: The tree has a path 1 -> 1 -> 6. 
 
 */
+
+class BinaryTree {
+    constructor(value, left = null, right = null) {
+        this.value = value;
+        this.right = right;
+        this.left = left;
+    }
+}
+
+let bt1 = new BinaryTree(1);
+bt1.left = new BinaryTree(7);
+bt1.right = new BinaryTree(9);
+bt1.right.left = new BinaryTree(2);
+bt1.right.right = new BinaryTree(9);
+
+function hasSequence(binaryTree, numberSequenceArr) {
+    return getPath(binaryTree, numberSequenceArr)
+}
+
+function getPath(binaryTree, numberSequenceArr, currentPath = []) {
+
+    if (binaryTree === null) {
+        return 
+    } 
+
+    currentPath = [...currentPath, binaryTree.value];
+
+    if (binaryTree.left === null && binaryTree.right === null) {
+        console.log('currentPath: ', currentPath);
+
+        let sequencePresent = true; 
+
+        for (let i = 0; i < numberSequenceArr.length; i++) {
+            // console.log('i: ', i)
+            // console.log('currentPath[i]: ', currentPath[i]);
+            console.log('numberSequenceArr[i]: ', numberSequenceArr[i]);
+            
+            // if (currentPath[i] !== numberSequenceArr[i]) {
+            //     console.log('test');
+            //     sequencePresent = false;
+            // }
+        }
+        console.log('sequencePresent: ', sequencePresent);
+        return sequencePresent
+    } else {
+        getPath(binaryTree.left,numberSequenceArr, currentPath);
+        getPath(binaryTree.right,numberSequenceArr, currentPath);
+    }
+}
+
+console.log('hasSequence: ', hasSequence(bt1, [1,9]))
+

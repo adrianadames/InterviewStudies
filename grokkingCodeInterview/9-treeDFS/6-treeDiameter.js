@@ -73,33 +73,80 @@ class BinaryTree {
   bt2.right.right.right.right = new BinaryTree(11);
   // console.log('bt2: ', bt2);
 
-function findTreeDiameter(binaryTree) {
-    let maxTreeDiameter = 0;
-    calculateNodeHeight(binaryTree, maxTreeDiameter);
-    console.log('maxTreeDiameter2: ', maxTreeDiameter)
-    return maxTreeDiameter
-}
+// function findTreeDiameter(binaryTree) {
+//     let maxTreeDiameter = 0;
+//     calculateNodeHeight(binaryTree, maxTreeDiameter);
+//     console.log('maxTreeDiameter2: ', maxTreeDiameter)
+//     return maxTreeDiameter
+// }
 
-function calculateNodeHeight(currentNode, maxTreeDiameter) {
+// function calculateNodeHeight(currentNode, maxTreeDiameter) {
     
-    if (currentNode === null) {
-        return 0;
-    } else {
-        console.log('currentNode.value: ', currentNode.value)
-    }
+//     if (currentNode === null) {
+//         return 0;
+//     } else {
+//         console.log('currentNode.value: ', currentNode.value)
+//     }
 
-    let leftTreeHeight = calculateNodeHeight(currentNode.left, maxTreeDiameter);
-    let rightTreeHeight = calculateNodeHeight(currentNode.right, maxTreeDiameter);
+//     let leftTreeHeight = calculateNodeHeight(currentNode.left, maxTreeDiameter);
+//     let rightTreeHeight = calculateNodeHeight(currentNode.right, maxTreeDiameter);
 
-    let diameter = leftTreeHeight + rightTreeHeight + 1;
-    console.log('diameter: ', diameter)
+//     let diameter = leftTreeHeight + rightTreeHeight + 1;
+//     console.log('diameter: ', diameter)
 
-    maxTreeDiameter = Math.max(maxTreeDiameter, diameter);
-    console.log('maxTreeDiameter: ', maxTreeDiameter)
+//     maxTreeDiameter = Math.max(maxTreeDiameter, diameter);
+//     console.log('maxTreeDiameter: ', maxTreeDiameter)
 
-    return Math.max(leftTreeHeight, rightTreeHeight) + 1
-}
+//     return Math.max(leftTreeHeight, rightTreeHeight) + 1
+// }
 
-console.log(findTreeDiameter(bt1));
+// console.log(findTreeDiameter(bt1));
 
 // console.log(findTreeDiameter(bt2));
+
+
+// get all the node to leaf paths in the binary tree
+function getRootToLeafPaths(binaryTree) {
+    let allPaths = [];
+    // console.log('allPaths: ', allPaths);
+    traverseTree(binaryTree, allPaths);
+    return allPaths
+}
+
+    //     1*
+    // 2*      3*
+    // 4*     5   6* 
+
+    //     1*
+    // 2*      3*
+let bt3 = new BinaryTree(1);
+bt3.left = new BinaryTree(2);
+bt3.right = new BinaryTree(3);
+
+function traverseTree(binaryTree, allPaths, currentPath = [], nodeDepth = -1) {
+    
+    // console.log('allPaths 1: ', allPaths);
+    if (binaryTree === null) {
+        return 
+    }
+
+    currentPath.push(binaryTree.value);
+    nodeDepth +=1;
+    console.log('currentPath: ', currentPath);
+    console.log('nodeDepth: ', nodeDepth);
+    
+    // if leaf
+    if (binaryTree.left === null && binaryTree.right === null) {
+        allPaths.push(currentPath.slice());
+    }
+
+    
+    
+
+    traverseTree(binaryTree.left, allPaths, currentPath, nodeDepth);
+    traverseTree(binaryTree.right, allPaths, currentPath, nodeDepth);
+
+    currentPath.pop();
+}
+
+console.log('allPaths: ', getRootToLeafPaths(bt3))
