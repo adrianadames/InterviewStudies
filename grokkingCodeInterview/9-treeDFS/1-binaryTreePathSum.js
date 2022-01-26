@@ -60,4 +60,39 @@ bt2.right.right = new BinaryTree(5);
 // console.log('bt2: ', bt2);
 
 
+// Given a binary tree and a number ‘S’, find if the tree has a path 
+// from root-to-leaf such that the sum of all the node values of that 
+// path equals ‘S’.
 
+function binaryTreePathSum(binaryTree, desiredSum) {
+    let qualifyingPaths = [];
+    traverseTree(binaryTree, desiredSum, qualifyingPaths);
+    return qualifyingPaths
+}
+
+function traverseTree(binaryTree, desiredSum, qualifyingPaths, currentPath = [], currentSum = 0) {
+    if (binaryTree === null) {
+        return
+    }
+
+    currentPath.push(binaryTree.value);
+    currentSum += binaryTree.value;
+
+    // console.log('currentPath :', currentPath);
+    // console.log('currentSum :', currentSum);
+
+    if (binaryTree.left === null && binaryTree.right === null) {
+        if (currentSum === desiredSum) {
+            qualifyingPaths.push(currentPath.slice());
+        }
+    }
+
+    traverseTree(binaryTree.left, desiredSum, qualifyingPaths, currentPath, currentSum);
+    traverseTree(binaryTree.right, desiredSum, qualifyingPaths, currentPath, currentSum);
+
+    currentPath.pop();
+}
+
+console.log('binaryTreePathSum: ', binaryTreePathSum(bt1, 10));
+console.log('binaryTreePathSum: ', binaryTreePathSum(bt2, 23));
+console.log('binaryTreePathSum: ', binaryTreePathSum(bt2, 16));
