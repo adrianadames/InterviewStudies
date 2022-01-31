@@ -47,7 +47,6 @@ bt1.right.left = new BinaryTree(2);
 bt1.right.right = new BinaryTree(3);
 // console.log('bt1: ', bt1);
 
-
 // ex 2 BT
 let bt2 = new BinaryTree(12);
 bt2.left = new BinaryTree(7);
@@ -57,35 +56,40 @@ bt2.right.left = new BinaryTree(10);
 bt2.right.right = new BinaryTree(5);
 // console.log('bt2: ', bt2);
 
-function countPathsForSum(binaryTree, sum) {
-    // need to first get all the paths and put them in an array 
-    // then need to combine the digits in each path into a number 
-    // then need to add up the resulting numbers that come from combining the digits
+// Given a binary tree and a number ‘S’, find all paths in the tree 
+// such that the sum of all the node values of each path equals ‘S’. 
+// Please note that the paths can start or end at any node but all 
+// paths must follow direction from parent to child (top to bottom).
+
+function allPathsForSum(binaryTree, desiredSum) {
     let allPaths = [];
-
-    findPathsRecursive(binaryTree, currentPath = [], allPaths);
-
+    traverseTree(binaryTree, desiredSum, allPaths);
     return allPaths
 }
 
-function findPathsRecursive(currentNode, currentPath, allPaths) {
-    if (currentNode === null) {
-        return
+function traverseTree(binaryTree, desiredSum, allPaths, currentPath = []) {
+    if (binaryTree === null) {
+        return 
     }
 
-    currentPath.push(currentNode.value);
+    currentPath.push(binaryTree.value);
 
-    if (currentNode.left === null && currentNode.right === null) {
-        allPaths.push(currentPath.slice());
-    } else {
-        findPathsRecursive(currentNode.left, currentPath, allPaths);
-        findPathsRecursive(currentNode.right, currentPath, allPaths);
+    if (binaryTree.left === null && binaryTree.right === null) {
+        let pathSum = 0;
+
+        for (let i = currentPath.length -1; i >= 0; i--) {
+            pathSum += currentPath[i];
+            if (pathSum === desiredSum) {
+                allPaths.push(currentPath.slice(i))
+            }
+        }
     }
+
+    traverseTree(binaryTree.left, desiredSum, allPaths, currentPath);
+    traverseTree(binaryTree.right, desiredSum, allPaths, currentPath);
 
     currentPath.pop();
 }
 
-
-console.log(countPathsForSum(bt1, 12));
-
-// console.log(countPathsForSum(bt2, 11));
+console.log('allPathsForSum: ', allPathsForSum(bt1, 12));
+console.log('allPathsForSum: ', allPathsForSum(bt2, 11));

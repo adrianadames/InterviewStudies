@@ -40,19 +40,6 @@ class BinaryTree {
   }
 };
 
-function hasPathSum(binaryTree, sum) {
-    if (binaryTree === null) {
-        return false
-    }
-    // if current node is leaf (i.e. no left or right child) and its 
-    // value equal to sum, we have found a path
-    if (binaryTree.left === null && binaryTree.right === null && binaryTree.value === sum) {
-        return true
-    }
-
-    return hasPathSum(binaryTree.left, sum - binaryTree.value) || hasPathSum(binaryTree.right, sum - binaryTree.value)
-}
-
 // ex 1 BT
 let bt1 = new BinaryTree(1);
 bt1.left = new BinaryTree(2);
@@ -72,7 +59,40 @@ bt2.right.left = new BinaryTree(10);
 bt2.right.right = new BinaryTree(5);
 // console.log('bt2: ', bt2);
 
-// console.log(hasPathSum(bt1, 10));
-// console.log(hasPathSum(bt1, 12));
-console.log(hasPathSum(bt2, 23));
-console.log(hasPathSum(bt2, 16));
+
+// Given a binary tree and a number ‘S’, find if the tree has a path 
+// from root-to-leaf such that the sum of all the node values of that 
+// path equals ‘S’.
+
+function binaryTreePathSum(binaryTree, desiredSum) {
+    let qualifyingPaths = [];
+    traverseTree(binaryTree, desiredSum, qualifyingPaths);
+    return qualifyingPaths
+}
+
+function traverseTree(binaryTree, desiredSum, qualifyingPaths, currentPath = [], currentSum = 0) {
+    if (binaryTree === null) {
+        return
+    }
+
+    currentPath.push(binaryTree.value);
+    currentSum += binaryTree.value;
+
+    // console.log('currentPath :', currentPath);
+    // console.log('currentSum :', currentSum);
+
+    if (binaryTree.left === null && binaryTree.right === null) {
+        if (currentSum === desiredSum) {
+            qualifyingPaths.push(currentPath.slice());
+        }
+    }
+
+    traverseTree(binaryTree.left, desiredSum, qualifyingPaths, currentPath, currentSum);
+    traverseTree(binaryTree.right, desiredSum, qualifyingPaths, currentPath, currentSum);
+
+    currentPath.pop();
+}
+
+console.log('binaryTreePathSum: ', binaryTreePathSum(bt1, 10));
+console.log('binaryTreePathSum: ', binaryTreePathSum(bt2, 23));
+console.log('binaryTreePathSum: ', binaryTreePathSum(bt2, 16));

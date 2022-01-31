@@ -36,32 +36,6 @@ class BinaryTree {
   }
 };
 
-function allPathsForSum(binaryTree, sum) {
-    let allPaths = [];
-    find_paths_recursive(binaryTree, sum, [], allPaths);
-    return allPaths
-}
-
-function find_paths_recursive(currentNode, sum, currentPath, allPaths) {
-    if (currentNode === null) {
-        return
-    }
-
-    // add the current node to the path
-    currentPath.push(currentNode.value);
-
-    // if node a leaf and node value equals sum, save current path to all paths
-    if (currentNode.value === sum && currentNode.left === null && currentNode.right === null) {
-        allPaths.push(currentPath.slice());
-    } else {
-        find_paths_recursive(currentNode.left, sum-currentNode.value, currentPath, allPaths);
-        find_paths_recursive(currentNode.right, sum-currentNode.value, currentPath, allPaths);
-    }
-
-    // need to remove current node from current path to backtrack to parent node
-    currentPath.pop();
-}
-
 // ex 1 BT
 let bt1 = new BinaryTree(1);
 bt1.left = new BinaryTree(7);
@@ -72,7 +46,6 @@ bt1.right.left = new BinaryTree(2);
 bt1.right.right = new BinaryTree(7);
 // console.log('bt1: ', bt1);
 
-
 // ex 2 BT
 let bt2 = new BinaryTree(12);
 bt2.left = new BinaryTree(7);
@@ -82,8 +55,38 @@ bt2.right.left = new BinaryTree(10);
 bt2.right.right = new BinaryTree(5);
 // console.log('bt2: ', bt2);
 
-console.log(allPathsForSum(bt1, 12));
+// Given a binary tree and a number ‘S’, find all paths from 
+// root-to-leaf such that the sum of all the node values of 
+// each path equals ‘S’.
 
-// console.log(allPathsForSum(bt2, 23));
-// console.log(allPathsForSum(bt2, 18));
+function allPathsForSum(binaryTree, desiredSum) {
+    let qualifyingPaths = [];
+    traverseTree(binaryTree, desiredSum, qualifyingPaths);
+    return qualifyingPaths
+}
 
+function traverseTree(binaryTree, desiredSum, qualifyingPaths, currentPath = [], currentSum = 0) {
+    if (binaryTree === null) {
+        return
+    }
+
+    currentPath.push(binaryTree.value);
+    currentSum += binaryTree.value;
+
+    // console.log('currentPath :', currentPath);
+    // console.log('currentSum :', currentSum);
+
+    if (binaryTree.left === null && binaryTree.right === null) {
+        if (currentSum === desiredSum) {
+            qualifyingPaths.push(currentPath.slice());
+        }
+    }
+
+    traverseTree(binaryTree.left, desiredSum, qualifyingPaths, currentPath, currentSum);
+    traverseTree(binaryTree.right, desiredSum, qualifyingPaths, currentPath, currentSum);
+
+    currentPath.pop();
+}
+
+console.log('allPathsForSum: ', allPathsForSum(bt1, 12));
+console.log('allPathsForSum: ', allPathsForSum(bt2, 23));
