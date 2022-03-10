@@ -9,17 +9,21 @@
 // spacetime: O(1)
 
 /*
+TD: Bubble sort for linked list. 
+*/
+
+/*
 -"(algorithm) repeatedly steps through the list, compares adjacent 
 elements and swaps them if they are in the wrong order."
 
 -Algorithm completes for loop through the array n times, each time looping 
 through 1 less element until it only loops through the 1st element
-- (n-1) + (n-2) + ... (n - arr.length + 2) =~ n*(n-1)/2 => O(n^2)
+- (n-1) + (n-2) + ... + 1 =~ n*(n-1)/2 => O(n^2)
 
 -first loop places largest value in the array at the end
 -second loop places 2nd largest value in the array
 -...
--last loop places second smallest value in the array (loop will compare first
+-last loop places (n-1)th largest value in the array (loop will compare first
 two items and swap if 2nd item is smaller)
 
 // 1st for loop (n=4): i < n - 1 = 4 => i= 0, 1, 2, 3
