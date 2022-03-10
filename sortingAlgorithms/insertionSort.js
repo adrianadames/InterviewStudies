@@ -9,6 +9,13 @@
 // spacetime: O(1)
 
 /*
+TD: insertion sort for linked list. 
+*/
+
+/*
+-Like you would sort a deck of cards as you flipped over each card from down facing deck
+-as you flip over each card, you move it leftward if its smaller to the number to its left
+and you keep going until it's in its correct position
 
 "The algorithm proceeds as follows for an array based
 sequence. We start with the first element in the array. One element by itself
