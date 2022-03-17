@@ -202,3 +202,102 @@ function mergeVirtualSeq(seq, left, middle, right, tmpArray) {
 
 // console.log('mergeSort: ', mergeSort([1, 13, 5, 8, 11, 2, 18, 9]));
 // console.log('mergeSort: ', mergeSort([2, 5, 1, 9, 6]));
+
+
+
+
+/*
+
+Off the top
+
+NOTE: Have not compared to the above yet. Will do at later time. 
+
+time and space big O
+
+time:
+    -splitting problem down into subproblems: O(n) = n * log(n)
+    -merging function: O(n) = 2n = n
+
+    => O(n) = n*log(n) + n = n* (1+ log(n))      ???????????????????
+
+space: O(n) = n because of the temporary array we make and use throughout. 
+
+*/
+
+function mergeSortOffTop(seq, a, b, tmpArr = []) {
+    if (a >= b) {
+      return
+    } else {
+      let splitIndex = Math.floor((b-a)/2) + a;
+  
+      console.log('a: ', a); 
+      console.log('b: ', b);
+      console.log('splitIndex: ', splitIndex);
+      console.log('seq: ', seq); 
+      console.log('seq[splitIndex] : ', seq[splitIndex]);
+      
+      mergeSortOffTop(seq, a, splitIndex, tmpArr);
+      mergeSortOffTop(seq, splitIndex+1, b, tmpArr);
+  
+      mergeOffTop(seq, a, splitIndex, b, tmpArr);
+    }
+  }
+  
+  function mergeOffTop(seq, a, splitIndex, b, tmpArr) {
+    let left = a; 
+    let right = splitIndex+1; 
+    let tmpIndex = a; 
+  
+    console.log('left: ', left); 
+    console.log('right: ', right);
+    console.log('tmpIndex: ', tmpIndex);
+    console.log('tmpArr: ', tmpArr);
+  
+    while (left <= splitIndex && right <= b) {
+      console.log('test');
+      console.log('seq[left]: ', seq[left]);
+      console.log('seq[right]: ', seq[right]);
+      if (seq[left] <= seq[right]) {
+        console.log('test2');
+        tmpArr[tmpIndex] = seq[left];
+        console.log('tmpIndex: ', tmpIndex);
+        console.log('tmpArr[tmpIndex] = seq[left] = ', tmpArr)
+        left++;
+      } else {
+        tmpArr[tmpIndex] = seq[right];
+        console.log('tmpIndex: ', tmpIndex);
+        console.log('tmpArr[tmpIndex] = seq[right] = ', tmpArr)
+        right++;
+      }
+      tmpIndex++;
+    }
+  
+    while (left <= splitIndex) {
+      console.log('bloop: ');
+      tmpArr[tmpIndex]= seq[left];
+      tmpIndex++;
+      left++;
+      console.log('tmpArr[tmpIndex] = seq[left] = ', tmpArr);
+      console.log('right: ', right); 
+      console.log('b: ', b);
+    }
+  
+    while (right <=b) {
+      console.log('bleep: ');
+      tmpArr[tmpIndex] = seq[right];
+      tmpIndex++;
+      right++;
+      console.log('tmpArr[tmpIndex] = seq[right] = ', tmpArr)
+    }
+  
+    for (let i = a; i < tmpIndex; i++) {
+      seq[i] = tmpArr[i];
+      console.log('seq: ', seq)
+    }
+  }
+  
+  let s1 = [5, 9, 1, 4, 13, 6];
+  
+  mergeSortOffTop(s1, 0, s1.length-1);
+  
+  console.log('s1: ', s1)
