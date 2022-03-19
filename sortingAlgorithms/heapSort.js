@@ -8,23 +8,30 @@ Things to review here:
         -extract max value (i.e. remove and return max value)
 -heapsort algorithm
     -bottom up heap construction (buildMaxHeap function)
-    -in-place construction of sorted array from unsorted array via constructed heap
+    -in-place construction of sorted array from unsorted array by first
+    building the heap and then using extract max to make the sorted array
+    in place...
 
 
 NOTE: Remaining TO DOs: 
+-think about why storing the size of the heap as a heap property is important
+    -it's done in Corbin Ch 6.4, but not sure if it's done in goodrich. it isn't, 
+    but it is indirectly as it's a property of the priority base class that the 
+    heap priority queue is based off of; I'm starting to see why that paramater 
+    can be useful. in the past, i would be like, why not just use the length of the 
+    array you're working on and give that as the length, but how would I implement
+    the heapsort algorithm in Corbin using this approach (i.e. without heap size as
+    as stored property); 
+    -Necaise Ch. 13.5: 
+        -"The next step in the process of extracting a value from the heap is to remove
+        the leaf node from the heap. In an array representation, we do this by reducing
+        a counter indicating the number of items in the heap."
 -figure out best way to construct heap from array input
     -should it be a separate function? should it reference the input array?
-
--prove to self that constructing heap O(n) = n; 
-
--figure out how to implement heapSort in-place for a given input array
-    -first construct heap in place by pointing heap items to input array and then 
-    constructing the heap
-    -then sort in place by extracting the max and pushing it to the end of the 
-    array as each max value is popped out; it's noted here that this is a lil 
-    confusing given how we reference the input array; it's length is mutated as
-    we extract the max from the array, but at the same time we place the extracted
-    max at the last position of the array plus 1, which is out of bounds...
+        -Goodrich has it in the heapPriortyQueue data structure as a constructor method
+        (def __init__(self, contents = ())) that's used if you also pass in an optional 
+        set of data when you first create the priority queue. Otherwise, the priority 
+        queue starts empty. 
 */
 
 
