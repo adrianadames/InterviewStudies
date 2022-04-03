@@ -1,37 +1,164 @@
-// HEAP SORT
+/*
+HEAP SORT 
+
+References:
+-Corbin Ch. 6
+-Goodrich 9.4.2
+-Necaise 12.1
+-Skiena 4.3 
+
+Performance: 
+-runtime: O(n) = n*log(n);
+-spacetime: O(n) = 1; (i.e. in place sorting)
+
+
+**************************************************************************
+****************** The Heap and the Heapsort Algorithm ******************
+**************************************************************************
+
+-The heapsort sorting algorithm is a little bit different than the sorting algorithms 
+we've discussed up until now in that a special kind of data structure called a heap
+is integral to it. The heap data structure will be a central focus of this write-up
+along with several things related to it. The write-up is organized as follows: 
+    
+    -Introduction and Motivation: 
+        -What is a heap? Why do we use them? 
+            -Data structure with certain properties that make it attractive 
+            for use in two modalities: 
+                -1) as a priority queue, and 
+                -2) for sorting
+            -Key properties:
+                -heap-order property (max heap vs min heap)
+                -complete binary tree property
+                    -height of a heap
+    -Implementation Notes and Code
+        -Array representation of a heap
+        -Methods:
+            -addValue
+            -currentMaxValue (return the maximum value stored in the heap)
+            -extractMaxValue (i.e. remove and return max value)
+            -bottom-up heap construction from initial unsorted array input
+                -fact that for n element heap represented as array, the leaves of the 
+                heap are the nodes indexed by: floor(n/2) + 1, floor(n/2) + 2, ..., n
+                (important fact to know for ground-up construction of a heap)
+                -*see Goodrich heapPriortyQueue data structure as a constructor method
+                (def __init__(self, contents = ())) that's used if you also pass in an optional 
+                set of data when you first create the priority queue. Otherwise, the priority 
+                queue starts empty.*
+            -internal methods bubbleUp and bubbleDown
+            -heapsort (i.e. sort unsorted array input) 
+                -two part process:
+                    1) first use bottom-up heap construction to build the heap
+                    2) then construct array in-place using extractMaxValue method
+        -Things to ponder: 
+            -is storing the size of the heap as a heap property important?
+                -*it's done in Corbin Ch 6.4. in goodrich it's done indirectly as it's a property 
+                of the priority base class that the heap priority queue is based off of; Why not 
+                just use the length of the array you're working on and give that as the length? 
+                BUT THEN how would I implement the heapsort algorithm in Corbin using this approach 
+                (i.e. without heap size as as stored property);* 
+                -*Necaise Ch. 13.5: 
+                    -"The next step in the process of extracting a value from the heap is to remove
+                    the leaf node from the heap. In an array representation, we do this by reducing
+                    a counter indicating the number of items in the heap."*
+    -Conclusion
+        -pros and cons to using heap as opposed to a different data structure (for 
+        applications in which a heap would realistically be used) (lean into skiena reference for this one)
+        -3 examples of when heaps would be appropriate data structure to use (lean into skiena reference for this one)
+
+
+
+
+------------------ Introduction and Motivation ------------------------
+-Introduction and Motivation: 
+    -What is a heap? Why do we use heaps? 
+        -Data structure with certain properties that make it attractive 
+        for use in two modalities: 
+            -1) as a priority queue, and 
+            -2) for sorting
+        -Key properties:
+            -heap-order property (max heap vs min heap)
+            -complete binary tree property
+                -height of a heap
+
+
+
+
+------------------ Implementation Notes and Code ------------------------
+-Implementation Notes and Code
+    -Array representation of a heap
+    -Methods:
+        -addValue
+        -currentMaxValue (return the maximum value stored in the heap)
+        -extractMaxValue (i.e. remove and return max value)
+        -bottom-up heap construction from initial unsorted array input (see p.96 in notebook)
+            -fact that for n element heap represented as array, the leaves of the 
+            heap are the nodes indexed by: floor(n/2) + 1, floor(n/2) + 2, ..., n
+            (important fact to know for ground-up construction of a heap)
+            -*see Goodrich heapPriortyQueue data structure as a constructor method
+            (def __init__(self, contents = ())) that's used if you also pass in an optional 
+            set of data when you first create the priority queue. Otherwise, the priority 
+            queue starts empty.*
+        -internal methods bubbleUp and bubbleDown
+        -heapsort (i.e. sort unsorted array input) 
+            -two part process:
+                1) first use bottom-up heap construction to build the heap
+                2) then construct array in-place using extractMaxValue method (see p.96 in notebook)
+    -Things to ponder: 
+        -is storing the size of the heap as a heap property important?
+            -*it's done in Corbin Ch 6.4. in goodrich it's done indirectly as it's a property 
+            of the priority base class that the heap priority queue is based off of; Why not 
+            just use the length of the array you're working on and give that as the length? 
+            BUT THEN how would I implement the heapsort algorithm in Corbin using this approach 
+            (i.e. without heap size as as stored property);* 
+            -*Necaise Ch. 13.5: 
+                -"The next step in the process of extracting a value from the heap is to remove
+                the leaf node from the heap. In an array representation, we do this by reducing
+                a counter indicating the number of items in the heap."*
+
+
+    
+------------------ Conclusion ------------------------
+-Conclusion
+    -pros and cons to using heap as opposed to a different data structure (for 
+    applications in which a heap would realistically be used) (lean into skiena reference for this one)
+    -3 examples of when heaps would be appropriate data structure to use (lean into skiena reference for this one)
+
+*/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 /*
-Things to review here: 
--the heap data structure
-    -methods: 
-        -add value
-        -extract max value (i.e. remove and return max value)
--heapsort algorithm
-    -bottom up heap construction (buildMaxHeap function)
-    -in-place construction of sorted array from unsorted array by first
-    building the heap and then using extract max to make the sorted array
-    in place...
 
-
-NOTE: Remaining TO DOs: 
--think about why storing the size of the heap as a heap property is important
-    -it's done in Corbin Ch 6.4, but not sure if it's done in goodrich. it isn't, 
-    but it is indirectly as it's a property of the priority base class that the 
-    heap priority queue is based off of; I'm starting to see why that paramater 
-    can be useful. in the past, i would be like, why not just use the length of the 
-    array you're working on and give that as the length, but how would I implement
-    the heapsort algorithm in Corbin using this approach (i.e. without heap size as
-    as stored property); 
-    -Necaise Ch. 13.5: 
-        -"The next step in the process of extracting a value from the heap is to remove
-        the leaf node from the heap. In an array representation, we do this by reducing
-        a counter indicating the number of items in the heap."
--figure out best way to construct heap from array input
-    -should it be a separate function? should it reference the input array?
-        -Goodrich has it in the heapPriortyQueue data structure as a constructor method
-        (def __init__(self, contents = ())) that's used if you also pass in an optional 
-        set of data when you first create the priority queue. Otherwise, the priority 
-        queue starts empty. 
+*******************************************************************************
+****************** First pass at implementation for use as reference ******************
+*******************************************************************************
 */
 
 
