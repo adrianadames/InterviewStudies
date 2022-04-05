@@ -1,18 +1,19 @@
-// bubble sort
-
-// References
-// -Goodrich Ex C-7.38 in Section 7.8
-// -Necaise 5.2.1
-// -Corbin Problem 2.2 in Ch 2 problems
-
-// runtime:O(n^2)  (best case = worst case = O(n^2))
-// spacetime: O(1)
-
 /*
-TD: Bubble sort for linked list. 
-*/
+BUBBLE SORT
 
-/*
+References
+-Goodrich Ex C-7.38 in Section 7.8
+-Necaise 5.2.1
+-Corbin Problem 2.2 in Ch 2 problems
+
+Performance: 
+-runtime: O(n^2)  (best case = worst case = O(n^2))
+-spacetime: O(1)
+
+TDs: 
+-Bubble sort for linked list. 
+
+------------------------ Description ----------------------------
 -"(algorithm) repeatedly steps through the list, compares adjacent 
 elements and swaps them if they are in the wrong order."
 
@@ -26,7 +27,7 @@ through 1 less element until it only loops through the 1st element
 -last loop places (n-1)th largest value in the array (loop will compare first
 two items and swap if 2nd item is smaller)
 
-// 1st for loop (n=4): i < n - 1 = 4 => i= 0, 1, 2, 3
+// 1st for loop (n=4): i < n-1 = 4 => i = 0, 1, 2, 3
 
 i=0
 [2, 5, 1, 9, 6]
@@ -52,39 +53,23 @@ i= 1
 
 */
 
-// using es6 destructuring assignment
 function bubbleSort(arr) {
     let n = arr.length;
 
     while (n > 1) {
         for (let i = 0; i < n-1; i++) {
+            // if current element greater than next element, swap
             if (arr[i]> arr[i+1]) {
                 [arr[i], arr[i+1]] = [arr[i+1], arr[i]];
             }
         }
+        // -largest of remaining values placed at n and to the right of n, 
+        // so don't need to do comparisons after n cause we know everything 
+        // larger there; so we decrement n so we do fewer comparisons next loop
         n--;
     }
     return arr
 };
-
-// // not using es6 destructuring assignment
-// function bubbleSort(arr) {
-//     let n = arr.length;
-
-//     while (n > 1) {
-//         for (let i = 0; i < n-1; i++) {
-//             let curr = arr[i];
-//             let next = arr[i+1];
-
-//             if (curr > next) {
-//                 arr[i] = next;
-//                 arr[i+1] = curr;
-//             }
-//         }
-//         n--;
-//     }
-//     return arr
-// };
 
 console.log('bubbleSort: ', bubbleSort([2, 5, 1, 9, 6]));
 console.log('bubbleSort: ', bubbleSort([10, 51, 2, 18, 4, 31, 13, 5, 23, 64, 29]));
