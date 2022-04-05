@@ -1,15 +1,23 @@
-// Quick Sort Notes 
-
-// References
-// -Goodrich 12.3
-// -Necaise 12.2
-// -Corbin Ch. 7
-
-// // Notes From the other day
-// from corbin ch 7 
-
 /*
-3 step divide and conquer process: 
+QUICKSORT
+
+References
+-Goodrich 12.3
+-Necaise 12.2
+-Corbin Ch. 7
+
+Performance: 
+-runtime: 
+-spacetime: 
+
+TDs: 
+-off the top implementation
+-revise what I have now
+-quicksort for linked list
+
+------------------- Description -----------------------
+
+"3 step divide and conquer process: 
 
 Divide: Partion (rearrange) the array A[p..r] into two (possibly empty) 
 subarrays A[p..q-1] and A[q+1..r] s.t. each element of A[p..q-1] is less
@@ -21,7 +29,7 @@ Conquer: Sort the two subarrays A[p..q-1] and A[q+1..r] by recursive calls
 to quicksort.
 
 Combine: Because subarrays already sorted, no work needed to combine them: 
-the entire array A[p..r] is now sorted.
+the entire array A[p..r] is now sorted." (Corbin Ch. 7)
 */
 
 // fep = first-element-pivot
@@ -214,7 +222,3 @@ function test1(arr) {
 console.log('test1: ', test1([85, 24, 63, 45, 17, 31, 96, 50]));
 
 // console.log('test2: ', test1([50, 85, 24, 63, 50, 50, 24]));
-
-
-
-
