@@ -114,7 +114,7 @@ function generateSubsetsAlt(sol, elements) {
     // base case
     if (sol.length === elements.length) {
         console.log('complete soln: ', sol);
-        printSubsetBinary(sol, elements)
+        // printSubsetBinary(sol, elements)
     } else {
         // generate candidate elements
         for (let k = 0; k < 2; k++) {
@@ -175,7 +175,7 @@ function generatePermutationsAltWrapper(elements) {
     generatePermutationsAlt(0, available, sol, elements);
 }
 
-generatePermutationsAltWrapper(e1);
+// generatePermutationsAltWrapper(e1);
 
 
 // -same as generatePermutationsAlt except it doesn't use the i parameter at all
@@ -217,3 +217,60 @@ function generatePermutationsAltWrapper2(elements) {
 }
 
 // generatePermutationsAltWrapper2(e1);
+
+
+// Time: O(2^n);
+// Space: O(n^2);
+
+function generateSubsetsCoderbyte(elements) {
+    // base case: elements = []
+    if (elements.length === 0) {
+        return [[]]
+    };
+
+    let firstEl = elements[0];
+    let rest = elements.slice(1);
+    console.log('rest: ', rest);
+
+    // here we're reducing the input size to our recursive function
+    // getting closer to base case
+    let subsetsWithoutFirst = generateSubsetsCoderbyte(rest); 
+    let subsetsWithFirst = [];
+
+    subsetsWithoutFirst.forEach(subset => {
+        let subsetWithFirst = [...subset, firstEl];
+        subsetsWithFirst.push(subsetWithFirst);
+    });
+
+    console.log('[...subsetsWithoutFirst, ...subsetsWithFirst]: ', [...subsetsWithoutFirst, ...subsetsWithFirst]);
+
+
+    return [...subsetsWithoutFirst, ...subsetsWithFirst];
+}
+
+console.log('generateSubsetsCoderbyte: ', generateSubsetsCoderbyte(['a', 'b', 'c', 'd']))
+
+
+// time: O(n!)
+// space: O(n^2)
+function generatePermsCoderbyte(elements) {
+    if (elements.length === 0) {
+        return [[]]
+    };
+    let firstEl = elements[0];
+    let rest = elements.slice(1);
+
+    let allPermutations = [];
+    
+    let permsWithoutFirst = generatePermsCoderbyte(rest);
+    permsWithoutFirst.forEach(perm => {
+        for (let i = 0; i <= perm.length; i++) {
+            let permWithFirst = [...perm.slice(0, i), firstEl, ...perm.slice(i)];
+            allPermutations.push(permWithFirst);
+        }
+    })
+
+    return allPermutations
+}
+
+console.log('generatePermsCoderbyte: ', generatePermsCoderbyte(['a', 'b', 'c', 'd']))
