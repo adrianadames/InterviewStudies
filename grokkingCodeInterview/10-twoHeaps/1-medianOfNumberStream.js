@@ -51,7 +51,8 @@ class MaxHeap {
     }
 
     add(value) {
-        this.items.push(value);
+        // this.items.push(value); // NOTE: FOUND ISSUE HERE THAT RESOLVED WITH LINE BELOW
+        this.items[this.size] = value; 
         this.size +=1;
      
         if (this.size === 1) {
@@ -160,7 +161,12 @@ class MinHeap {
     }
 
     add(value) {
-        this.items.push(value);
+
+        // NOTE: RESOLVED ISSUE FOUND WITH COMMENTED LINE BELOW. NEED TO FIX IN
+        // heapsort file in InterviewStudies/sortingAlgorithms directory
+
+        // this.items.push(value);  
+        this.items[this.size] = value; 
         this.size +=1;
      
         if (this.size === 1) {
@@ -265,5 +271,78 @@ class MinHeap {
 
 class MedianTracker {
     constructor() {
+        this.maxHeap = new MaxHeap();
+        this.minHeap = new MinHeap();
+        this.size = 0;
+    }
+
+    addNum(num) {
+        if (this.size === 0) {
+            this.maxHeap.add(num);
+        } else if (this.size > 0) {
+            
+            // -number to be added greater than the largest of the smaller 
+            // half of numbers from the stream 
+            if (num > this.maxHeap.maximum()) {
+                
+                // -if this.size odd, this number we're adding will go in the minHeap
+                // -at all times, approx half the numbers should be in maxHeap and 
+                // half in minHeap (maxHeap can have, at most one more number than minHeap)
+                if (this.size % 2 !== 0) {
+                    this.minHeap.add(num);
+                } else {
+                    // -if this.size even, 
+                    
+                    // -if the number we're adding is less or equal to than minHeap.minimum(), 
+                    // then that number is part of the smaller half of the numbers from the 
+                    // stream and is therefore added to the maxHeap
+                    if (num <= this.minHeap.minimum()) {
+                        this.maxHeap.add(num)
+                    } else {
+                        // -if the number to be added is greater than minHeap.minimum(), then 
+                        // minHeap.minimum() needs to be extracted and put in maxHeap (as it now
+                        // belongs to the smaller half of the numbers from the stream), and 
+                        // the number added is then added to the minHeap as it's part of the 
+                        // larger half of the numbers from the stream 
+                        this.maxHeap.add(this.minHeap.extractMin());
+                        this.minHeap.add(num);
+                    }
+                }
+            } else {
+                // number to be added less than or equal to the largest of the smaller 
+                // half of numbers from the stream 
+
+                // -if this.size odd, maximum of the smaller half of the numbers added 
+                // needs to be moved over to minHeap, and the number we're in the process
+                // of adding will be added to the maxHeap
+                if (this.size % 2 !== 0) {
+                    this.minHeap.add(this.maxHeap.extractMax());
+                    this.maxHeap.add(num);
+                } else {
+                    // -if this.size even, then the number is added to maxHeap as only 
+                    // maxHeap can have one more element than minHeap
+                    this.maxHeap.add(num);                    
+                } 
+            }
+        }
+        this.size += 1;
+    }
+
+    findMedian() {
+        // -if odd number of numbers have been added, median at maxHeap.maximum();
+        if (this.size % 2 !== 0) {
+            return this.maxHeap.maximum();
+        } else {
+            return 0.5* (this.maxHeap.maximum() + this.minHeap.minimum());
+        }
     }
 }
+
+let m1 = new MedianTracker();
+
+let arr1 = [22, 30, 11, 20, 12, 5, 16];
+
+arr1.forEach(num => {
+    m1.addNum(num);
+    console.log('m1.findMedian(): ', m1.findMedian());
+})
