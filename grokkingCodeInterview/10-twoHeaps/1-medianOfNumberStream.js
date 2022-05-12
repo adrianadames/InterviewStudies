@@ -338,11 +338,14 @@ class MedianTracker {
     }
 }
 
-let m1 = new MedianTracker();
+// let m1 = new MedianTracker();
 
-let arr1 = [22, 30, 11, 20, 12, 5, 16];
+// let arr1 = [22, 30, 11, 20, 12, 5, 16];
 
-arr1.forEach(num => {
-    m1.addNum(num);
-    console.log('m1.findMedian(): ', m1.findMedian());
-})
+// arr1.forEach(num => {
+//     m1.addNum(num);
+//     console.log('m1.findMedian(): ', m1.findMedian());
+// }); 
+
+
+export default MedianTracker
