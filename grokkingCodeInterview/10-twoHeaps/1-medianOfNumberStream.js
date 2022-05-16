@@ -268,6 +268,18 @@ class MinHeap {
     }
 }
 
+// General Strategy: 
+// -use two heaps to store the numbers added to the set with the 
+// the larger half of the numbers added going in a minHeap and 
+// the smaller half of the numbers added going in a maxHeap
+// -with the larger half of the numbers added in a minHeap, and the 
+// smaller half of the numbers added in a maxHeap, the largest of the
+// the smaller half of the numbers will be at the maxHeap root
+// and the smallest of the smaller half of the numbers will be at the 
+// minHeap root
+
+// Time Complexity: O(log(n)) for addNum and O(1) for findMedian;
+// Space Complexity: O(n);
 
 class MedianTracker {
     constructor() {
@@ -278,7 +290,7 @@ class MedianTracker {
 
     addNum(num) {
         if (this.size === 0) {
-            this.maxHeap.add(num);
+            this.maxHeap.add(num); // O(log(n)) 
         } else if (this.size > 0) {
             
             // -number to be added greater than the largest of the smaller 
@@ -289,7 +301,7 @@ class MedianTracker {
                 // -at all times, approx half the numbers should be in maxHeap and 
                 // half in minHeap (maxHeap can have, at most one more number than minHeap)
                 if (this.size % 2 !== 0) {
-                    this.minHeap.add(num);
+                    this.minHeap.add(num);  
                 } else {
                     // -if this.size even, 
                     
@@ -344,8 +356,7 @@ class MedianTracker {
 
 // arr1.forEach(num => {
 //     m1.addNum(num);
-//     console.log('m1.findMedian(): ', m1.findMedian());
+//     console.log('m1.findMedian(): ', m1.findMedian()); // 22, 26, 22, 21, 20, 16, 16
 // }); 
-
 
 export default MedianTracker
