@@ -28,9 +28,6 @@ Note:
     0 <= A[i].start, A[i].end, B[i].start, B[i].end < 10^9
 */
 
-
-
-
 // NOTE: THE FOLLOWING WORKS, BUT I THINK THERE'S A BETTER APPROACH
 let intervalListIntersections = (listA, listB) => {
     let intersectingIntervals = [];
@@ -110,8 +107,47 @@ let intervalListIntersections = (listA, listB) => {
     return intersectingIntervals
 }
 
-
 let l1 = [[0,2],[5,10],[13,23],[24,25]]; 
 let l2 = [[1,5],[8,12],[15,24],[25,26]];
 
 console.log('intervalListIntersections: ', intervalListIntersections(l1,l2));
+
+
+let intervalListIntersections2 = (intervalsA, intervalsB) => {
+    let intersectingIntervals = [];
+    let indexA = 0, indexB = 0; 
+    while (indexA < intervalsA.length && indexB < intervalsB.length) {
+        // identify interval sections that intersect
+        // intervals in intervalsA and intervalsB sorted, disjoint
+        let intersectionStart = Math.max(intervalsA[indexA][0], intervalsB[indexB][0]);
+        let intersectionEnd = Math.min(intervalsA[indexA][1], intervalsB[indexB][1]);
+
+        if (intersectionEnd < intersectionStart) { 
+        // implies that there isn't an intersection because the end of 
+        // the intersection interval can't be less than its beginning
+            // A ___
+            // B     ___ 
+            // if intervalA started earlier, move to next interval in A
+            if (intervalsA[indexA][0] < intervalsB[indexB][0]) {
+                indexA += 1;
+            } else {
+                indexB += 1;
+            }
+        } else {
+            // -there is overlap
+            // A ________
+            // B         ___
+            intersectingIntervals.push([intersectionStart, intersectionEnd]);
+            if (intervalsA[indexA][1] < intervalsB[indexB][1]) {
+                indexA += 1;
+            } else if (intervalsA[indexA][1] > intervalsB[indexB][1]) {
+                indexB +=1;
+            } else {
+                indexA +=1;
+                indexB +=1;
+            }
+        }
+    }
+};
+
+console.log('intervalListIntersections2: ', intervalListIntersections(l1,l2));
