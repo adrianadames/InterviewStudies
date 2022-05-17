@@ -1,47 +1,14 @@
-/* 
-(medium)
-
-Problem Statement
-
-Median is the middle value in an ordered integer list. If the size of 
-the list is even, there is no middle value. So the median is the mean 
-of the two middle value. For example, for [2,3,4], the median is 3. 
-For [2,3], the median is (2 + 3) / 2 = 2.5.
-
-Design a data structure that supports the following two operations:
-    -void addNum(int num) - Add a integer number from the data stream 
-    to the data structure.
-    -double findMedian() - Return the median of all elements so far.
-
-Example:
-
-addNum(1)
-addNum(2)
-findMedian() -> 1.5
-addNum(3) 
-findMedian() -> 2
- 
-
-Follow up:
-    -If all integer numbers from the stream are between 0 and 100, how 
-    would you optimize it?
-    -If 99% of all integer numbers from the stream are between 0 and 100, 
-    how would you optimize it?
-*/
-
-// -NOTE: Code for the Max and Min Heap Data structures below is copy paste from 
-// prior work (see InterviewStudies/sortingAlgorithms directory); the code 
-// for the data structures is pared down to inlcude only the functionality 
-// needed to solve this problem 
-
 /*
------------------- Implementation Notes and Code ------------------------
-Array representation of heap (i.e. array representation of complete binary tree):
+You are given an extra long list. Each element of 
+the list is an array. For example: [[1, 5], [10, 16], 
+[2, 7],….. [1000, 1027]].
 
--Given array index i of a node, the index of the parent or children is: 
-    -parent = Math.floor((i-1)/2);
-    -left = 2*i +1 (odd index implies node is a left child)
-    -right = 2*i+2 (even index implies node is a left child)
+The first number of arrays represents the driver’s 
+starting time and the second number is the arrival 
+time for passengers. Given the starting and ending 
+time for online drivers from this input array, find 
+the time interval where there is maximum drivers online. 
+For example, the answer could be [16, 801].
 */
 
 class MaxHeap {
@@ -268,95 +235,67 @@ class MinHeap {
     }
 }
 
-// General Strategy: 
-// -use two heaps to store the numbers added to the set with the 
-// the larger half of the numbers added going in a minHeap and 
-// the smaller half of the numbers added going in a maxHeap
-// -with the larger half of the numbers added in a minHeap, and the 
-// smaller half of the numbers added in a maxHeap, the largest of the
-// the smaller half of the numbers will be at the maxHeap root
-// and the smallest of the smaller half of the numbers will be at the 
-// minHeap root
+let maxDriversOnline1 = (intervals) => {
+    intervals.sort((a,b) => a[0]-b[0]);
+    let maxNumDrivers = 0, maxIntervalStart = 0, maxIntervalEnd = 0;
+    let minHeap = new MinHeap();
 
-// Time Complexity: O(log(n)) for addNum and O(1) for findMedian;
-// Space Complexity: O(n);
-
-class MedianTracker {
-    constructor() {
-        this.maxHeap = new MaxHeap();
-        this.minHeap = new MinHeap();
-        this.size = 0;
-    }
-
-    addNum(num) {
-        if (this.size === 0) {
-            this.maxHeap.add(num); // O(log(n)) 
-        } else if (this.size > 0) {
-            
-            // -number to be added greater than the largest of the smaller 
-            // half of numbers from the stream 
-            if (num > this.maxHeap.maximum()) {
-                
-                // -if this.size odd, this number we're adding will go in the minHeap
-                // -at all times, approx half the numbers should be in maxHeap and 
-                // half in minHeap (maxHeap can have, at most one more number than minHeap)
-                if (this.size % 2 !== 0) {
-                    this.minHeap.add(num);  
-                } else {
-                    // -if this.size even, 
-                    
-                    // -if the number we're adding is less or equal to than minHeap.minimum(), 
-                    // then that number is part of the smaller half of the numbers from the 
-                    // stream and is therefore added to the maxHeap
-                    if (num <= this.minHeap.minimum()) {
-                        this.maxHeap.add(num)
-                    } else {
-                        // -if the number to be added is greater than minHeap.minimum(), then 
-                        // minHeap.minimum() needs to be extracted and put in maxHeap (as it now
-                        // belongs to the smaller half of the numbers from the stream), and 
-                        // the number added is then added to the minHeap as it's part of the 
-                        // larger half of the numbers from the stream 
-                        this.maxHeap.add(this.minHeap.extractMin());
-                        this.minHeap.add(num);
-                    }
-                }
-            } else {
-                // number to be added less than or equal to the largest of the smaller 
-                // half of numbers from the stream 
-
-                // -if this.size odd, maximum of the smaller half of the numbers added 
-                // needs to be moved over to minHeap, and the number we're in the process
-                // of adding will be added to the maxHeap
-                if (this.size % 2 !== 0) {
-                    this.minHeap.add(this.maxHeap.extractMax());
-                    this.maxHeap.add(num);
-                } else {
-                    // -if this.size even, then the number is added to maxHeap as only 
-                    // maxHeap can have one more element than minHeap
-                    this.maxHeap.add(num);                    
-                } 
+    for (let i = 0; i < intervals.length; i++) {
+        let intervalStart = intervals[i][0];
+        let intervalEnd = intervals[i][1];
+        if (minHeap.size > 0 && intervalStart >= minHeap.minimum()) { 
+            // -if earliest intervalEnd time (i.e. minHeap.minimum()) in heap
+            // less than/equal to current interval start time, then it doesn't 
+            // overlap with the current interval; before popping it off, we check
+            // if maxNumDrivers new max; if so, record associated start/end times
+            if (minHeap.size > maxNumDrivers) {
+                [maxNumDrivers, maxIntervalStart, maxIntervalEnd] = [minHeap.size, intervals[i-1][0], minHeap.minimum()];
             }
+            minHeap.extractMin(); 
         }
-        this.size += 1;
+        minHeap.add(intervalEnd);
     }
-
-    findMedian() {
-        // -if odd number of numbers have been added, median at maxHeap.maximum();
-        if (this.size % 2 !== 0) {
-            return this.maxHeap.maximum();
-        } else {
-            return 0.5* (this.maxHeap.maximum() + this.minHeap.minimum());
-        }
+    if (minHeap.size > maxNumDrivers) {
+        [maxNumDrivers, maxIntervalStart, maxIntervalEnd] = [minHeap.size, intervals[intervals.length-1][0], minHeap.minimum()];
     }
+    return [maxNumDrivers, maxIntervalStart, maxIntervalEnd]
 }
 
-// let m1 = new MedianTracker();
+let maxDriversOnline2 = (intervals) => {
+    intervals.sort((a,b) => a[0]-b[0]);
+    let maxNumDrivers = 0, maxIntervalStart = 0, maxIntervalEnd = 0;
+    let minHeap = new MinHeap();
 
-// let arr1 = [22, 30, 11, 20, 12, 5, 16];
+    for (let i = 0; i < intervals.length; i++) {
+        let intervalStart = intervals[i][0];
+        let intervalEnd = intervals[i][1];
+        while (minHeap.size>0 && intervalStart >= minHeap.minimum()) {
+            // -if earliest intervalEnd time (i.e. minHeap.minimum()) in heap
+            // less than/equal current interval start time, then pop it out from heap
+            // because no overlap with current interval
+            minHeap.extractMin();
+        }
+        minHeap.add(intervalEnd);
+        if (minHeap.size > maxNumDrivers) {
+            // -maxIntervalStart = intervalStart because interval start is the 
+            // greatest of all the starts we've examined so far (list is sorted by start)
+            [maxNumDrivers, maxIntervalStart, maxIntervalEnd] = [minHeap.size, intervalStart, minHeap.minimum()];
+        }
+    }
+    return [maxNumDrivers, maxIntervalStart, maxIntervalEnd]
+}
 
-// arr1.forEach(num => {
-//     m1.addNum(num);
-//     console.log('m1.findMedian(): ', m1.findMedian()); // 22, 26, 22, 21, 20, 16, 16
-// }); 
+let list1 = [[1,10],[2,7],[3,19],[8,12],[10,20],[11,30],[19,35],[11,30],[14,40],[12,40]];
+let list2 = [[1,14],[13,15]];
+let list3 = [[1,10],[2,7],[3,19],[8,12],[10,20],[11,30]];
+let list4 = [[23,40],[1,30],[7,25],[5,15],[10,18],[18,28],[6,17],[23,28]];
 
-export default MedianTracker
+console.log('maxDriversOnline1: ', maxDriversOnline1(list1)); // 14,19
+console.log('maxDriversOnline1: ', maxDriversOnline1(list2)); // 13,14
+console.log('maxDriversOnline1: ', maxDriversOnline1(list3)); // 11, 12
+console.log('maxDriversOnline1: ', maxDriversOnline2(list4)); // 10,15
+
+console.log('maxDriversOnline2: ', maxDriversOnline2(list1)); // 14,19
+console.log('maxDriversOnline2: ', maxDriversOnline2(list2)); // 13,14
+console.log('maxDriversOnline2: ', maxDriversOnline2(list3)); // 11, 12
+console.log('maxDriversOnline2: ', maxDriversOnline2(list4)); // 10,15
