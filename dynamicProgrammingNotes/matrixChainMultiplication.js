@@ -152,7 +152,7 @@ let printOptimalParenthWrapper = (p) => { // p: array of matrix dimensions
     return optimalParenth[0]
 } 
 
-// console.log('printOptimalParenthWrapper: ', printOptimalParenthWrapper([30, 35, 15, 5, 10, 20, 25]));
+console.log('printOptimalParenthWrapper: ', printOptimalParenthWrapper([30, 35, 15, 5, 10, 20, 25]));
 
 let matrixChainOrderRec = (p, i, j, m, s) => {
     if (i === j) {
