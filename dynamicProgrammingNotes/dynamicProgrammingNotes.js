@@ -9,6 +9,30 @@ four steps:
 3. Compute the value of an optimal solution, typically in a bottom-up fashion.
 4. Construct an optimal solution from computed information.
 
+*/
+
+/*
+Dynamic Programming Problems to Solve
+-knapsack (in grokking knapsack problem set)
+-subset sum (in grokking knapsack problem set)
+-equal sum partition (in grokking knapsack problem set)
+-rod cutting (corbin 15.1)
+-matrix chain (corbin 15.2)
+-longest common subsequence (corbin ch 15.4) 
+-longest increasing subsequence (https://www.geeksforgeeks.org/longest-increasing-subsequence-dp-3/)
+-longest palindrome subsequence (p. 322 in Intro to Rec by Sanchez)
+-find continguous array with max sum 
+-minimum number of jumps
+-given matrix of 0s and 1s, find max size submatrix of only 1s
+-climbing stairs
+-coin change
+
+-optimal binary tree (corbin 15.5)
+
+*/
+
+/*
+
 ******15.1 Rod Cutting********
 
 -Given: 
