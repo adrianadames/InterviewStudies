@@ -40,15 +40,17 @@ let minimumSubsetSumDifferenceRec = (seq) => {
     let subset = [];
     let subsetSum = [0];
     let minDifference = [Infinity];
+    // console.log('totalSubsetSum: ', totalSubsetSum)
 
     let findMinimumSubsetSumDifference = (seq, index, subset, subsetSum, targetSubset, totalSubsetSum, minDifference) => {
-        // base case
-        if (index === seq.length) {
-            return 
-        }
+        
 
         if (subset.length > 0) {
-            let complementSubsetSum = totalSubsetSum-subsetSum; 
+            let complementSubsetSum = totalSubsetSum-subsetSum[0]; 
+            // console.log('subset: ', subset)
+            // console.log('subsetSum[0]: ', subsetSum[0])
+            
+            // console.log('complementSubsetSum: ', complementSubsetSum)
     
             if (Math.abs(complementSubsetSum-subsetSum[0]) < minDifference[0]) {
                 minDifference[0] = Math.abs(complementSubsetSum-subsetSum[0]);
@@ -56,12 +58,18 @@ let minimumSubsetSumDifferenceRec = (seq) => {
                 targetSubset.push(subset.slice());
             }
         }
+
+        // base case
+        if (index === seq.length) {
+            return 
+        }
         
         // not including element at index
         findMinimumSubsetSumDifference(seq, index+1, subset, subsetSum, targetSubset, totalSubsetSum, minDifference);            
         
         // including element at index
         subset.push(seq[index]);
+        // console.log('subset2: ', subset)
         subsetSum[0] += seq[index];
         findMinimumSubsetSumDifference(seq, index+1, subset, subsetSum, targetSubset, totalSubsetSum, minDifference);
         subset.pop();
@@ -70,10 +78,10 @@ let minimumSubsetSumDifferenceRec = (seq) => {
     findMinimumSubsetSumDifference(seq, index+1, subset, subsetSum, targetSubset, totalSubsetSum, minDifference);
     return targetSubset
 }
-
+console.log('minimumSubsetSumDifferenceRec: ', minimumSubsetSumDifferenceRec([1, 2, 3, 9]))
+console.log('minimumSubsetSumDifferenceRec: ', minimumSubsetSumDifferenceRec([1, 2, 7, 1, 5]))
 console.log('minimumSubsetSumDifferenceRec: ', minimumSubsetSumDifferenceRec([1, 3, 100, 4]))
 
-console.log('minimumSubsetSumDifferenceRec: ', minimumSubsetSumDifferenceRec([1, 2, 7, 1, 5]))
 
 
 // let minimumSubsetSumDifferenceMemoized = (seq) => {

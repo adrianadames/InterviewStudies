@@ -25,7 +25,40 @@ Example 3:
     equal sum.
 */
 
-let equalSubsetSumPartitionRec = (seq) => {
+let equalSubsetSumPartitionRec1 = (seq) => {
+    let targetSum = seq.reduce((prev, curr) => prev + curr);
+    if (targetSum % 2 !== 0) {
+        return false
+    } 
+    targetSum = targetSum/2;
+
+    let equalSubsetSumPartitionCheck = (seq, targetSum, index = 0) => {
+        // base cases
+        if (targetSum === 0) {
+            return true
+        }
+        if (index === seq.length) {
+            return false
+        }
+
+        if (targetSum - seq[index] < 0) {
+            // not including element at index
+            return equalSubsetSumPartitionCheck(seq, targetSum, index + 1);
+        } else {
+            // not including element at index
+            let withoutElement = equalSubsetSumPartitionCheck(seq, targetSum, index + 1);
+            // including element at index
+            let withElement = equalSubsetSumPartitionCheck(seq, targetSum - seq[index], index + 1);
+
+            return withoutElement || withElement
+        }
+    }
+    return equalSubsetSumPartitionCheck(seq, targetSum)
+}
+
+// console.log('equalSubsetSumPartitionRec1: ', equalSubsetSumPartitionRec1([1,2,3]))
+
+let equalSubsetSumPartitionRec2 = (seq) => {
     let targetSum = seq.reduce((prev, curr) => prev + curr);
     if (targetSum % 2 !== 0) {
         return false
@@ -64,7 +97,7 @@ let equalSubsetSumPartitionRec = (seq) => {
     return [targetSubsets.length > 0, targetSubsets]
 }
 
-// console.log('equalSubsetSumPartitionRec: ', equalSubsetSumPartitionRec([1,2,3]))
+// console.log('equalSubsetSumPartitionRec2: ', equalSubsetSumPartitionRec2([1,2,3]))
 
 let equalSubsetSumPartitionMemoized = (seq) => {
     let targetSum = seq.reduce((prev, curr) => prev + curr);
@@ -79,16 +112,12 @@ let equalSubsetSumPartitionMemoized = (seq) => {
     let index = 0;
     let store = new Array(seq.length + 1).fill(null).map(() => new Array(targetSum+1).fill(-1));
 
-    let findEqualSubsetSumPartition = (seq, index, subset, subsetSum, targetSum, targetSubsets, store, allSubsets) => {
+    let findEqualSubsetSumPartition = (seq, index, subset, subsetSum, targetSum, targetSubsets, store) => {
         // base cases
         if (subsetSum === targetSum) {
             targetSubsets.push(subset.slice());
-            if (index === seq.length) {
-                allSubsets.push(subset.slice());
-            }
             return true
         } else if (index === seq.length) {
-            allSubsets.push(subset.slice());
             return false
         }
 
@@ -100,7 +129,6 @@ let equalSubsetSumPartitionMemoized = (seq) => {
         // -if so, including the element at index given the subsetSum will not produce the targetSum
         // -move on to checking subsets that don't include that element
         if (subsetSum + seq[index] > targetSum) {
-            store[index][subsetSum] = false;
             return findEqualSubsetSumPartition(seq, index+1, subset, subsetSum, targetSum, targetSubsets, store, allSubsets);
         } else {
             // not including element at index
@@ -112,12 +140,14 @@ let equalSubsetSumPartitionMemoized = (seq) => {
             subset.pop();
             
             // -stores whether the target sum can be reached given the starting subsetSum below 
-            // and any subsets that can be made with any of the elements at or to the right of the index below
+            // and the addition of elements at or to the right of the index below
+            // -if true, we know that, given this subsetSum and the current index we're at, the target sum is reachable
+            // -if false, we know that, given this subsetSum, the target sum isn't reachable by including/excluding elements at or to the right of index
             return store[index][subsetSum] = withoutElement || withElement;
         }
     }
-    findEqualSubsetSumPartition(seq, index, subset, subsetSum, targetSum, targetSubsets, store, allSubsets);
-    console.log('store: ', store);
+    findEqualSubsetSumPartition(seq, index, subset, subsetSum, targetSum, targetSubsets, store);
+    // console.log('store: ', store);
     console.log('targetSubsets: ', targetSubsets);
     return store[0][0]
 }
@@ -125,43 +155,53 @@ let equalSubsetSumPartitionMemoized = (seq) => {
 // console.log('equalSubsetSumPartitionMemoized: ', equalSubsetSumPartitionMemoized([1,2,3]));
 // console.log('equalSubsetSumPartitionMemoized: ', equalSubsetSumPartitionMemoized([3,1,2]));
 // console.log('equalSubsetSumPartitionMemoized: ', equalSubsetSumPartitionMemoized([3,2,1]));
-console.log('equalSubsetSumPartitionMemoized: ', equalSubsetSumPartitionMemoized([5, 7, 2, 10]));
+// console.log('equalSubsetSumPartitionMemoized: ', equalSubsetSumPartitionMemoized([5, 7, 2, 10]));
 // console.log('equalSubsetSumPartitionMemoized: ', equalSubsetSumPartitionMemoized([1,2,3,4,5,1]));
 
-// // same function as above, but deleted all comments for easy viewing on python tutor
-// let equalSubsetSumPartitionMemoizedForPythonTutor = (seq) => {
-//     let targetSum = seq.reduce((prev, curr) => prev + curr);
-//     if (targetSum % 2 !== 0) {
-//         return false
-//     }
-//     targetSum = targetSum/2;
-//     let store = new Array(seq.length + 1).fill(null).map(() => new Array(targetSum+1).fill(-1));
-//     let findEqualSubsetSumPartition = (seq, targetSum,store, index = 0, subset = [], subsetSum =0,  targetSubsets =[],  allSubsets=[]) => {
-//         if (subsetSum === targetSum) {
-//             targetSubsets.push(subset.slice());
-//             if (index === seq.length) {
-//                 allSubsets.push(subset.slice());
-//             }
-//             return true
-//         } else if (index === seq.length) {
-//             allSubsets.push(subset.slice());
-//             return false
-//         }
-//         if (store[index][subsetSum] !== -1) {
-//             return store[index][subsetSum]
-//         }
-//         if (subsetSum + seq[index] > targetSum) {
-//             store[index][subsetSum] = false;
-//             return findEqualSubsetSumPartition(seq, targetSum,store, index+1, subset, subsetSum,  targetSubsets,  allSubsets);
-//         } else {
-//             let withoutElement = findEqualSubsetSumPartition(seq, targetSum,store, index+1, subset, subsetSum,  targetSubsets,  allSubsets);            
-//             subset.push(seq[index]);
-//             let withElement = findEqualSubsetSumPartition(seq, targetSum,store, index+1, subset, subsetSum + seq[index],  targetSubsets,  allSubsets);
-//             subset.pop();  
-//             return store[index][subsetSum] = withoutElement || withElement;
-//         }
-//     }
-//     findEqualSubsetSumPartition(seq, targetSum,store);
-//     return store[0][0]
-// }
-// console.log('equalSubsetSumPartitionMemoizedForPythonTutor: ', equalSubsetSumPartitionMemoizedForPythonTutor([1,2,3,4,5,1]));
+let equalSubsetSumPartitionTabulated = (seq) => {
+    let targetSum = seq.reduce((prev, curr) => prev + curr);
+    if (targetSum % 2 !== 0) {
+        return false
+    }
+    targetSum = targetSum/2;
+    let store = new Array(seq.length).fill(null).map(() => new Array(targetSum +1).fill(-1));
+
+    // -can always find a subset that sums to zero (the empty set)
+    for (let i = 0; i < seq.length; i++) {
+        store[i][0] = true;
+    }
+    console.log('store: ', store);
+
+    // -with only one number, can form a subset only when required sum is equal to its value
+    for (let s = 1; s <= targetSum; s++) {
+        store[0][s] = seq[0] === s;
+    }
+    
+    let subsetSum = 0;
+    for (let index = 1; index < seq.length; index++) {
+        for (let target = 1; target <= targetSum; target++) {
+        }
+    }
+    console.log('store: ', store)
+    return store[seq.length-1][targetSum]
+    // for (let index = 1; index <= seq.length; index++) {
+    //     for (let subsetSum = 1; subsetSum <= targetSum; subsetSum++) {
+    //         if (seq[index-1] + subsetSum > targetSum) {
+    //             // if subsetSum = 3
+    //             store[index][subsetSum] = store[index-1][subsetSum];
+    //         } else {
+    //             store[index][subsetSum] = seq[index-1] + subsetSum;
+    //         }
+    //     }
+    // }
+    // console.log('store: ', store)
+    // return store[seq.length][0]
+}
+
+// console.log('equalSubsetSumPartitionTabulated: ', equalSubsetSumPartitionTabulated([1,2,3]));
+// console.log('equalSubsetSumPartitionTabulated: ', equalSubsetSumPartitionTabulated([3,1,2]));
+console.log('equalSubsetSumPartitionTabulated: ', equalSubsetSumPartitionTabulated([3,1,6,2]));
+
+// console.log('equalSubsetSumPartitionTabulated: ', equalSubsetSumPartitionTabulated([3,2,1]));
+// console.log('equalSubsetSumPartitionTabulated: ', equalSubsetSumPartitionTabulated([5, 7, 2, 10]));
+// console.log('equalSubsetSumPartitionTabulated: ', equalSubsetSumPartitionTabulated([1,2,3,4,5,1]));

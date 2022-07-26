@@ -62,6 +62,39 @@ let subsetSumRec = (seq, targetSum) => {
 // console.log('subsetSumRec: ', subsetSumRec([1, 2, 3, 4, 5], 12)); // true
 // console.log('subsetSumRec: ', subsetSumRec([1, 2, 3, 4, 5], 16)); //false
 
+let subsetSumRec2 = (seq, targetSum) => {
+    let targetSubsets = [];
+    let findSubsetsSummingToTargetSum = (seq, targetSum,targetSubsets, index=0, subset=[], subsetSum=0, allSubsets=[]) => {
+        // console.log('subset: ', subset);
+        // console.log('subsetSum: ', subsetSum);
+        // base cases
+        if (subsetSum === targetSum) {
+            targetSubsets.push(subset.slice());
+            return true
+        }
+        if (index === seq.length) {
+            return false
+        }
+
+        // if including the element at index will put us over target sum, skip associated subset
+        if (subsetSum + seq[index] > targetSum) {
+            findSubsetsSummingToTargetSum(seq, targetSum, targetSubsets, index+1, subset, subsetSum, allSubsets);
+        } else {
+            // without element at index
+            let withoutElement = findSubsetsSummingToTargetSum(seq, targetSum, targetSubsets, index+1, subset, subsetSum, allSubsets);
+            // with element at index
+            subset.push(seq[index]);
+            let withElement = findSubsetsSummingToTargetSum(seq, targetSum, targetSubsets, index+1, subset, subsetSum + seq[index], allSubsets);
+            subset.pop();
+
+            return withoutElement || withElement
+        }
+    }
+    findSubsetsSummingToTargetSum(seq, targetSum, targetSubsets);
+    console.log('targetSubsets: ', targetSubsets);
+    return targetSubsets.length > 0
+}
+
 let subsetSumMemoized = (seq, targetSum) => {
     let targetSubsets = [];
     let store = Array(seq.length+1).fill(null).map(() => Array(targetSum+1).fill(-1));
