@@ -34,7 +34,7 @@ knapsack or we skip it.
 // -recursive approach (time O(n) = 2^n) 
 // -note: doesn't return set of weights associated with highest profit; only the largest profit itself
 let knapsackRec = (weights, profits, capacity, index = 0) => {
-    // base case
+    // base cases
     // -if number of items remaining is zero (i.e. index = num of items), no more profits
     // -if remaining capacity is zero, no more profits
     if (index === weights.length || capacity === 0) {
@@ -63,39 +63,37 @@ let knapsackRec = (weights, profits, capacity, index = 0) => {
 // that we won't have more than numItems * Capacity subprobs => time O(n) = numItems * Capacity
 // -O(numItems * capacity) space for memoization arr and O(numItems) for recursive stack 
 // => space O(n) =  O(numItems * capacity + numItems) = O(numItems * capacity)
-let knapsackRecMemoizedWrapper = (weights, profits, capacity) => {
-    let store = new Array(weights.length + 1).fill(null).map(arrItem => new Array(capacity+1).fill(-1));
-    return knapsackRecMemoized(weights, profits, capacity, 0, store)
-}
+let knapsackMemoized = (weights, profits, capacity) => {
+    let store = new Array(weights.length + 1).fill(null).map(() => new Array(capacity+1).fill(-1));
 
-let knapsackRecMemoized = (weights, profits, capacity, index = 0, store) => {
-    // base case
-    // -if number of items remaining is zero (i.e. index = num of items), no more profits
-    // -if remaining capacity is zero, no more profits
-    if (index === weights.length || capacity === 0) {
-        return 0
+    let findMaxProfit = (weights, profits, capacity, store, index = 0) => {
+        // base case
+        // -if number of items remaining is zero (i.e. index = num of items), no more profits
+        // -if remaining capacity is zero, no more profits
+        if (index === weights.length || capacity === 0) {
+            return 0
+        }
+    
+        // check if answer already present in store
+        if (store[index][capacity] !== -1) {
+            return store[index][capacity]
+        }
+    
+        // if item weights[index] greater than capacity, skip it (i.e. don't include in optimal sol'n)
+        if (weights[index] > capacity) {
+            store[index][capacity] = findMaxProfit(weights, profits, capacity, store, index+1);
+            return store[index][capacity]
+        } else {
+            // return larger b/t profit for subsets including item and 
+            // profit for subsets excluding item
+            let profitExcludingItem = findMaxProfit(weights, profits, capacity, store, index+1);
+            let profitIncludingItem = profits[index] + findMaxProfit(weights, profits, capacity-weights[index], store, index+1);
+            let maxProfit = Math.max(profitExcludingItem, profitIncludingItem);
+            store[index][capacity] = maxProfit;
+            return store[index][capacity]
+        }
     }
-
-    // check if answer already present in store
-    if (store[index][capacity] !== -1) {
-        // console.log('index: ', index, ' capacity: ', capacity);
-        // console.log('stored: ', store[index][capacity]);
-        return store[index][capacity]
-    }
-
-    // if item weights[index] greater than capacity, skip it (i.e. don't include in optimal sol'n)
-    if (weights[index] > capacity) {
-        store[index][capacity] = knapsackRecMemoized(weights, profits, capacity, index+1, store);
-        return store[index][capacity]
-    } else {
-        // return larger b/t profit for subsets including item and 
-        // profit for subsets excluding item
-        let profitExcludingItem = knapsackRecMemoized(weights, profits, capacity, index+1, store);
-        let profitIncludingItem = profits[index] + knapsackRecMemoized(weights, profits, capacity-weights[index], index+1, store);
-        let maxProfit = Math.max(profitExcludingItem, profitIncludingItem);
-        store[index][capacity] = maxProfit;
-        return store[index][capacity]
-    }
+    return findMaxProfit(weights, profits, capacity, store)
 }
 
 // bottom-up tabulated approach
@@ -109,7 +107,7 @@ let knapsackTabulated = (weights, profits, capacity) => {
     // create store matrix dimensions i (rows) by j (columns)
     // store[i][j] = max profit given up to i items and j capacity
     // store[0][j] (zero items) and store[i][0] (zero capacity) will always be zero
-    let store = new Array(weights.length + 1).fill(null).map(arrItem => new Array(capacity+1).fill(0));
+    let store = new Array(weights.length + 1).fill(null).map(() => new Array(capacity+1).fill(0));
 
     for (let i = 1; i <= weights.length; i++) {
         for (let j = 1; j <= capacity; j++) {
@@ -151,10 +149,10 @@ console.log('knapsackRec: ', knapsackRec(weights1b, profits1b, capacity1b));
 console.log('knapsackRec: ', knapsackRec(weights2, profits2, capacity2));
 console.log('knapsackRec: ', knapsackRec(weights3, profits3, capacity3));
 
-console.log('knapsackRecMemoizedWrapper: ', knapsackRecMemoizedWrapper(weights1a, profits1a, capacity1a));
-console.log('knapsackRecMemoizedWrapper: ', knapsackRecMemoizedWrapper(weights1b, profits1b, capacity1b));
-console.log('knapsackRecMemoizedWrapper: ', knapsackRecMemoizedWrapper(weights2, profits2, capacity2));
-console.log('knapsackRecMemoizedWrapper: ', knapsackRecMemoizedWrapper(weights3, profits3, capacity3));
+console.log('knapsackMemoized: ', knapsackMemoized(weights1a, profits1a, capacity1a));
+console.log('knapsackMemoized: ', knapsackMemoized(weights1b, profits1b, capacity1b));
+console.log('knapsackMemoized: ', knapsackMemoized(weights2, profits2, capacity2));
+console.log('knapsackMemoized: ', knapsackMemoized(weights3, profits3, capacity3));
 
 console.log('knapsackTabulated: ', knapsackTabulated(weights1a, profits1a, capacity1a));
 console.log('knapsackTabulated: ', knapsackTabulated(weights1b, profits1b, capacity1b));
