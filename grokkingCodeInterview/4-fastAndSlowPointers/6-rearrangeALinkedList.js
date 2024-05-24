@@ -1,8 +1,8 @@
 /*
 (medium)
 
-Rearrange a LinkedList (medium): 
-Given the head of a Singly LinkedList, write a method to modify 
+Problem Statement: 
+-Given the head of a Singly LinkedList, write a method to modify 
 the LinkedList such that the nodes from the second half of the 
 LinkedList are inserted alternately to the nodes from the first 
 half in reverse order. So if the LinkedList has 
@@ -13,12 +13,9 @@ Your algorithm should not use any extra space and the input
 LinkedList should be modified in-place.
 
 Example 1:
-
-Input: 2 -> 4 -> 6 -> 8 -> 10 -> 12 -> null
-Output: 2 -> 12 -> 4 -> 10 -> 6 -> 8 -> null 
-
+    Input: 2 -> 4 -> 6 -> 8 -> 10 -> 12 -> null
+    Output: 2 -> 12 -> 4 -> 10 -> 6 -> 8 -> null 
 Example 2:
-
-Input: 2 -> 4 -> 6 -> 8 -> 10 -> null
-Output: 2 -> 10 -> 4 -> 8 -> 6 -> null
+    Input: 2 -> 4 -> 6 -> 8 -> 10 -> null
+    Output: 2 -> 10 -> 4 -> 8 -> 6 -> null
 */

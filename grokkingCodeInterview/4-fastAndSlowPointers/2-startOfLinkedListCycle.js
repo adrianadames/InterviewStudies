@@ -2,8 +2,7 @@
 (medium)
 
 Problem Statement: 
-
-Given the head of a Singly LinkedList that contains a cycle, 
+-Given the head of a Singly LinkedList that contains a cycle, 
 write a function to find the starting node of the cycle.
 */
 
@@ -12,24 +11,6 @@ class Node {
         this.value = value;
         this.next = next;
     }
-}
-
-function linkedListCycle(head) {
-    if (head.next === null) {
-        return false
-    }
-    let slow = head;
-    let fast = head.next;
-
-    while (fast !== null && fast.next !== null) {
-        if (slow.value === fast.value) {
-            return true
-        } else {
-            slow = slow.next;
-            fast = fast.next.next;
-        }
-    }
-    return false
 }
 
 let head = new Node(1);
@@ -42,30 +23,81 @@ head.next.next.next.next.next = new Node(6);
 // // 6th node points to null
 // console.log('linked list has cycle: ', linkedListCycle(head));
 
-// // 7th node = 3rd node
+// 7th node = 3rd node
 // head.next.next.next.next.next.next = head.next.next;
 // console.log('linked list has cycle: ', linkedListCycle(head));
 
 // // 7th node = 2nd node
-// head.next.next.next.next.next.next = head.next.next.next;
+head.next.next.next.next.next.next = head.next;
 // console.log('linked list has cycle: ', linkedListCycle(head));
 
 
 
 // strategy 
+// -first use the strategy from problem 1 to detect the cycle (i.e. when fast 
+// pointer (p2 here) equals slow pointer(p1 here))
+// -pause
+// -keeping p1 where it is, move p2 until it points to p1; the number of steps
+//  for p2 to reach p1 is the size of the cycle
 
+// -now put the two pointers at the start of the list again; 
+// -increment p1 the size of the cycle; 
+// -now increment both pointer 1 and 2 until they both point at the same node 
+// (you've traversed the size of the cycle in the previous step, so whatever
+// slack or length remains is the length of the list when the cycle begins (l_exludingCycle))
+
+// time: O(n) = n;
+// space: O(n) = 1;
 function startOfLinkedListCycle(head) {
-    // check if it has a cycle using code from problem 1-linkedListCycle.js
+    let p1 = head; 
+    let p2 = head.next;
 
-    // if it does, 
-    // get the size of the cycle (i.e. how many nodes travered before I reach same node)
-    
-    // set a pointer to the head
-    // let pointerA = head;
-    
-    // make another pointer and set it point to the `${sizeOfCycle}` + 'th' node
-    // let pointerB = head
-    // while sizeOfCycle > 0, pointerB = pointerB.next; sizeOfCycle -= 1; 
+    // -we know the list has a cycle; 
+    // -we move the pointers until we detect the cycle 
+    while (p2.value !== p1.value) {
+        p2 = p2.next.next; // fast pointer
+        p1 = p1.next; // slow pointer
+    }    
+    // -we move the fast pointer to start to determine the size of the cycle;
+    p2 = p2.next.next;
+    let l_cycle = 2;
 
-    // while pointerA !== pointerB, pointerA = pointerA.next, pointerB = pointerB.next
+    while (p2.value !== p1.value) {   
+        if (p2.next.value === p1.value) {  
+            p2 = p2.next;
+            l_cycle +=1;
+        } else {
+            p2 = p2.next.next;
+            l_cycle +=2
+        }
+    } 
+    //-at this point both pointers are on the same spot
+    // and l_cycle equals the length of the list's cycle
+    
+    //-we move p1 and put it at the beginning of the list
+    // and step through the list for the length of the cycle
+    p1 = head;
+    for (let i = 0; i < l_cycle; i++) {
+        p1 = p1.next; 
+    }
+    //-we move p2 back to the front of the list
+
+    //-with p2 at the head and p1 at a displacement l_cycle steps
+    // from the head, we simulataneously step each pointer until 
+    // they equal each other
+    // -this length is the amount of length on the track sans the 
+    // cycle, i.e., the length until the cycle begins
+    let l_excludingCycle = 0; // l_excludingCycle + l_cycle = total number of nodes plus 1
+    p2 = head; 
+
+    while (p2.value !== p1.value) {
+        l_excludingCycle += 1;
+        p2 = p2.next;
+        p1 = p1.next;
+    }
+    // console.log('l_cycle: ', l_cycle);
+    // console.log('l_excludingCycle: ', l_excludingCycle);
+    return p1
 }
+
+console.log('startOfLinkedListCycle: ', startOfLinkedListCycle(head));

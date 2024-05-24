@@ -26,8 +26,8 @@ function maxSumSubarrayOfSizeK(arr, k) {
 
     for (let windowEnd = 0; windowEnd < arr.length; windowEnd++) {
         windowSum += arr[windowEnd];
-        // console.log('windowSum: ', windowSum)
         if (windowEnd >= k-1) {
+            console.log('windowEnd >= k-1')
             if (windowSum > currentMax) {
                 currentMax = windowSum;
             } 
