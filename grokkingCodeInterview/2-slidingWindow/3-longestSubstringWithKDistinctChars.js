@@ -135,7 +135,6 @@ function longestSubstringWithKDistinctChars2(str, K) {
             // - if adding this new key-value causes the number of entries in the object to be greater than k,
             //   then we need to decrement the size of the window until its size is k again;  we reduce 
             //   the window size by incrementing windowStart by 1; 
-
             let numberOfDistinctChars = 0; 
             for (let key in distinctChars) {
                 numberOfDistinctChars++; 
@@ -152,15 +151,14 @@ function longestSubstringWithKDistinctChars2(str, K) {
                         distinctChars[str[windowStart]] -= 1;
                         windowStart++;
                         substringLength--;
-                    }
-                }
+                    };
+                };
             };
         };
     };
-    // console.log('windowEnd3: ', windowEnd)
-    return longestSubstringLength
-}
 
+    return longestSubstringLength
+};
 
 console.log(longestSubstringWithKDistinctChars2('araaci', 2)) // returns 4
 console.log(longestSubstringWithKDistinctChars2('araaci', 1)) // returns 2
