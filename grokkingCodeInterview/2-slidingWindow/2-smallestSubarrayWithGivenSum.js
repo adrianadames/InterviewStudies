@@ -97,7 +97,7 @@ function smallestSubarrayWithGivenSum2(arr,S) {
         // - if windowSum is greater than S, shrink the window from the front to see if it still
         // holds true with the smaller window
         if (windowSum >= S) {
-            if (windowLength == 1) {
+            if (windowLength === 1) {
                 return 1
             }
             if (windowLength < smallestSubarrayLength) {
