@@ -21,6 +21,8 @@ Explanation: The only substring containing both the words is "catfox".
 */
 
 function wordsConcatenation(str, wordsArr) {
-    // - given string and list of words, find all the starting indices of substrings
-    // in the given string that are a concatenation of all the given words exactly 
+ 
 }
+
+// console.log('wordsConcatenation(str, wordsArr): ', wordsConcatenation("catfoxcat", ["cat", "fox"]));
+// console.log('wordsConcatenation(str, wordsArr): ', wordsConcatenation("catcatfoxfox", ["cat", "fox"]));

@@ -20,30 +20,8 @@ Example 2:
 */
 
 function longestContinuousSubarrayOfAllOnes(arr, k) {
-    let windowStart = 0; 
-    let windowEnd = 0; 
-    let maxSubarrayLength = 0; 
-    let zeroTracker = 0;  
 
-    while (windowEnd < arr.length) {
-        if (arr[windowEnd] === 0) {
-            zeroTracker++; 
-        }
-
-        while (zeroTracker > k) {
-            if (arr[windowStart] === 0) {
-                zeroTracker--;
-            }
-            windowStart++; 
-        }
-
-        maxSubarrayLength = Math.max(maxSubarrayLength, windowEnd - windowStart + 1);
-
-        windowEnd++;
-    };
-
-    return maxSubarrayLength
 };
 
-console.log('longestContinuousSubarrayOfAllOnes: ', longestContinuousSubarrayOfAllOnes([0, 1, 1, 0, 0, 0, 1, 1, 0, 1, 1], 2));
-console.log('longestContinuousSubarrayOfAllOnes: ', longestContinuousSubarrayOfAllOnes([0, 1, 0, 0, 1, 1, 0, 1, 1, 0, 0, 1, 1], 3));
+// console.log('longestContinuousSubarrayOfAllOnes: ', longestContinuousSubarrayOfAllOnes([0, 1, 1, 0, 0, 0, 1, 1, 0, 1, 1], 2));
+// console.log('longestContinuousSubarrayOfAllOnes: ', longestContinuousSubarrayOfAllOnes([0, 1, 0, 0, 1, 1, 0, 1, 1, 0, 0, 1, 1], 3));
