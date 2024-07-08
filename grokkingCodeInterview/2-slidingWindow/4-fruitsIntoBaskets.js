@@ -26,9 +26,44 @@ Example 2:
 This can be done if we start with the second letter: ['B', 'C', 'B', 'B', 'C']
 */
 
-let fruitsIntoBaskets = (arr) => {
+// time complexity: O(n)
+// space complexity: O(1)
 
+// - essentially the same problem as find the maximum continuous subarray length
+// with at most K distinct chars, except K is set to two; 
+let fruitsIntoBaskets = (arr) => {
+    let maxNumberOfFruits = 0; 
+    let fruitTracker = {}; 
+    let windowStart = 0;
+    let numberOfDistinctFruits = 0; 
+
+    for (let windowEnd = 0; windowEnd < arr.length; windowEnd++) {
+        // - add fruit to tracker
+        if (!fruitTracker[arr[windowEnd]]) {
+            fruitTracker[arr[windowEnd]] = 0; 
+            numberOfDistinctFruits++;
+        }
+        fruitTracker[arr[windowEnd]]++; 
+
+        // - if adding this fruit causes the number of distinct fruits to be greater than 2, 
+        // we have to shrink window from left until the number of distinct fruits is less than 2
+        while (numberOfDistinctFruits > 2) {
+            fruitTracker[arr[windowStart]]--; 
+            if (fruitTracker[arr[windowStart]] === 0) {
+                numberOfDistinctFruits--;
+                delete fruitTracker[arr[windowStart]];
+            }
+            windowStart++;
+        }
+
+        maxNumberOfFruits = Math.max(windowEnd - windowStart + 1, maxNumberOfFruits);
+    }
+    return maxNumberOfFruits
 }
 
-// console.log('fruitsIntoBaskets: ', fruitsIntoBaskets(['A', 'B', 'C', 'A', 'C']));
-// console.log('fruitsIntoBaskets: ', fruitsIntoBaskets(['A', 'B', 'C', 'B', 'B', 'C']));
+console.log(fruitsIntoBaskets(['A', 'B', 'C', 'A', 'C'])); // Output: 3
+console.log(fruitsIntoBaskets(['A', 'B', 'C', 'B', 'B', 'C'])); // Output: 5
+console.log(fruitsIntoBaskets(['A', 'B', 'A', 'B', 'A', 'B'])); // Output: 6
+console.log(fruitsIntoBaskets(['A'])); // Output: 1
+console.log(fruitsIntoBaskets([])); // Output: 0
+console.log(fruitsIntoBaskets(['A', 'A', 'A', 'A'])); // Output: 4
