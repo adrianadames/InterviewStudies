@@ -19,30 +19,40 @@ Example 2:
     longest contiguous subarray of 1s having length 9.
 */
 
+// time complexity: O(N); 
+// space complexity: O(1);
 function longestContinuousSubarrayOfAllOnes(arr, k) {
+    // - we use the sliding window method
+    // - as we expand the window, we need to make sure that the the following condition is met: 
+    // (windowEnd - windowStart + 1 - numberOfOnesInWindow) > k
+    
+    let numberOfOnesInWindow = 0; 
+    let longestSubarrayLength = 0; 
     let windowStart = 0; 
-    let windowEnd = 0; 
-    let maxSubarrayLength = 0; 
-    let zeroTracker = 0;  
 
-    while (windowEnd < arr.length) {
+    for (let windowEnd = 0; windowEnd < arr.length; windowEnd++) {
+        // - if the number we're about to add is 0, we need to check if adding it violated our condition; 
         if (arr[windowEnd] === 0) {
-            zeroTracker++; 
-        }
-
-        while (zeroTracker > k) {
-            if (arr[windowStart] === 0) {
-                zeroTracker--;
+            while (windowEnd - windowStart + 1 - numberOfOnesInWindow > k) {
+                // - if condition violated, shrink window from the left
+                if (arr[windowStart] === 1) {
+                    numberOfOnesInWindow--;
+                    windowStart++;
+                } else {
+                    windowStart++;
+                }
             }
-            windowStart++; 
+        } else {
+            // - if the number we're about to add is a 1;
+            numberOfOnesInWindow++;
         }
-
-        maxSubarrayLength = Math.max(maxSubarrayLength, windowEnd - windowStart + 1);
-
-        windowEnd++;
-    };
-
-    return maxSubarrayLength
+        // - after adding the number at windowEnd and shrinking the window if need be
+        // we check if this length of the window is the longest encountered so far; 
+        if (windowEnd - windowStart + 1 > longestSubarrayLength) {
+            longestSubarrayLength = windowEnd - windowStart + 1;
+        }
+    }
+    return longestSubarrayLength
 };
 
 console.log('longestContinuousSubarrayOfAllOnes: ', longestContinuousSubarrayOfAllOnes([0, 1, 1, 0, 0, 0, 1, 1, 0, 1, 1], 2));
