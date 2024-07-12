@@ -27,10 +27,27 @@ Explanation: No substring in the given string has all characters of the pattern.
 // - Given a string and a pattern, find the smallest substring in the given string 
 // which has all the characters of the given pattern.
 function smallestWindowContainingSubstring(str, pattern) {
+    let patternTracker = {};
+    for (let i = 0; i < pattern.length; i++) {
+        if (!patternTracker[pattern[i]]) {
+            patternTracker[pattern[i]] = 0;
+        }
+        patternTracker[pattern[i]]++;
+    }
+    // console.log('patternTracker: ', patternTracker);
 
+    let smallestSubstringLength = Infinity;
+    let smallestSubstring = ''
+    let windowTracker = {};
+    let windowStart = 0;
+
+    for (let windowEnd = 0; windowEnd < str.length; windowEnd++) {
+
+    }
+    return smallestSubstring
 };
 
 
-// console.log('smallestWindowContainingSubstring(): ', smallestWindowContainingSubstring('aabdec', 'abc'));
-// console.log('smallestWindowContainingSubstring(): ', smallestWindowContainingSubstring('abdabca', 'abc'))
-// console.log('smallestWindowContainingSubstring(): ', smallestWindowContainingSubstring('adcad', 'abc'))
+console.log('smallestWindowContainingSubstring(): ', smallestWindowContainingSubstring('aabdec', 'abc'));
+console.log('smallestWindowContainingSubstring(): ', smallestWindowContainingSubstring('abdabca', 'abc'))
+console.log('smallestWindowContainingSubstring(): ', smallestWindowContainingSubstring('adcad', 'abc'))
