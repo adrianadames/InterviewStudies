@@ -27,6 +27,54 @@ Example 3:
 // -so if the Target is 3 and one triplet sums to 2 and the other triplet 
 // sums to 4, return 2 
 
+
+function tripletSumCloseToTarget2 (arr, target) {
+    arr.sort((a,b) => (a-b));
+    let closestSum = Infinity; 
+
+    for (let fixedPointer = 0; fixedPointer < arr.length - 2; fixedPointer++) {
+        let leftPointer = fixedPointer + 1;
+        let rightPointer = arr.length -1; 
+
+        while (leftPointer < rightPointer) {
+            let sum = arr[fixedPointer] + arr[leftPointer] + arr[rightPointer];
+
+            if (Math.abs(sum - target) < Math.abs(closestSum - target)) {
+                closestSum = sum;
+            } else if (Math.abs(sum - target) === Math.abs(closestSum - target)) {
+                closestSum = Math.min(sum, closestSum);
+            }
+
+            // - if sum needs to be bigger, increase pointer on the left; 
+            if (sum < target) {
+                leftPointer++; 
+            } else {
+                rightPointer--;
+            }
+        }
+    };
+    return closestSum;
+};
+
+console.log('tripletSumCloseToTarget: ', tripletSumCloseToTarget2([-2, 0, 1, 2], 2)); // 1 
+console.log('tripletSumCloseToTarget: ', tripletSumCloseToTarget2([-3, -1, 1, 2], 1)); // 0 
+console.log('tripletSumCloseToTarget: ', tripletSumCloseToTarget2([1, 0, 1, 1], 100)); // 3
+console.log('tripletSumCloseToTarget: ', tripletSumCloseToTarget2([0, 0, 2, 4], 3)); // 2
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 // time: O(n) = n^3*log(n)
 // space: O(n) = 1;
 let tripletSumCloseToTarget = (arr, target) => {
@@ -64,6 +112,6 @@ let tripletSumCloseToTarget = (arr, target) => {
     return closestSum
 }
 
-console.log('tripletSumCloseToTarget: ', tripletSumCloseToTarget([-2, 0, 1, 2], 2));
-console.log('tripletSumCloseToTarget: ', tripletSumCloseToTarget([-3, -1, 1, 2], 1));
-console.log('tripletSumCloseToTarget: ', tripletSumCloseToTarget([1, 0, 1, 1], 100));
+// console.log('tripletSumCloseToTarget: ', tripletSumCloseToTarget([-2, 0, 1, 2], 2));
+// console.log('tripletSumCloseToTarget: ', tripletSumCloseToTarget([-3, -1, 1, 2], 1));
+// console.log('tripletSumCloseToTarget: ', tripletSumCloseToTarget([1, 0, 1, 1], 100));
