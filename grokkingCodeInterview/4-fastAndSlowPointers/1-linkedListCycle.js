@@ -7,25 +7,28 @@ determine if the LinkedList has a cycle in it or not.
 */
 
 class Node {
-    constructor(value, next = null) {
-        this.value = value;
+    constructor(id, next = null) {
+        this.id = id; 
         this.next = next;
     }
 }
 
+// time complexity: O(n)
+// space complexity: O(2) = O(1);
 function linkedListCycle(head) {
-    if (head.next === null) {
+    if (head === null || head.next === null) {
         return false
     }
-    let slow = head;
-    let fast = head.next;
+    let slowPointer = head; 
+    let fastPointer = head; 
 
-    while (fast !== null && fast.next !== null) {
-        if (slow.value === fast.value) {
-            return true
-        } else {
-            slow = slow.next;
-            fast = fast.next.next;
+    // - if fastPointer is null, we don't have a cycle
+    // - if fastPointer.next is null, we don't have a cycle;
+    while (fastPointer && fastPointer.next) {
+        slowPointer = slowPointer.next;
+        fastPointer = fastPointer.next.next;
+        if (fastPointer === slowPointer) {
+            return true; 
         }
     }
     return false
@@ -38,17 +41,13 @@ head.next.next.next = new Node(4);
 head.next.next.next.next = new Node(5);
 head.next.next.next.next.next = new Node(6);
 
-// 6th node points to null
+// // 6th node points to null
 console.log('linked list has cycle: ', linkedListCycle(head));
 
-// 7th node = 3rd node
-head.next.next.next.next.next.next = head.next.next;
-console.log('linked list has cycle: ', linkedListCycle(head));
+// // 7th node = 3rd node (i.e. have 6th node point to the 3rd node)
+// head.next.next.next.next.next.next = head.next.next;
+// console.log('linked list has cycle: ', linkedListCycle(head));
 
-// 7th node = 2nd node
-head.next.next.next.next.next.next = head.next.next.next;
-console.log('linked list has cycle: ', linkedListCycle(head));
-
-// big O
-// time complexity: O(n)
-// space complexity: O(1) 
+// // 7th node = 2nd node (i.e. have 6th node point to the 2nd node)
+// head.next.next.next.next.next.next = head.next.next.next;
+// console.log('linked list has cycle: ', linkedListCycle(head));
