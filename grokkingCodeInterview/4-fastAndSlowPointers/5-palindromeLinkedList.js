@@ -3,7 +3,9 @@
 
 Problem Statement: 
 -Given the head of a Singly LinkedList, write a method to check 
-if the LinkedList is a palindrome or not.
+if the LinkedList is a palindrome or not. (palindrome: a word, phrase, 
+or sequence that reads the same backward as forward, e.g., madam or 
+nurses run.)
 -Your algorithm should use constant space and the input 
 LinkedList should be in the original form once the algorithm is 
 finished. The algorithm should have O(N) time complexity 
@@ -17,9 +19,6 @@ Example 2:
     Output: false
 */
 
-// -palindrome: a word, phrase, or sequence that reads the 
-// same backward as forward, e.g., madam or nurses run.
-
 class Node {
     constructor(value, next = null) {
         this.value = value; 
@@ -28,23 +27,21 @@ class Node {
 };
 
 function reverseLinkedList(head) {
-    let currentNode = head;  // points to head node 1
-    let nextNode = head.next;  // points to node 2
-    let newNextNode = null; // points to null
+    let currentNode = head;
+    let newNextNode = null;
 
-    while (nextNode) {
-        currentNode.next = newNextNode; // node 1 next is now null; null <- 1  2 -> null
-        newNextNode = currentNode;  // newNext now point to 1;
-        currentNode = nextNode // currentNode now points to 2; 
-        nextNode = currentNode.next // nextNode now point to 3; 
+    // - when newNext points to current and current points to null
+    // is when we're done reversing and we return the head of the 
+    // reversed linked list (what was supposed to be the newNext); 
+    while (currentNode) {
+        let nextNode = currentNode.next;
+        currentNode.next = newNextNode;
+        newNextNode = currentNode; 
+        currentNode = nextNode;
     }
 
-    currentNode.next = newNextNode;
-
-    return currentNode; 
+    return newNextNode; 
 };
-
-
 
 // - first find the middle of the linked list; 
 // - then reverse the second half of the list; 
@@ -63,17 +60,18 @@ function palindromeLinkedList(head) {
     while (fast.next !== null && fast.next.next !== null) {
         slow = slow.next;
         fast = fast.next.next; 
-        count++;
+        count++; // -steps to the middle
     }
 
     // - if number of nodes is odd, slow is pointing to middle node
     // - if number of nodes is even, slow pointing to first of the two middle nodes; 
     let middlePointer = slow; 
 
+    // - assume it's a palindrome
     let palindromeCheck = true; 
 
-    // - if number of nodes is even;
-    if (fast.next && fast.next.next === null) {  
+    // - if number of nodes is even (i.e. slow pointing to first of the two middle nodes);
+    if (fast.next !== null && fast.next.next === null) {  
         // - the two middle nodes must equal each other for it to be a palindrome; 
         if (middlePointer.value === middlePointer.next.value) {
             // - if the two middle nodes are equal, advance the middle pointer by one; 
@@ -85,42 +83,24 @@ function palindromeLinkedList(head) {
 
     // - if number of nodes odd, leave middle pointer where it is; 
 
-
     // - now, to check if the list is a palindrome we reverse the second half of the list by 
     // passing the middle node to the reverseLinkedList function; we check if the two sides of 
-    // the list are equal, and then we reverse the linked list again starting with the middle node
-
+    // the list are equal by moving the pointers at the heads of each list inwards one at a time,
+    // for a number of count times-- the number of steps to the middle
     let firstHalf = head; 
     let secondHalfReversed = reverseLinkedList(middlePointer);
-    // console.log('secondHalfReversed: ', secondHalfReversed);
 
-    // -having reversed the second half of the list, we now check if it's equal to first half
-
-    let leftPointer = head; 
-    let rightPointer = secondHalfReversed;
     for (let i = 0; i < count ; i++) {
-        if (leftPointer.value !== rightPointer.value) {
+        if (firstHalf.value !== secondHalfReversed.value) {
             palindromeCheck = false;
         }
-        leftPointer = leftPointer.next;
-        rightPointer = rightPointer.next
-    }
+        firstHalf = firstHalf.next;
+        secondHalfReversed = secondHalfReversed.next;
+    };
 
-    // - then we need to re-reverse the second half of the linked list so that the original 
-    // linked list stays the same as it was originally 
+    // - then we need to re-reverse the second half of the linked list so that the 
+    // linked list is the same as it was originally 
     reverseLinkedList(secondHalfReversed);
-
-    // -original linked list: 
-    // console.log('original linked list: ', head)
-
-    // // - checking to make sure linkedlist is the same as original 
-    // let nodes = [];
-    // let node = head; 
-    // while (node !== null) {
-    //     nodes.push(node.value);
-    //     node = node.next;
-    // }
-    // // console.log('nodes: ', nodes)
 
     return palindromeCheck;
 }
@@ -159,5 +139,4 @@ head.next.next.next = new Node(4);
 head.next.next.next.next = new Node(2);
 head.next.next.next.next.next = new Node(2);
 
-// console.log('reverseLinkedList: ', reverseLinkedList(head));
 console.log('palindromeLinkedList: ', palindromeLinkedList(head));
