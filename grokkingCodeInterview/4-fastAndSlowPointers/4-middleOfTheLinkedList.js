@@ -18,9 +18,32 @@ Example 3:
     Output: 4
 */
 
-// -start with slow and fast pointer p1 and p2 respectively 
-// pointing at the head
-// -p1 moves one step at a time and p2 moves two steps at a time
-// -I drew it out and proved to myself that if p2.next === null, 
-// p1 will be pointing at the middle node; and if p2.next.next === null,
-// p1.next will be the 2nd middle node
+class Node {
+    constructor(value, next = null) {
+        this.value = value; 
+        this.next = next;
+    }
+};
+
+function middleOfLinkedList(head) {
+    let fast = head;
+    let slow = head;
+
+    // - if fast === null there's an even number of nodes; 
+    // - if fast.next === null there's an odd number of nodes;
+    while (fast !== null && fast.next !== null) {
+        fast = fast.next.next;
+        slow = slow.next;
+    }
+
+    return slow
+};
+
+let head = new Node(1);
+head.next = new Node(2); 
+head.next.next = new Node(3);
+head.next.next.next = new Node(4);
+head.next.next.next.next = new Node(5);
+head.next.next.next.next.next = new Node(6);
+
+console.log('middleOfLinkedList: ', middleOfLinkedList(head));
