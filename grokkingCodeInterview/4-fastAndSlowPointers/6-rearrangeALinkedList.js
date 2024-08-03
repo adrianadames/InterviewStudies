@@ -47,12 +47,9 @@ n3.next.next = new Node(3);
 n3.next.next.next = new Node(4);
 n3.next.next.next.next = new Node(5);
 
-
-
 function reverseLinkedList(head) {
     let newNext = null;
     let current = head; 
-    
 
     while (current !== null) {     
         let currentNext = current.next; // - points to the original next node
@@ -63,7 +60,6 @@ function reverseLinkedList(head) {
 
     return newNext;
 }
-
 
 function printLinkedList(head) {
     let node = head; 
@@ -79,12 +75,11 @@ function printLinkedList(head) {
 // console.log('printLinkedList: ', printLinkedList(reverseLinkedList(n1)));
 
 
-
 function rearrangeALinkedList(head) {
     // - first find the middle of the linked list; 
-    // - if we have an even number of nodes, start the reverse on the second half;
-    // - if we have an odd number of nodes, start the reverse in the latter half (not including middle node); 
-    // in this case; the middle node will end up as the last node; 
+    // - if we have an even number of nodes, start the reverse in the latter half (not including
+    // the first middle node);
+    // - if we have an odd number of nodes, the middle node will end up as the last node; 
 
     let fast = head; 
     let slow = head;
