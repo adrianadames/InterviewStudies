@@ -13,25 +13,6 @@ class Node {
     }
 }
 
-let head = new Node(1);
-head.next = new Node(2); 
-head.next.next = new Node(3);
-head.next.next.next = new Node(4);
-head.next.next.next.next = new Node(5);
-head.next.next.next.next.next = new Node(6);
-
-// // 6th node points to null
-// console.log('linked list has cycle: ', linkedListCycle(head));
-
-// 7th node = 3rd node
-// head.next.next.next.next.next.next = head.next.next;
-// console.log('linked list has cycle: ', linkedListCycle(head));
-
-// // 7th node = 2nd node
-head.next.next.next.next.next.next = head.next;
-// console.log('linked list has cycle: ', linkedListCycle(head));
-
-
 
 // strategy 
 // -first use the strategy from problem 1 to detect the cycle (i.e. when fast 
@@ -54,7 +35,7 @@ function startOfLinkedListCycle(head) {
 
     // -we know the list has a cycle; 
     // -we move the pointers until we detect the cycle 
-    while (p2.value !== p1.value) {
+    while (p2 !== p1) {
         p2 = p2.next.next; // fast pointer
         p1 = p1.next; // slow pointer
     }    
@@ -62,8 +43,8 @@ function startOfLinkedListCycle(head) {
     p2 = p2.next.next;
     let l_cycle = 2;
 
-    while (p2.value !== p1.value) {   
-        if (p2.next.value === p1.value) {  
+    while (p2 !== p1) {   
+        if (p2.next === p1) {  
             p2 = p2.next;
             l_cycle +=1;
         } else {
@@ -90,14 +71,31 @@ function startOfLinkedListCycle(head) {
     let l_excludingCycle = 0; // l_excludingCycle + l_cycle = total number of nodes plus 1
     p2 = head; 
 
-    while (p2.value !== p1.value) {
+    while (p2 !== p1) {
         l_excludingCycle += 1;
         p2 = p2.next;
         p1 = p1.next;
     }
     // console.log('l_cycle: ', l_cycle);
     // console.log('l_excludingCycle: ', l_excludingCycle);
-    return p1
+    return p1.value
 }
 
-console.log('startOfLinkedListCycle: ', startOfLinkedListCycle(head));
+
+let head = new Node(1);
+head.next = new Node(2); 
+head.next.next = new Node(3);
+head.next.next.next = new Node(4);
+head.next.next.next.next = new Node(5);
+head.next.next.next.next.next = new Node(6);
+
+// // 6th node points to null
+// console.log('startOfLinkedListCycle: ', startOfLinkedListCycle(head));
+
+// 7th node = 3rd node
+// head.next.next.next.next.next.next = head.next.next;
+// console.log('startOfLinkedListCycle: ', startOfLinkedListCycle(head));
+
+// // 7th node = 2nd node
+// head.next.next.next.next.next.next = head.next;
+// console.log('startOfLinkedListCycle: ', startOfLinkedListCycle(head));
