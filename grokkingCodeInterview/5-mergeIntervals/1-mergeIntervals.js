@@ -22,52 +22,26 @@ Output: [[1,6]]
 Explanation: Since all the given intervals overlap, we merged them into one.
 */
 
-// i think the big O of this function is O(n*log(n))
+// time: O(n*log(n))
+// space: O(n);
 
 function mergeIntervals(arr) {
-    let intervals = arr;
-    let mergedIntervals = [];
-    
-    if (intervals.length < 2) {
-        return intervals
-    }
+    // - first sort intervals from earliest start time to the latest start time
+    arr.sort((a, b) => a[0] - b[0]);
+    // console.log('arr: ', arr);
+    let currentInterval = arr[0];
+    let mergedIntervals = [currentInterval];
 
-    let sortFunction = (a,b) => b[0]-a[0];
-
-    // bigO = O(n*log(n))
-    intervals.sort(sortFunction);
-
-    // bigO = O(n)
-    while (intervals.length > 1) {
-        let intervalA = intervals[intervals.length-1];
-        let intervalB = intervals[intervals.length-2];
-
-        // if end time of intervalA is greater than the start time of interval B, 
-        // we have overlap
-        if (intervalB[0] < intervalA[1]) {
-            // get the endTime of new merged interval
-            let endTime = Math.max(intervalA[1], intervalB[1]);
-
-            // replace intervalB value with the value of the new merged interval
-            intervalB = [intervalA[0], endTime];
-
-            // replace the old value of intervalB in the intervals array with the 
-            // new interval B 
-            intervals[intervals.length-2] = intervalB;
-
-            // pop off intervalA from the intervals array
-            intervals.pop();
-        } else {
-            // we do not have overlap, so we pop off the end value in intervals 
-            // and push it into mergedIntervals
-            mergedIntervals.push(intervals.pop())
+    for (let i = 1; i < arr.length; i++) {
+        let nextInterval = arr[i];
+        // - if there's no overlap, we can push next interval to merged, and make next current
+        if (nextInterval[0] > currentInterval[1]) {
+            mergedIntervals.push(nextInterval);
+            currentInterval = nextInterval;        
+        } else { // - if there's overlap, merge the intervals
+            currentInterval[1] = Math.max(nextInterval[1], currentInterval[1]);            
         }
     }
-
-    // at this point the length of the intervals array is just one, so we just pop
-    // it into the merged intervals array 
-    mergedIntervals.push(intervals.pop());
-
     return mergedIntervals
 }
 
@@ -76,7 +50,7 @@ intervals2 = [[1,4], [2,6], [3,5]];
 intervals3 = [[1,4], [2,5], [7,9]];
 intervals4 = [[6,7], [2,4], [5,9]];
 
-console.log(mergeIntervals(intervals1));
-console.log(mergeIntervals(intervals2));
-console.log(mergeIntervals(intervals3));
-console.log(mergeIntervals(intervals4));
+console.log(mergeIntervals(intervals1)); // [ [ 1, 4 ], [ 5, 9 ] ]
+console.log(mergeIntervals(intervals2)); // [ [ 1, 6 ] ]
+console.log(mergeIntervals(intervals3)); // [ [ 1, 5 ], [ 7, 9 ] ]
+console.log(mergeIntervals(intervals4)); // [ [ 2, 4 ], [ 5, 9 ] ]
