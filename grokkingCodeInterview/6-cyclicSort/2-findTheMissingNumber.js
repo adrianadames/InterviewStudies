@@ -18,3 +18,33 @@ Input: [8, 3, 5, 2, 4, 6, 0, 1]
 Output: 7
 
 */
+
+// - sort the array from smallest to biggest
+// and then loop to find missing number
+
+function findMissingNumber(arr) {
+    let i = 0;
+
+    while (i < arr.length) {
+        let currentValue = arr[i]; 
+        let correctIndex = arr[i]; 
+
+        let valueAtCorrectIndex = arr[correctIndex]; 
+
+        if (arr[i] < arr.length && arr[i] !== arr[correctIndex]) {
+            arr[i] = valueAtCorrectIndex; 
+            arr[correctIndex] = currentValue; 
+        } else {
+            i++;
+        };
+    };
+    
+    for (let i = 0; i < arr.length; i++) {
+        if (arr[i] !== i) {
+            return i
+        }
+    }
+};
+
+console.log(findMissingNumber([4, 0, 3, 1]));  // Output: 2
+console.log(findMissingNumber([8, 3, 5, 2, 4, 6, 0, 1])); // Output: 7

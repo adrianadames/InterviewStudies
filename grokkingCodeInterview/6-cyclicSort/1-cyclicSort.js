@@ -32,3 +32,24 @@ Input: [1, 5, 6, 4, 3, 2]
 Output: [1, 2, 3, 4, 5, 6]
 
 */
+
+function cyclicSort(arr) {
+    let i = 0; 
+    while (i < arr.length) {
+        let currentValue = arr[i];
+        let correctIndex = arr[i] - 1; // - if value is 1, it's correct index is 0; 
+        let numberAtCorrectIndex = arr[correctIndex]; 
+
+        if (arr[i] !== arr[correctIndex]) {
+            arr[i] = numberAtCorrectIndex; 
+            arr[correctIndex] = currentValue; 
+        } else {
+            i++;
+        }
+    }
+    return arr;
+}
+
+console.log('cyclicSort: ', cyclicSort([3, 1, 5, 4, 2]));
+console.log('cyclicSort: ', cyclicSort([2, 6, 4, 3, 1, 5]));
+console.log('cyclicSort: ', cyclicSort([1, 5, 6, 4, 3, 2]));

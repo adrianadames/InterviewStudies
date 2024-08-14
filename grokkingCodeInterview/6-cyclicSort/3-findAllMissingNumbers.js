@@ -27,3 +27,32 @@ Example 3:
 Input: [2, 3, 2, 1]
 Output: 4
 */
+
+function findAllMissingNumbers(arr) {
+    let i = 0; 
+
+    while (i < arr.length) {
+        let currentValue = arr[i]; 
+        let correctIndex = arr[i] - 1; 
+        let numberAtCorrectIndex = arr[correctIndex]; 
+
+        if (arr[i] !== arr[correctIndex]) {
+            arr[i] = numberAtCorrectIndex; 
+            arr[correctIndex] = currentValue; 
+        } else {
+            i++;
+        }
+    }
+    // -at this point, if the number isn't at it's location, then it's missing; 
+    let missing = []; 
+    for (let i = 0; i < arr.length; i++) {
+        if (arr[i] !== i + 1) {
+            missing.push(i+1); 
+        }
+    }
+    return missing
+}
+
+console.log('findAllMissingNumbers: ', findAllMissingNumbers([2, 3, 1, 8, 2, 3, 5, 1]));
+console.log('findAllMissingNumbers: ', findAllMissingNumbers([2, 4, 1, 2]));
+console.log('findAllMissingNumbers: ', findAllMissingNumbers([2, 3, 2, 1]));
