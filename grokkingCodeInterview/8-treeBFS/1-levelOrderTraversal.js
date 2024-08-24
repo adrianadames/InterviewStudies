@@ -106,6 +106,8 @@ class Queue {
     }
 }
 
+// - time complexity: O(N)
+// - space complexity: O(N)
 function levelOrderTraversal(binaryTree) {
     let allLevelsNodes = [];
     let queue = new Queue();

@@ -142,12 +142,15 @@ class Dequeue {
     }
 }
 
+// - time complexity: O(N)
+// - space complexity: O(N)
 function reverseLevelOrderTraversal(binaryTree) {
     let allLevelsNodes = new Dequeue();
-    let levelSize = 1;
+    
     let queue = new Dequeue();
     queue.push(binaryTree)
     while (queue.items.size > 0) {
+        let levelSize = queue.items.size;
         let levelNodes = [];
         for (let i = 0; i < levelSize; i++) {
             let current = queue.shift();
