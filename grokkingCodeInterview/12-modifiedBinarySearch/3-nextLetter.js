@@ -36,3 +36,32 @@ Output: 'a'
 Explanation: As the array is assumed to be circular, the smallest 
 letter greater than 'h' is 'a'.
 */
+
+function nextLetter(arr, key) {
+    let left = 0;
+    let right = arr.length - 1;
+    
+    // - if the largest letter in the array is less than the key, 
+    // then the smallest letter larger than the key is arr[0]; this
+    // is because the array is circular, so the first letter of the array 
+    // is greater than the last letter in the array after the first circulation
+    // - same if smallest letter in arr greater than the key;
+    if (arr[left] > key || arr[right] <= key) {
+        return arr[0];
+    };
+
+    while (left <= right) {
+        let middle = Math.floor((left + right)/2);
+        if (arr[middle] > key) {
+            right = middle - 1;
+        } else {
+            left = middle + 1;
+        };
+    };
+    return arr[left];
+};
+
+console.log('nextLetter: ', nextLetter(['a', 'c', 'f', 'h'], 'f')); // h
+console.log('nextLetter: ', nextLetter(['a', 'c', 'f', 'h'], 'b')); // c
+console.log('nextLetter: ', nextLetter(['a', 'c', 'f', 'h'], 'm')); // a
+console.log('nextLetter: ', nextLetter(['a', 'c', 'f', 'h'], 'h')); // a
