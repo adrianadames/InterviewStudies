@@ -23,3 +23,42 @@ Example 4:
 Input: [4, 6, 10], key = 17
 Output: 10
 */
+
+// - time: O(log(n))
+// - space: O(1)
+// - note: my solution to this problem can be simplified. the improvement is worth doing, 
+// but I don't feel like it right now :/
+function minimumDifferenceElement(arr, key) {
+    let left = 0;
+    let right = arr.length -1
+    
+    let minDifference = Infinity;
+    let minDifferenceElement = null;
+
+    while (left <= right) {
+        let middle = Math.floor((left + right)/2);
+        let difference = arr[middle] - key; 
+        let differenceMagnitude = Math.abs(difference);
+
+        if (differenceMagnitude < minDifference) {
+            minDifferenceElement = arr[middle];
+            minDifference = differenceMagnitude;
+        }
+
+        if (difference === 0) {
+            return minDifferenceElement
+        } else if (difference < 0) {
+            left = middle + 1; 
+        } else {
+            right = middle - 1;
+        }
+    }
+
+    return minDifferenceElement
+}
+
+console.log('minimumDifferenceElement: ', minimumDifferenceElement([4, 6, 10], 7)); // 6
+console.log('minimumDifferenceElement: ', minimumDifferenceElement([4, 6, 10], 4)); // 4
+console.log('minimumDifferenceElement: ', minimumDifferenceElement([1, 3, 8, 10, 15], 12)); // 10
+console.log('minimumDifferenceElement: ', minimumDifferenceElement([4, 6, 10], 17)); // 10
+console.log('minimumDifferenceElement: ', minimumDifferenceElement([1, 2, 8, 12, 15, 17], 7)); // 8
