@@ -66,6 +66,7 @@ Explanation: The array has not been rotated.
 //     }
 // }
 
+// - below is the chatgpt generated recommended revision
 function rotationCount(arr) {
     let left = 0;
     let right = arr.length - 1;
