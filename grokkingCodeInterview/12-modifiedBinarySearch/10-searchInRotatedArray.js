@@ -19,3 +19,17 @@ Input: [4, 5, 7, 9, 10, -1, 2], key = 10
 Output: 4
 Explanation: '10' is present in the array at index '4'.
 */
+
+// - find the pivot, then do a binary search on the increasing portions of the 
+// array; 
+function searchInRotatedArray(arr) {
+    let left = 0; 
+    let right = arr.length - 1;
+
+    while (left < right) {
+        let middle = Math.floor((left + right)/2);
+        // - if arr[middle] < arr[middle + 1], we are in a part of 
+        // the array where the numbers are increasing; 
+    }
+
+}

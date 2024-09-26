@@ -1,5 +1,6 @@
 /*
 Problem Statement (medium)
+
 Given an array of numbers sorted in an ascending order, 
 find the ceiling of a given number ‘key’. The ceiling of 
 the ‘key’ will be the smallest element in the given array 
@@ -32,3 +33,42 @@ Output: 0
 Explanation: The smallest number greater than or equal to 
 '-1' is '4' having index '0'.
 */
+
+function ceilingOfANumber(arr, key) {
+    let left = 0;
+    let right = arr.length - 1; 
+
+    // - if key greater than largest number, there's no ceiling. 
+    if (key > arr[right]) {
+        return -1;
+    }
+
+    while (left <= right) {
+        let middle = Math.floor((left + right)/2);
+        
+        if (arr[middle] === key) {
+            return middle; 
+
+        // - if middle element is greater than key, move right pointer  
+        // to the left of middle 
+        } else if (arr[middle] > key) {
+            right = middle - 1; 
+
+        // - if middle element is greater than key, move left pointer  
+        // to the right of middle 
+        } else  {
+            left = middle + 1;
+        };
+    };
+
+    // - if the middle element is the ceiling but it's not equal to the key, 
+    // then the left pointer will eventually come to point at this number in 
+    // the end
+    return left;
+}
+
+console.log('ceilingOfANumber: ', ceilingOfANumber([4, 6, 10], 6)); // 1
+console.log('ceilingOfANumber: ', ceilingOfANumber([1, 3, 8, 10, 15], 12)); // 4
+console.log('ceilingOfANumber: ', ceilingOfANumber([4, 6, 10], 17)); // -1
+console.log('ceilingOfANumber: ', ceilingOfANumber([4, 6, 10], -1)); // 0
+console.log('ceilingOfANumber: ', ceilingOfANumber([2, 3, 4, 6, 7, 8, 10], 5)); // 3
