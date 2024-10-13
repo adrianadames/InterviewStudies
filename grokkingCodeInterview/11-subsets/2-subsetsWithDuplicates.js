@@ -18,71 +18,99 @@ Output: [], [1], [5], [3], [1,5], [1,3], [5,3],
 [1,5,3], [3,3], [1,3,3], [3,3,5], [1,5,3,3] 
 */
 
-allDistinctSubsetsWithDups = (index, distinctSubset, allSubsets, elements) => {
-    // -base case: when distinctSubset becomes complete (i.e. when all elements 
-    // in elements array have been established to be included or not included
-    // in the distinctSubset array)
-    // -until then, we move closer and closer to the base case by guessing yes 
-    // or no for the presence of each element in elements in the 
-    // partial solution that is the distinctSubject array; if element at index x 
-    // of elements is/isn't in the partial solution that is the 
-    // distinctSubject array, we put push/don't push into the distinctSubset array 
-    
-    // console.log('index: ', index);
-    // if (index === elements.length) {
-    //     allSubsets.push(distinctSubset.slice());
-    // } else {
-    //     [0,1].forEach(val => {
-    //         if (val === 0) {
-    //             if (elements[index] === elements[index+1]) {
-    //                 allSubsets.push(distinctSubset.slice());
-    //             } else {
-    //                 allDistinctSubsetsWithDups(index+1, distinctSubset, allSubsets, elements);
-    //             }
-    //         } else {
-    //             distinctSubset.push(elements[index]); 
-    //             allDistinctSubsetsWithDups(index+1, distinctSubset, allSubsets, elements);
-    //             distinctSubset.pop(); 
-    //         }
-    //     })
-    // }
-    console.log('index: ', index);
-    if (index === elements.length) {
-        allSubsets.push(distinctSubset.slice());
-    } else if (elements[index] === elements[index+1]) {
-        [0,1].forEach(val => {
-            if (val === 0) {
-                allSubsets.push(distinctSubset.slice());
-            } else {
-                distinctSubset.push(elements[index]); 
-                allDistinctSubsetsWithDups(index+1, distinctSubset, allSubsets, elements);
-                distinctSubset.pop(); 
-            }
-        })
-    } else {
-        [0,1].forEach(val => {
-            if (val === 0) {
-                allDistinctSubsetsWithDups(index+1, distinctSubset, allSubsets, elements);
-            } else {
-                distinctSubset.push(elements[index]); 
-                allDistinctSubsetsWithDups(index+1, distinctSubset, allSubsets, elements);
-                distinctSubset.pop(); 
-            }
-        })
-    }
-}
+/*
+TO DO: 
+- time and space complexity 
+*/
 
-allDistinctSubsetsWithDupsWrapper = (elements) => {
-    let distinctSubset = [];
+function allDistinctSubsetsWithDupsRecursive(elements) {
+    elements.sort((a,b) => a-b);
+    let currentSubset = [];
     let allSubsets = [];
-    allDistinctSubsetsWithDups(0, distinctSubset, allSubsets, elements);
-    return allSubsets
+
+    function generateSubsets(index) {
+        if (index === elements.length) {
+            allSubsets.push(currentSubset.slice());
+            return;
+        }; 
+        
+        // - with element at elements[index]
+        currentSubset.push(elements[index]); 
+        generateSubsets(index+1);
+        currentSubset.pop(); 
+
+        // - without element at elements[index]
+        while (index + 1 < elements.length && elements[index] === elements[index+1]) { // - to avoid duplicate distinct subsets
+            index++;
+        };
+        generateSubsets(index+1);
+
+        // NOTE: If I want to start by excluding elements first, I would need to use
+        // this variation of the above to account for the duplicate elements
+        
+        // // - without element at elements[index]
+        // let nextIndex = index;
+        // while (nextIndex < nums.length && nums[nextIndex] === nums[index]) {
+        //     nextIndex++;
+        // };
+        // backtrack(nextIndex); // - by skipping some indices for duplicates, we avoid adding duplicate subsets
+        
+        // // - with element at elements[index]
+        // currentSubset.push(nums[index]);
+        // backtrack(index + 1);
+        // currentSubset.pop();
+    };
+    generateSubsets(0);
+    return allSubsets;
+};
+console.log('allDistinctSubsetsWithDupsRecursive: ', allDistinctSubsetsWithDupsRecursive([1,3,3, 4]));
+
+
+// // Iterative (BFS) Approach  per grokking
+function allDistinctSubsetsWithDupsIterative(elements) {
+    elements.sort((a,b) => a-b);
+    let allSubsets = [[]];
+    let endIndex = 0;
+    for (let i = 0; i < elements.length; i++) {
+        let startIndex = 0;
+
+        // - if current and previous element are the same, only use subsets generated
+        // from the previous step (to avoid duplicates) to generate more sets; if you 
+        // instead use all the sets, you will generate duplicates; 
+        // - endIndex + 1 is the start location of the subsets added in the previous steps
+        if (i > 0 && elements[i] === elements[i - 1]) {
+            startIndex = endIndex + 1;
+        };
+        endIndex = allSubsets.length - 1;
+
+        // - add current number to all subsets formed so far
+        for (let j = startIndex; j <= endIndex; j++) {
+            let newSubset = allSubsets[j].slice();
+            newSubset.push(elements[i]); // Add current number
+            allSubsets.push(newSubset);
+        };
+    };
+    return allSubsets;
+};
+console.log('allDistinctSubsetsWithDupsIterative: ', allDistinctSubsetsWithDupsIterative([3, 3, 1, 4]));
+// console.log('allDistinctSubsetsWithDupsIterative: ', allDistinctSubsetsWithDupsIterative([1, 3, 3, 4]));
+
+// alternate (per chatgpt) (NOTE: Still not totally clear on how this one works...)
+function allDistinctSubsetsWithDupsAlternate(elements) {
+    function backtrack(start, current, result, elements) {
+        result.push([...current]); // Capture a copy of the current subset
+    
+        for (let i = start; i < elements.length; i++) {
+            if (i > start && elements[i] === elements[i - 1]) continue; // Skip duplicates
+            current.push(elements[i]);
+            backtrack(i + 1, current, result, elements);
+            current.pop();
+        }
+    }
+    const result = [];
+    elements.sort((a, b) => a - b);
+    backtrack(0, [], result, elements);
+    return result;
 }
+console.log('allDistinctSubsetsWithDupsAlternate: ', allDistinctSubsetsWithDupsAlternate([1, 3, 3, 4]));
 
-
-// console.log('allDistinctSubsetsWithDupsWrapper: ', allDistinctSubsetsWithDupsWrapper([1, 3]))
-// console.log('allDistinctSubsetsWithDupsWrapper: ', allDistinctSubsetsWithDupsWrapper([3, 3]))
-// console.log('allDistinctSubsetsWithDupsWrapper: ', allDistinctSubsetsWithDupsWrapper([1, 3, 3]))
-console.log('allDistinctSubsetsWithDupsWrapper1: ', allDistinctSubsetsWithDupsWrapper([3, 3, 1]))
-
-console.log('allDistinctSubsetsWithDupsWrapper2: ', allDistinctSubsetsWithDupsWrapper([1, 3, 3]))

@@ -165,7 +165,7 @@ let breadthFirstTraversal = (binaryTree) => {
     if (binaryTree.value === null) {
         return path
     } else if (binaryTree.left === null && binaryTree.right === null) {
-        return path.push(binaryTree.value);;
+        return path.push(binaryTree.value);
     }
 
     let nodeQueue = [binaryTree];
@@ -284,7 +284,6 @@ let structurallyUniqueBSTs = n => {
         
     }
     return uniqueBinaryTrees
-    
 } 
 
 
@@ -307,7 +306,7 @@ let generatePermutations = (elements, index, availableElements, permutation, all
             allPermutationsObject[permutation[0]].push(permutation.slice());
         } else {
             allPermutationsObject[permutation[0]] = [permutation.slice()];
-        }
+        };
         return allPermutations.push(permutation.slice());
     } else {
         for (let i = 0; i < elements.length; i++) {
@@ -317,10 +316,10 @@ let generatePermutations = (elements, index, availableElements, permutation, all
                 generatePermutations(elements, index+1, availableElements, permutation, allPermutations, allPermutationsObject);
                 availableElements[i] = true;
                 permutation.pop();
-            }
-        }
-    }
-}
+            };
+        };
+    };
+};
 
 // console.log('generatePermutationsWrapper: ', generatePermutationsWrapper([1, 2, 3]))
 

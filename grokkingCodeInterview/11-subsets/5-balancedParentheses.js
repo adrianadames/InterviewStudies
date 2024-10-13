@@ -16,138 +16,187 @@ Input: N=3
 Output: ((())), (()()), (())(), ()(()), ()()()
 */
 
-allParenthesesCombinations = (N, index, allCombos, combination, parenthesesCount) => {
-    /*
-    let's think about constraints these combinations must abide by: 
-    -if number of open parenthesis === number of closed parenthesis, 
-    the next character must be an open parenthesis
-    -if number of open parenthesis === N/2, the rest of the characters
-    are all closed parenthesis
-    */
-   // base case is when we've filled all N*2 spots
-   if (index === N*2) {
-       allCombos.push(combination.slice()); // O(n)
-   } else {
-       if (parenthesesCount['open'] === parenthesesCount['closed']) {
-           combination[index] = '(';
-           parenthesesCount['open'] +=1;
-           allParenthesesCombinations(N, index+1, allCombos, combination, parenthesesCount);
-           combination[index] = null;
-           parenthesesCount['open'] -=1;
-       } else if (parenthesesCount['open'] === N) {
-           combination[index] = ')';
-           parenthesesCount['closed'] +=1;
-           allParenthesesCombinations(N, index+1, allCombos, combination, parenthesesCount);
-           combination[index] = null;
-           parenthesesCount['closed'] -=1;
-       } else {
-            for (let k = 0; k<=1; k++) {
-                if (k === 0) { // open parenthesis
-                    combination[index] = '(';
-                    parenthesesCount['open'] +=1;
-                    allParenthesesCombinations(N, index+1, allCombos, combination, parenthesesCount);
-                    combination[index] = null;
-                    parenthesesCount['open'] -=1;
-                }
+/*
+TO DO: 
+- time and space complexity;
+- iterative version of the solution;
+*/
 
-                if (k === 1) { // closed parenthesis
-                    combination[index] = ')';
-                    parenthesesCount['closed'] +=1;
-                    allParenthesesCombinations(N, index+1, allCombos, combination, parenthesesCount);
-                    combination[index] = null;
-                    parenthesesCount['closed'] -=1;
-                }
-            }
-       }
-   }
-}
 
-allParenthesesCombinationsWrapper = (N) => {
+// - allParenthesesCombosRecursive1: dynamic size partial solution for allParenthesesCombosRecursive1; 
+// - allParenthesesCombosRecursive2: static size partial soln for allParenthesesCombosRecursive2
+// - allParenthesesCombosRecursive3:  using string concatenation instead of an array for manipulating comboInProgress
+//  because string immutable in js; also passing in new parenthesis count object to recursive 
+// function so that variable isn't shared between recursive calls
+function allParenthesesCombosRecursive1(N) {
     let allCombos = [];
-    let combination = new Array(N*2).fill(null); // time: O(n) = N, space: O(n) = N
-    combination[0] = '('; // all combinations start with open parenth
+    let comboInProgress = [];  
+    let parenthesesCount = {
+        'open': 0,
+        'closed': 0
+    };
+
+    function generateAllParenthesesCombos(index) {
+        if (index === N*2) {
+            allCombos.push(comboInProgress.join(''));  
+        } else {
+            if (parenthesesCount['open'] < N) {
+                comboInProgress.push('(');
+                parenthesesCount['open']++;
+                generateAllParenthesesCombos(index+1);
+                comboInProgress.pop();
+                parenthesesCount['open']--;
+            } 
+            if (parenthesesCount['closed'] < parenthesesCount['open']) {
+                comboInProgress.push(')');
+                parenthesesCount['closed']++;
+                generateAllParenthesesCombos(index+1);
+                comboInProgress.pop(); // O(n)
+                parenthesesCount['closed'] -=1;
+            };
+        };
+    };
+    generateAllParenthesesCombos(0);
+    return allCombos;
+};
+console.log('allParenthesesCombosRecursive1: ', allParenthesesCombosRecursive1(2));
+
+
+function allParenthesesCombosRecursive2(N) {
+    let allCombos = [];
+    let comboInProgress = new Array(N*2).fill(null); // time: O(n) = N, space: O(n) = N 
+    let parenthesesCount = {
+        'open': 0,
+        'closed': 0
+    };
+
+    function generateAllParenthesesCombos(index) {
+        if (index === N*2) {
+            allCombos.push(comboInProgress.join(''));  
+        } else {
+            if (parenthesesCount['open'] < N) {
+                comboInProgress[index] = '(';
+                parenthesesCount['open']++;
+                generateAllParenthesesCombos(index+1);
+                comboInProgress[index] = null;;
+                parenthesesCount['open']--;
+            } 
+            if (parenthesesCount['closed'] < parenthesesCount['open']) {
+                comboInProgress[index] =')';
+                parenthesesCount['closed']++;
+                generateAllParenthesesCombos(index+1);
+                comboInProgress[index] = null;;
+                parenthesesCount['closed'] -=1;
+            };
+        };
+    };
+    generateAllParenthesesCombos(0);
+    return allCombos;
+};
+console.log('allParenthesesCombosRecursive2: ', allParenthesesCombosRecursive2(2));
+
+
+function allParenthesesCombosRecursive3(N) {
+    let allCombos = [];
+
+    function generateAllParenthesesCombos(index, comboInProgress, parenthesesCount) {
+        if (index === N*2) {
+            allCombos.push(comboInProgress);  
+        } else {
+            if (parenthesesCount['open'] < N) {
+                // comboInProgress +='(';
+                generateAllParenthesesCombos(index+1, comboInProgress + '(', 
+                {'open':  parenthesesCount['open'] + 1,'closed': parenthesesCount['closed']});
+            } 
+            if (parenthesesCount['closed'] < parenthesesCount['open']) {
+                // comboInProgress +=')';
+                generateAllParenthesesCombos(index+1, comboInProgress + ')', 
+                {'open':  parenthesesCount['open'], 'closed': parenthesesCount['closed'] + 1});
+            };
+        };
+    };
 
     let parenthesesCount = {
-        'open': 1,
+        'open': 0,
         'closed': 0
-    }
+    };
+    generateAllParenthesesCombos(0, '', parenthesesCount);
+    return allCombos;
+};
 
-    // -using similar analysis to that done for allParenthesesCombinationsWrapper2, 
-    // time and space: O(n) = N * 2^N
-    allParenthesesCombinations(N, 1, allCombos, combination, parenthesesCount);
-
-    for (let i = 0; i < allCombos.length; i++) { // time: O(n) = (number of combinations = 2^N)*(join function big O = N) = N* 2^N; space: O(n) = N;
-        allCombos[i] =  allCombos[i].join('');
-    }
-    return allCombos
-}
-
-console.log('allParenthesesCombinationsWrapper: ', allParenthesesCombinationsWrapper(4));
-
-
-
-allParenthesesCombinations2 = (N, index, allCombos, combination, parenthesesCount) => {
-    /*
-    let's think about constraints these combinations must abide by: 
-    -if number of open parenthesis === number of closed parenthesis, 
-    the next character must be an open parenthesis
-    -if number of open parenthesis === N/2, the rest of the characters
-    are all closed parenthesis
-    */
-   // base case is when we've filled all N*2 spots
-   if (index === N*2) {
-       allCombos.push(combination); // O(n)
-   } else {
-       if (parenthesesCount['open'] === parenthesesCount['closed']) {
-           combination += '(';
-           parenthesesCount['open'] +=1;
-           allParenthesesCombinations2(N, index+1, allCombos, combination, parenthesesCount);
-           combination = combination.slice(0,-1); // O(n)
-           parenthesesCount['open'] -=1;
-       } else if (parenthesesCount['open'] === N) {
-           combination += ')';
-           parenthesesCount['closed'] +=1;
-           allParenthesesCombinations2(N, index+1, allCombos, combination, parenthesesCount);
-           combination = combination.slice(0,-1);
-           parenthesesCount['closed'] -=1;
-       } else {
-            for (let k = 0; k<=1; k++) {
-                if (k === 0) { // open parenthesis
-                    combination += '(';
-                    parenthesesCount['open'] +=1;
-                    allParenthesesCombinations2(N, index+1, allCombos, combination, parenthesesCount);
-                    combination = combination.slice(0,-1);
-                    parenthesesCount['open'] -=1;
-                }
-
-                if (k === 1) { // closed parenthesis
-                    combination += ')';
-                    parenthesesCount['closed'] +=1;
-                    allParenthesesCombinations2(N, index+1, allCombos, combination, parenthesesCount);
-                    combination = combination.slice(0,-1);
-                    parenthesesCount['closed'] -=1;
-                }
-            }
-       }
-   }
-}
-
-allParenthesesCombinationsWrapper2 = (N) => {
+function allParenthesesCombosIterative1(N) {
     let allCombos = [];
-    let combination = '('; // all combinations start with open parenth
-    let parenthesesCount = {
-        'open': 1,
-        'closed': 0
-    }
-    // -depth of recursion tree no more than log(n) implying O(n) <= log(n) 
-    ///-depth of recursion tree no more than N*2 (one additional level for every open spot)
-    // -log(n) = N*2 implies that n = (2*N)^2 = 4*N^2?
-    // -number of nodes = 2 ^ (height + 1) - 1 = 2 ^ (2N+1) -1
-    // -if above true, O(n) = 2 ^(N*2)*N - N= N(2^(N)-1)=  
-    //          = N * 2^N for space and time complexity
-    
-    allParenthesesCombinations2(N, 1, allCombos, combination, parenthesesCount); 
-    return allCombos
-}
+    let combosInProgress = [];
 
-console.log('allParenthesesCombinationsWrapper2: ', allParenthesesCombinationsWrapper2(4));
+    combosInProgress.push({combo: [], open: 0, closed:0,});
+
+    while (combosInProgress.length > 0) {
+        let {combo, open, closed} = combosInProgress.shift();
+        if (open === N && closed === N) {
+            allCombos.push(combo.join(''));
+        } else {
+            if (open < N) {
+                combosInProgress.push({
+                    combo: [...combo, '('],
+                    open: open + 1,
+                    closed,
+                });
+            };
+
+            if (closed < open) {
+                combosInProgress.push({
+                    combo: [...combo, ')'],
+                    open,
+                    closed: closed + 1,
+                });
+            };
+        };
+    };
+    return allCombos;
+};
+
+console.log('allParenthesesCombosIterative1: ', allParenthesesCombosIterative1(3));
+
+function allParenthesesCombosIterative2(N) {
+    let allCombos = [];
+    let combosInProgress = [];
+    let comboInProgress = {
+        combo: [], 
+        open: 0, 
+        closed: 0,
+    };
+
+    combosInProgress.push(comboInProgress);
+
+    while (combosInProgress.length > 0) {
+        let comboInProgress = combosInProgress.shift();
+        if (comboInProgress['open'] === N && comboInProgress['closed'] === N) {
+            allCombos.push(comboInProgress['combo']);
+        } else {
+            if (comboInProgress['open'] < N) {
+                let updatedComboInProgress = {
+                    combo: comboInProgress['combo'] + '(', 
+                    open: comboInProgress['open'] + 1,
+                    closed: comboInProgress['closed'],
+                };
+                combosInProgress.push({...updatedComboInProgress});
+            };
+            if (comboInProgress['closed'] < comboInProgress['open']) {
+                let updatedComboInProgress = {
+                    combo: comboInProgress['combo'] + ')', 
+                    open: comboInProgress['open'],
+                    closed: comboInProgress['closed'] + 1,
+                };
+                combosInProgress.push({...updatedComboInProgress});
+            };
+        };
+    };
+    return allCombos;
+};
+
+console.log('allParenthesesCombosIterative2: ', allParenthesesCombosIterative2(3));
+
+
+
+
+
