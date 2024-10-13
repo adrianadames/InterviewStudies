@@ -58,64 +58,114 @@ we must dismiss any combinations that won't result in a valid expression.
     -can't place a closed parenthesis right before a digit/after an operator
 */
 
-let generateExpressionSolutionsWrapper = (expression) => {
-    let allSolutions = [];
-    generateExpressionSolutions(expression, allSolutions);
-    return allSolutions
-}
-
-let operatorFunctions = {
-    '+': (a, b) => a+b, 
-    '-': (a, b) => a-b,
-    '*': (a, b) => a*b,
-}
-
-/*
-2 * 3 - 4
-
-*/
-
-// let me keep in mind example of 2*3+4*5
-let generateExpressionSolutions = (expression, allSolutions) => {
-    // I'm given the expression. 
-    // I step through the string and find the first operator. 
-    // At that point, what happens?
-    
-    // I create an array called solutions.
-
-    // I create two arrays called lhsSolutions and rhsSolutions. 
-
-    // solutions is equal to all combos of lhsSolutions (operator function) rhsSolutions
-
-    // base case: expression is a single digit (will assume only 0-9 used as digits for now)
-    console.log('expression: ', expression)
-    let solutions = [];
+function evaluateExpression(expression) {
     if (expression.length === 1) {
-        solutions.push(Number(expression));
-        return solutions
-    } else {
-        for (let i = 0; i < expression.length; i++) {
-            if (expression[i] === '+' || expression[i] === '-' || expression[i] === '*') {
-                let lhs = expression.slice(0,i);
-                let rhs = expression.slice(i+1, expression.length);
+        return [Number(expression)];
+    };
 
-                let lhsSolutions = [...generateExpressionSolutions(lhs, allSolutions)];
-                let rhsSolutions = [...generateExpressionSolutions(rhs, allSolutions)];
+    let operators = {
+        '+': (a, b) => a + b,
+        '-': (a, b) => a - b,
+        '*': (a, b) => a * b,
+    };
 
-                for (let k=0; k < lhsSolutions.length;k++) {
-                    for (let q= 0; q<rhsSolutions.length;q++) {
-                        solutions.push(operatorFunctions[expression[i]](lhsSolutions[k],rhsSolutions[q]));
-                    }
-                }
-                
-            }
-        }
-        allSolutions = solutions.slice();
-        console.log('solutions: ', solutions)
-        // console.log('allSolutions: ', allSolutions)
-        return solutions
-    }
-}
+    let allEvaluations = [];
+
+    for (let i = 0; i < expression.length; i++) {
+        if (expression[i] === '+' || expression[i] === '-' || expression[i] === '*') {
+            let lhs = evaluateExpression(expression.slice(0,i));
+            let rhs = evaluateExpression(expression.slice(i+1, expression.length));
+            
+            for (let left of lhs) {
+                for (let right of rhs) {
+                    let result = operators[expression[i]](left, right);
+                    allEvaluations.push(result);
+                    // console.log('allEvaluations: ', allEvaluations)
+                };
+            };
+        };    
+    };
+
+    return allEvaluations;
+};
+console.log('evaluateExpression: ', evaluateExpression('2*3-4-5'));
 
 
-console.log('generateExpressionSolutionsWrapper: ', generateExpressionSolutionsWrapper('2*3+4*5'));
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// let generateExpressionSolutionsWrapper = (expression) => {
+//     let allSolutions = [];
+//     generateExpressionSolutions(expression, allSolutions);
+//     return allSolutions
+// }
+
+// let operatorFunctions = {
+//     '+': (a, b) => a+b, 
+//     '-': (a, b) => a-b,
+//     '*': (a, b) => a*b,
+// };
+
+// // let me keep in mind example of 2*3+4*5
+// let generateExpressionSolutions = (expression, allSolutions) => {
+//     // I'm given the expression. 
+//     // I step through the string and find the first operator. 
+//     // At that point, what happens?
+    
+//     // I create an array called solutions.
+
+//     // I create two arrays called lhsSolutions and rhsSolutions. 
+
+//     // solutions is equal to all combos of lhsSolutions (operator function) rhsSolutions
+
+//     // base case: expression is a single digit (will assume only 0-9 used as digits for now)
+//     // console.log('expression: ', expression)
+//     let solutions = [];
+//     if (expression.length === 1) {
+//         solutions.push(Number(expression));
+//         return solutions;
+//     } else {
+//         for (let i = 0; i < expression.length; i++) {
+//             if (expression[i] === '+' || expression[i] === '-' || expression[i] === '*') {
+//                 let lhs = expression.slice(0,i);
+//                 let rhs = expression.slice(i+1, expression.length);
+
+//                 let lhsSolutions = [...generateExpressionSolutions(lhs, allSolutions)];
+//                 let rhsSolutions = [...generateExpressionSolutions(rhs, allSolutions)];
+
+//                 for (let k=0; k < lhsSolutions.length;k++) {
+//                     for (let q= 0; q<rhsSolutions.length;q++) {
+//                         solutions.push(operatorFunctions[expression[i]](lhsSolutions[k],rhsSolutions[q]));
+//                     };
+//                 };
+//             };
+//         };
+//         allSolutions = solutions.slice();
+//         // console.log('solutions: ', solutions);
+//         // console.log('allSolutions: ', allSolutions);
+//         return solutions;
+//     };
+// };
+
+// console.log('generateExpressionSolutionsWrapper: ', generateExpressionSolutionsWrapper('2*3+4*5'));
+// console.log('generateExpressionSolutionsWrapper: ', generateExpressionSolutionsWrapper('2*3-4-5'));
