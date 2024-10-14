@@ -13,16 +13,13 @@ Example 2:
     Output: [0 1 1 4 9]
 */
 
-// - put a pointer at 0 and one at arr.length - 1; 
-// - i understand how to do this, but my strategy requires use of the sort alg, which 
-// i'm pretty sure is n*log(n); 
-// - can i come up with an O(n) solution? => initialize an array. place values based on 
-// position
-
+// - put pointers at the two ends. the max of the squared arr
+// will be one of those two; after finding the max, add it to the squaredArr
+// output array and decrement the pointer to the next largest value from the
+// left/right hand side
 
 // time complexity: O(n);
 // space complexity: O(n);
-
 let squaringASortedArray = arr => {
     let leftPointer = 0;
     let rightPointer = arr.length - 1;
@@ -38,17 +35,13 @@ let squaringASortedArray = arr => {
             squaredArr[arrayPlacementPointer] = arr[rightPointer] * arr[rightPointer];
             arrayPlacementPointer--;
             rightPointer--;
-        }
-    }
-    return squaredArr
-}
+        };
+    };
+    return squaredArr;
+};
 
 console.log(squaringASortedArray([-4,-3,-2,-1]));
 console.log(squaringASortedArray([1,2,3,5]));
 console.log(squaringASortedArray([-2, -1, 0, 2, 3]));
 console.log(squaringASortedArray([-3, -1, 0, 1, 2]));
 console.log(squaringASortedArray([-31, -11, -5, -1, 2]));
-
-
-
-
