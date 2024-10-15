@@ -21,8 +21,8 @@ Example 2:
 
 // -sort the array; 
 // -choose an element and hold it fixed; 
-// -put a pointer right next to the element--the left pointer, and 
-// a pointer at the end---the right pointer
+// -put a pointer right next to the element---the left pointer--and 
+// a pointer at the end of the array---the right pointer
 // -sum the fixed element and the elements at the pointers
 // -if the sum is greater than the target; we need to decrement the right 
 // pointer
