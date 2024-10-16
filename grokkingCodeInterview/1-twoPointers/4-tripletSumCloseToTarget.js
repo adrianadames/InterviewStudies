@@ -27,7 +27,8 @@ Example 3:
 // -so if the Target is 3 and one triplet sums to 2 and the other triplet 
 // sums to 4, return 2 
 
-
+// time: O(n^2) if already sorted, O(n^2 + n*log(n)) = O(n^2) (for large n) with the sort;
+// space: O(1) + O(n) b/c sort;
 function tripletSumCloseToTarget2 (arr, target) {
     arr.sort((a,b) => (a-b));
     let closestSum = Infinity; 
@@ -43,15 +44,15 @@ function tripletSumCloseToTarget2 (arr, target) {
                 closestSum = sum;
             } else if (Math.abs(sum - target) === Math.abs(closestSum - target)) {
                 closestSum = Math.min(sum, closestSum);
-            }
+            };
 
             // - if sum needs to be bigger, increase pointer on the left; 
             if (sum < target) {
                 leftPointer++; 
             } else {
                 rightPointer--;
-            }
-        }
+            };
+        };
     };
     return closestSum;
 };
@@ -60,58 +61,3 @@ console.log('tripletSumCloseToTarget: ', tripletSumCloseToTarget2([-2, 0, 1, 2],
 console.log('tripletSumCloseToTarget: ', tripletSumCloseToTarget2([-3, -1, 1, 2], 1)); // 0 
 console.log('tripletSumCloseToTarget: ', tripletSumCloseToTarget2([1, 0, 1, 1], 100)); // 3
 console.log('tripletSumCloseToTarget: ', tripletSumCloseToTarget2([0, 0, 2, 4], 3)); // 2
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// time: O(n) = n^3*log(n)
-// space: O(n) = 1;
-let tripletSumCloseToTarget = (arr, target) => {
-    // sort array
-    arr.sort((a, b) => a-b); // time O(n)= n*log(n) 
-
-    // -if triplet sum closer than closestSum, reassign closestSum to this sum
-    let closestSum = Infinity;
-
-    // -fix the first of the triplet and then use two pointer method with one pointer
-    // at beginning and one pointer at end of array
-    for (let i = 0; i<arr.length -2; i++) { // -time O(n) = n^2 because of nested loop
-        let ptr1 = i+1;
-        let ptr2 = arr.length-1;
-
-        // -while more triplet sums are available to check 
-        while (ptr1 < ptr2) {
-            // calculate sum of current triplet
-            let sum = arr[i] + arr[ptr1] + arr[ptr2];
-
-            // -check if triplet sum is closer to target than current closestSum
-            if (Math.abs(sum-target) < Math.abs(closestSum-target)) {
-                closestSum = sum;
-            }
-
-            // -if triplet sum greater than the target, reduce sum by decrementing the 
-            // pointer on the right (ptr2)
-            if (sum > target) {
-                ptr2--; 
-            } else { // -if triplet sum less than target, increment left pointer (ptr1)
-                ptr1++;
-            }
-        } 
-    }
-    return closestSum
-}
-
-// console.log('tripletSumCloseToTarget: ', tripletSumCloseToTarget([-2, 0, 1, 2], 2));
-// console.log('tripletSumCloseToTarget: ', tripletSumCloseToTarget([-3, -1, 1, 2], 1));
-// console.log('tripletSumCloseToTarget: ', tripletSumCloseToTarget([1, 0, 1, 1], 100));

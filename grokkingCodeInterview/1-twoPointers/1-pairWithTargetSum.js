@@ -17,23 +17,23 @@ Example 2:
     Explanation: The numbers at index 0 and 2 add up to 11: 2+9=11
 */
 
-// time: O(n) = n; 
-// space: O(n) = 1;
+// time: O(n); 
+// space: O(1);
 function pairWithTargetSum(arr, targetSum) {
     let leftPointer = 0;
     let rightPointer = arr.length-1;
 
     while (leftPointer !== rightPointer) {
         if (arr[leftPointer] + arr[rightPointer] === targetSum) {
-            return [leftPointer, rightPointer]
+            return [leftPointer, rightPointer];
         } else if (arr[leftPointer] + arr[rightPointer] > targetSum) {
-            rightPointer -=1;
+            rightPointer -= 1;
         } else {
-            leftPointer +=1;
-        }
-    }
-    return null
-}
+            leftPointer += 1;
+        };
+    };
+    return null;
+};
 
 console.log(pairWithTargetSum([1, 2, 3, 4, 6], 6));
 console.log(pairWithTargetSum([2, 5, 9, 11], 11));

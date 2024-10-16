@@ -21,21 +21,17 @@ Example 2:
 
 // -sort the array; 
 // -choose an element and hold it fixed; 
-// -put a pointer right next to the element--the left pointer, and 
-// a pointer at the end---the right pointer
+// -put a pointer right next to the element---the left pointer--and 
+// a pointer at the end of the array---the right pointer
 // -sum the fixed element and the elements at the pointers
 // -if the sum is greater than the target; we need to decrement the right 
 // pointer
 // -if the sum is less than the target; we need to increment the left pointer
 
-
-// -Given an array arr of unsorted numbers and a target sum, count 
-// all triplets in it such that arr[i] + arr[j] + arr[k] < target 
-// where i, j, and k are three different indices. Write a function 
-// to return the count of such triplets.
-
+// time: O(n^2) if already sorted, O(n^2 + n*log(n)) = O(n^2) (for large n) with the sort;
+// space: O(1) + O(n) b/c sort;
 function tripletsWithSmallerSum(arr, target) {
-    arr.sort((a,b) => a - b)
+    arr.sort((a,b) => a - b);
     let tripletCount = 0; 
 
     for (let fixedPointer = 0; fixedPointer < arr.length - 2; fixedPointer++) {
@@ -43,22 +39,17 @@ function tripletsWithSmallerSum(arr, target) {
         let rightPointer = arr.length - 1;
 
         while (leftPointer < rightPointer) {
-            // console.log('arr[fixedPointer]: ', arr[fixedPointer]);
-            // console.log('arr[leftPointer]: ', arr[leftPointer]);
-            // console.log('arr[rightPointer]: ', arr[rightPointer]);
-            // console.log(': ', )
             let sum = arr[fixedPointer] + arr[leftPointer] + arr[rightPointer];
-            // console.log('sum: ', sum);
             if (sum < target) {
                 tripletCount+= rightPointer-leftPointer; 
                 leftPointer++;
             } else if (sum >= target) {
                 rightPointer--;
-            }
-        }
-    }
+            };
+        };
+    };
     return tripletCount;
-}
+};
 
-console.log('tripletsWithSmallerSum: ', tripletsWithSmallerSum([-1, 0, 2, 3], 3))
-console.log('tripletsWithSmallerSum: ', tripletsWithSmallerSum([-1, 4, 2, 1, 3], 5))
+console.log('tripletsWithSmallerSum: ', tripletsWithSmallerSum([-1, 0, 2, 3], 3)) // 2
+console.log('tripletsWithSmallerSum: ', tripletsWithSmallerSum([-1, 4, 2, 1, 3], 5)) // 4

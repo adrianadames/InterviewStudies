@@ -15,50 +15,29 @@ Example 1:
     less than k.
 */
 
-
-
+// time: O(n);
+// space: O(1) if we're giving count, O(n) if we return the subarrays in an array;
 function subarraysWithProductLessThanK(arr, k) {
     let subarrays = [];
-    let windowEnd = 0;
-    let windowStart = 0; 
-    let product = arr[windowStart];
+    let product = 1;
+    let windowStart = 0;
+    
+    for (let windowEnd = 0; windowEnd < arr.length; windowEnd++) {
+        product *= arr[windowEnd]; 
+        
+        // - shrink window if product too large
+        while (product >= k) {
+            product /= arr[windowStart];
+            windowStart++;
+        }
 
-    while (windowStart < arr.length && windowEnd < arr.length) {
-
-        if (product < k ) {
-            // - if the end of the window is at the end of the array and 
-            // the product between it and that between windowStart inclusive,
-            // then all those subarrays will be less than k too
-            if (windowEnd === arr.length - 1) {
-                while (windowStart <= windowEnd) {
-                    subarrays.push(arr.slice(windowStart, windowEnd + 1));
-                    product = product/ arr[windowStart];
-                    windowStart++
-                }
-            } else {
-                subarrays.push(arr.slice(windowStart, windowEnd + 1));
-                windowEnd++;
-                product = product * arr[windowEnd];
-            }
-        } else { // - product too big
-            // - divide the product by the number at windowStart and shrink the window if window size> 1 or 
-            // move the window if the windowSize is 1; 
-            product = product/ arr[windowStart];  
-            
-            if (windowStart === windowEnd) {
-                windowStart++;
-                windowEnd++;
-            } else {
-                windowStart++;
-            }
+        // - all subarrays from windowStart to windowEnd have a product < k
+        for (let i = windowEnd; i >= windowStart; i--) {
+            subarrays.push(arr.slice(i, windowEnd + 1));
         }
     }
 
-
-    return [subarrays.length, subarrays]
+    return [subarrays.length, subarrays];
 }
 
-
-console.log('subarraysWithProductLessThanK: ', subarraysWithProductLessThanK([10, 5, 2, 6], 100))
-
-
+console.log('subarraysWithProductLessThanK: ', subarraysWithProductLessThanK([10, 5, 2, 6], 100));
