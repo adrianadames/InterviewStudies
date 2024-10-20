@@ -32,7 +32,6 @@ function findAllDuplicateNumbers(arr) {
             i++;
         }
     }
-    // console.log('arr: ', arr)
 
     let duplicates = [];
     for (let i = 0; i < arr.length; i++) {
@@ -40,35 +39,40 @@ function findAllDuplicateNumbers(arr) {
             duplicates.push(arr[i])
         }
     }
-    return duplicates
+    return duplicates;
 }
 
-// - from grokking solutions
-function findAllDuplicateNumbers2(nums) {
-    const result = [];
-    const n = nums.length;
-    
-    for (let i = 0; i < n; i++) {
-        while (nums[i] !== i + 1) {
-            const correctIndex = nums[i] - 1;
-            if (nums[i] === nums[correctIndex]) {
-                // Duplicate found
-                if (result[result.length - 1] !== nums[i]) {
-                    result.push(nums[i]);
-                }
-                break;
+function findAllDuplicateNumbers2(arr) {
+    let index = 0;
+    while (index < arr.length) {
+        if (arr[index] === index + 1) {
+            index++;
+        } else {
+            // - swap the element encountered with the array value that is at it's proper spot; 
+            // - if when we look to make the swap we see that the proper number is at the location, 
+            // we have a repeat; increment p; 
+            let j = arr[index];
+            let properIndex = j -1; 
+            
+            if (j === arr[properIndex]) { // repeat encountered; skip it 
+                index++;
+            } else { // value at properIndex not j, so make the swap
+                arr[index] = arr[properIndex]; 
+                arr[properIndex] = j; 
             }
-            // Swap
-            [nums[i], nums[correctIndex]] = [nums[correctIndex], nums[i]];
         }
     }
-    
-    return result;
+
+    let dups = [];
+    for (let i = 0; i < arr.length; i++) {
+        if (arr[i] !== i +1) {
+            dups.push(arr[i]);
+        }
+    }
+    return dups;
 }
+console.log('findAllDuplicateNumbers: ', findAllDuplicateNumbers([3,4,4,4,5,4,3,4,4,4,4,3,5,3])); // [ 4, 4, 4, 3, 4, 4, 4, 4, 3, 5, 3]
+console.log('findAllDuplicateNumbers2: ', findAllDuplicateNumbers2([3,4,4,4,5,4,3,4,4,4,4,3,5,3])); //  [ 4, 4, 4, 3, 4, 4, 4, 4, 3, 5, 3]  
 
-console.log('findAllDuplicateNumbers: ', findAllDuplicateNumbers([3, 4, 3]));
-console.log('findAllDuplicateNumbers: ', findAllDuplicateNumbers([5, 4, 7, 2, 3, 5, 3]));
-
-
-
-
+console.log('findAllDuplicateNumbers: ', findAllDuplicateNumbers([5, 4, 7, 2, 3, 5, 3, 3,5, 3])); // [ 3, 5, 3, 5, 3 ]
+console.log('findAllDuplicateNumbers2: ', findAllDuplicateNumbers2([5, 4, 7, 2, 3, 5, 3, 3, 5, 3])); //  [ 3, 5, 3, 5, 3 ]
