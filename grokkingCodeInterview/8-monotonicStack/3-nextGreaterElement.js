@@ -39,3 +39,39 @@ All the integers of nums1 also appear in nums2.
 
 Follow up: Could you find an O(nums1.length + nums2.length) solution?
 */
+
+function nextGreaterElement(nums1, nums2) {
+    let result = new Array(nums1.length).fill(-1);
+
+    for (let i = 0; i < nums1.length; i++) {
+        let num = nums1[i];
+        // find j such that nums2[j] = num
+        let j = findJ(num, nums2);
+        // find the next greater element of nums2[j] and put that number in result[i]
+        let nextGreater = findNextGreater(j, nums2);
+        result[i] = nextGreater;
+    }
+    return result;
+}
+
+function findJ(num, nums2) {
+    for (let j = 0; j < nums2.length; j++) {
+        if (num === nums2[j]) {
+            return j;
+        }
+    }
+}
+
+function findNextGreater(index, nums2) {
+    let current = nums2[index];
+
+    for (let i = index; i < nums2.length; i++) {
+        if (nums2[i] > current) {
+            return nums2[i];
+        } 
+    }
+    return -1;
+}
+
+console.log('nextGreaterElement: ', nextGreaterElement([4,1,2],  [1,3,4,2]));
+console.log('nextGreaterElement: ', nextGreaterElement([2,4],  [1,2,3,4]));

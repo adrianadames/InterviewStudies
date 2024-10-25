@@ -33,3 +33,33 @@ Constraints:
 2 <= k <= 104
 s only contains lowercase English letters.
 */
+
+function removeAdjacentDupsII(str, k) {
+    let stack = [];
+    for (let i = 0; i < str.length; i++) {
+        if (stack.length > 0 && str[i] === stack[stack.length -1].char) {
+            stack[stack.length -1].count++;
+            if (stack[stack.length -1].count === k) {
+                stack.pop();
+            } 
+        } else {
+            stack.push({char: str[i], count: 1});
+        }
+    }
+    let result = '';
+    while (stack.length > 0) {
+        let next = stack.pop();
+        for (let j = 0; j < next.count;j++) {
+            result = next.char + result;
+        }
+    }
+    return result;
+}
+
+console.log('removeAdjacentDupsII: ', removeAdjacentDupsII("abcd", 2)); // abcd
+console.log('removeAdjacentDupsII: ', removeAdjacentDupsII("deeedbbcccbdaa", 3)); // aa
+console.log('removeAdjacentDupsII: ', removeAdjacentDupsII("pbbcggttciiippooaais", 2)); // ps
+console.log('removeAdjacentDupsII: ', removeAdjacentDupsII("pbbcggttciiippoo", 2)); // ps
+console.log('removeAdjacentDupsII: ', removeAdjacentDupsII("aaabaaaabbba", 4)); // ''
+
+

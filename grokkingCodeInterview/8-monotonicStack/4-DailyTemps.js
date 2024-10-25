@@ -23,3 +23,22 @@ Constraints:
 1 <= temperatures.length <= 105
 30 <= temperatures[i] <= 100
 */
+
+function dailyTemps(arr) {
+    let stack = []; // - here we will store the days for which we are looking for the next greater temp day
+    let result = new Array(arr.length).fill(0);
+
+    for (let i = 0; i < arr.length; i++) {
+        // - while we have found a daily temp arr[i] greater than previous days
+        while (stack.length > 0 && arr[i] > arr[stack[stack.length -1]]){
+            let current = stack.pop();
+            result[current] = i - current; 
+        }
+        stack.push(i);
+    }
+    return result;
+}
+
+console.log('dailyTemps(arr): ', dailyTemps([73,74,75,71,69,72,76,73]));
+console.log('dailyTemps(arr): ', dailyTemps([30,40,50,60]));
+console.log('dailyTemps(arr): ', dailyTemps([30,60,90]));
