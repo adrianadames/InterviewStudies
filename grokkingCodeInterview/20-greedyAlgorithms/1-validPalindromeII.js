@@ -1,4 +1,5 @@
 /*
+(easy)
 Problem Statement
 Given string s, determine whether it's possible to make a given string palindrome by removing at most one character.
 
