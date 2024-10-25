@@ -21,3 +21,17 @@ Explanation: First, we remove "cc" to get "abba". Then, we remove
 Input: s = "foobar"
 Output: "fbar"
 */
+
+function removeAdjacentDups(str) {
+    let stack = [];
+    for (let i = 0; i < str.length; i++) {
+        if (stack.length > 0 && str[i] === stack[stack.length - 1]) {
+            stack.pop();
+        } else {
+            stack.push(str[i]);
+        }
+    }
+    return stack.join('');
+}
+console.log('removeAdjacentDups: ', removeAdjacentDups('abccba'));
+console.log('removeAdjacentDups: ', removeAdjacentDups('foobar'));
