@@ -24,3 +24,25 @@ Constraints:
 1 <= ransomNote.length, magazine.length <= 105
 ransomNote and magazine consist of lowercase English letters.
 */
+
+// time: O(m + n);
+// space: O(1) (26 letters worst case)
+function ransomNote(ransomNote, magazine) {
+    let magazineCharCount = {};
+    for (let i = 0; i < magazine.length; i++) {
+        magazineCharCount[magazine[i]] = (magazineCharCount[magazine[i]] || 0) + 1;
+    }
+    
+    for (let i = 0; i < ransomNote.length; i++) {
+        if (!magazineCharCount[ransomNote[i]]) {
+            return false;
+        }
+        magazineCharCount[ransomNote[i]]--;
+    }
+
+    return true;
+}
+
+console.log('ransomNote: ', ransomNote("a", "b"));
+console.log('ransomNote: ', ransomNote("aa", "ab"));
+console.log('ransomNote: ', ransomNote("aa", "aab"));

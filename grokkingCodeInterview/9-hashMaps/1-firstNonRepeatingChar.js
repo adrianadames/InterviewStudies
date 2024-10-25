@@ -23,3 +23,28 @@ Example 3:
 Input: "abab"
 Expected Output: -1
 */
+
+// time: O(n);
+// space: O(n) (worst case if every char is distinct);
+function firstNonRepeatingChar(str) {
+    let charCount = {};
+
+    for (let i = 0; i < str.length; i++) {
+        if (!charCount[str[i]]) {
+            charCount[str[i]] = 0;
+        }
+        charCount[str[i]]++;
+    }
+
+    for (let i = 0; i < str.length; i++) {
+        if (charCount[str[i]] === 1) {
+            return i;
+        }
+    }
+
+    return -1;
+}
+
+console.log('firstNonRepeatingChar: ', firstNonRepeatingChar("apple")); // 0
+console.log('firstNonRepeatingChar: ', firstNonRepeatingChar("abcab")); // 2
+console.log('firstNonRepeatingChar: ', firstNonRepeatingChar("abab")); // -1
